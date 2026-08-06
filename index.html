@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#14161B">
+<title>Punto Ciego · Biblioteca de recursos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   PUNTO CIEGO · biblioteca v1.0
+   Sistema visual BYMCYL — tinta / oro / acento por materia
+   Misma hoja base de la plantilla de guías (v3): no editar al
+   añadir recursos nuevos; la zona editable está en el script.
+   ═══════════════════════════════════════════════════════════════ */
+
+:root{
+  --tinta:#14161B; --tinta-2:#232733; --tinta-3:#3A404F; --tinta-4:#6B7385;
+  --papel:#F6F3EC; --papel-2:#EDE8DD;
+  --oro:#C9A227; --oro-claro:#FAF3DC; --oro-texto:#8A6D12;
+  --violeta:#6C4AB6; --violeta-claro:#EFEAFA;
+  --acento:var(--violeta); --acento-claro:var(--violeta-claro);
+  --acierto:#2F6F52; --acierto-claro:#E6F0EA;
+  --trampa:#A8382F; --trampa-claro:#F7E9E7;
+  --linea:#D8D2C4;
+  --display:'Fraunces',Georgia,'Times New Roman',serif;
+  --texto:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  --dato:'Space Mono','SFMono-Regular',Consolas,monospace;
+  --r:10px; --barra:64px; --cabeza:52px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--texto);background:var(--papel);color:var(--tinta);
+  line-height:1.6;font-size:16px;-webkit-font-smoothing:antialiased;
+  padding-bottom:calc(var(--barra) + env(safe-area-inset-bottom));
+}
+
+/* ── progreso ─────────────────────────────────────────────────── */
+#progreso{position:fixed;top:0;left:0;right:0;height:3px;background:var(--papel-2);z-index:60}
+#progreso i{display:block;height:100%;width:0;background:var(--oro);transition:width .25s ease}
+
+/* ── cabecera ─────────────────────────────────────────────────── */
+#cabeza{
+  position:sticky;top:3px;z-index:45;background:rgba(246,243,236,.97);
+  border-bottom:1px solid var(--linea);backdrop-filter:blur(8px);
+}
+.cabeza-int{
+  max-width:640px;margin:0 auto;height:var(--cabeza);
+  display:flex;align-items:center;gap:12px;padding:0 14px;
+}
+.cabeza-tit{
+  flex:1;min-width:0;font-family:var(--dato);font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--tinta-3);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.cabeza-tit b{color:var(--tinta);display:block;font-size:12px;letter-spacing:.06em}
+.icono{
+  background:none;border:1px solid var(--linea);border-radius:8px;
+  font:inherit;font-size:12px;font-weight:600;padding:7px 11px;
+  color:var(--tinta);cursor:pointer;min-height:36px;white-space:nowrap;
+}
+.icono:hover{background:var(--papel-2)}
+.icono:focus-visible{outline:2px solid var(--acento);outline-offset:2px}
+.icono[aria-pressed="true"]{background:var(--oro-claro);border-color:var(--oro)}
+
+.envoltura{max-width:640px;margin:0 auto;padding:24px 18px}
+
+/* ── tipografía ───────────────────────────────────────────────── */
+.eyebrow{font-family:var(--dato);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--tinta-3)}
+h1{font-family:var(--display);font-weight:700;font-size:30px;line-height:1.15;letter-spacing:-.015em;margin:10px 0 8px}
+h2{font-family:var(--display);font-weight:600;font-size:21px;line-height:1.25;margin:0 0 12px}
+h3{font-family:var(--display);font-weight:600;font-size:17px;margin:0 0 10px}
+p{margin:0 0 12px} p:last-child{margin-bottom:0}
+.ic{width:13px;height:13px;vertical-align:-2px;margin-right:5px}
+
+/* ── marca ────────────────────────────────────────────────────── */
+.marca-grande{
+  font-family:var(--dato);font-size:13px;font-weight:700;
+  letter-spacing:.26em;text-transform:uppercase;color:var(--oro-texto);
+}
+.tagline{font-family:var(--display);font-size:16px;color:var(--tinta-3);margin:6px 0 16px}
+.sello{font-size:12.5px;color:var(--tinta-4);margin-top:26px;padding-top:14px;border-top:1px solid var(--linea)}
+.sello b{color:var(--tinta-3)}
+
+/* ── tarjetas ─────────────────────────────────────────────────── */
+.tarjeta{background:#fff;border:1px solid var(--linea);border-radius:var(--r);padding:20px 18px;margin-bottom:16px}
+.tarjeta--concepto{border-left:3px solid var(--acento)}
+.tarjeta--cierre{border-left:3px solid var(--oro)}
+.tarjeta--alerta{border-left:3px solid var(--trampa)}
+.tarjeta--bien{border-left:3px solid var(--acierto)}
+.clave{margin-top:16px;padding:12px 14px;background:var(--oro-claro);border-radius:8px;font-size:15px}
+.clave b{display:block;font-family:var(--dato);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--oro-texto);margin-bottom:4px}
+
+/* ── ficha de datos ───────────────────────────────────────────── */
+.subtitulo{font-size:17px;color:var(--tinta-3);margin-bottom:18px}
+.ficha{display:flex;flex-wrap:wrap;gap:10px;border-top:1px solid var(--linea);border-bottom:1px solid var(--linea);padding:14px 0;margin-bottom:22px}
+.ficha div{flex:1 1 30%}
+.ficha span{display:block;font-family:var(--dato);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--tinta-3)}
+.ficha b{font-size:14px;font-weight:600}
+
+/* ── buscador ─────────────────────────────────────────────────── */
+.buscar{position:relative;margin:0 0 14px}
+.buscar .lupa{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:15px;height:15px;color:var(--tinta-4);pointer-events:none}
+.campo{width:100%;font:inherit;font-size:16px;padding:13px 14px;border:1px solid var(--linea);border-radius:8px;background:#fff}
+.campo:focus{outline:2px solid var(--acento);outline-offset:1px;border-color:var(--acento)}
+.campo--buscar{padding-left:38px}
+.cod{font-size:12.5px;line-height:1.5;resize:vertical;word-break:break-all;font-family:var(--dato)}
+
+/* ── filtros ──────────────────────────────────────────────────── */
+.filtros{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px}
+.chips{display:flex;gap:7px;flex-wrap:wrap}
+.chip{
+  font:inherit;font-size:13px;padding:8px 13px;border-radius:20px;
+  border:1px solid var(--linea);background:#fff;color:var(--tinta-3);
+  cursor:pointer;min-height:38px;
+}
+.chip:focus-visible{outline:2px solid var(--acento);outline-offset:2px}
+.chip[aria-pressed="true"]{background:var(--tinta);border-color:var(--tinta);color:var(--papel);font-weight:600}
+.resultado-n{font-family:var(--dato);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--tinta-4);margin:14px 0 10px}
+
+/* ── tarjeta de recurso ───────────────────────────────────────── */
+.recurso{
+  display:block;width:100%;text-align:left;background:#fff;
+  border:1px solid var(--linea);border-radius:var(--r);
+  padding:15px 16px;margin-bottom:10px;font:inherit;color:var(--tinta);cursor:pointer;
+}
+.recurso:hover{border-color:var(--tinta-3)}
+.recurso:focus-visible{outline:2px solid var(--acento);outline-offset:2px}
+.recurso[data-estado="curso"]{border-left:3px solid var(--oro)}
+.recurso[data-estado="hecho"]{border-left:3px solid var(--acierto)}
+.rec-fila{display:flex;align-items:center;gap:8px}
+.rec-tipo{
+  font-family:var(--dato);font-size:9.5px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--acento);background:var(--acento-claro);
+  padding:3px 8px;border-radius:5px;flex-shrink:0;
+}
+.rec-nuevo{
+  font-family:var(--dato);font-size:9.5px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--oro-texto);background:var(--oro-claro);
+  padding:3px 8px;border-radius:5px;flex-shrink:0;
+}
+.rec-materia{font-family:var(--dato);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--tinta-4);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rec-marca{font-family:var(--dato);font-size:11px;font-weight:700;color:var(--tinta-3);flex-shrink:0;display:flex;align-items:center;gap:2px}
+.rec-marca[data-m="hecho"]{color:var(--acierto)}
+.rec-tit{font-weight:600;font-size:16px;margin-top:9px;line-height:1.35}
+.rec-desc{font-size:14px;color:var(--tinta-3);margin-top:4px}
+.rec-meta{font-family:var(--dato);font-size:11px;color:var(--tinta-4);margin-top:8px}
+.rec-riel{height:4px;background:var(--papel-2);border-radius:2px;margin-top:11px;overflow:hidden}
+.rec-riel i{display:block;height:100%;background:var(--oro)}
+.recurso[data-estado="hecho"] .rec-riel i{background:var(--acierto)}
+
+/* ── temas ────────────────────────────────────────────────────── */
+.temas{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 18px}
+.tema{
+  font-family:var(--dato);font-size:11px;padding:6px 11px;border-radius:16px;
+  border:1px solid var(--linea);background:#fff;color:var(--tinta-3);
+}
+
+/* ── botones ──────────────────────────────────────────────────── */
+.btn{
+  font:inherit;font-weight:600;font-size:15px;padding:13px 20px;border-radius:8px;
+  border:1px solid var(--tinta);background:var(--tinta);color:var(--papel);
+  cursor:pointer;min-height:48px;transition:opacity .12s;
+  display:inline-block;text-align:center;text-decoration:none;
+}
+.btn:hover{opacity:.86}
+.btn:focus-visible{outline:2px solid var(--acento);outline-offset:2px}
+.btn--fantasma{background:transparent;color:var(--tinta);border-color:var(--linea)}
+.btn--ancho{width:100%}
+.btn--oro{background:var(--oro);border-color:var(--oro);color:var(--tinta)}
+.btn--chico{padding:9px 14px;font-size:13.5px;min-height:40px}
+.enlace-pista{background:none;border:0;padding:0;cursor:pointer;font:inherit;font-size:14px;color:var(--acento);text-decoration:underline;text-underline-offset:3px}
+.enlace-pista:focus-visible{outline:2px solid var(--acento);outline-offset:3px}
+
+/* ── marcador y mapa (panel de actividad) ─────────────────────── */
+.marcador{display:flex;border:1px solid var(--linea);border-radius:var(--r);overflow:hidden;background:#fff;margin-bottom:16px}
+.marcador div{flex:1;padding:16px 8px;text-align:center;border-right:1px solid var(--linea)}
+.marcador div:last-child{border-right:0}
+.marcador .cifra{font-family:var(--dato);font-size:25px;font-weight:700;display:block;line-height:1.1}
+.marcador .rotulo{font-family:var(--dato);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--tinta-3);display:block;margin-top:4px}
+
+.mapa{list-style:none;margin-top:4px}
+.mapa li{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px solid var(--linea);font-size:15px}
+.mapa li:last-child{border-bottom:0}
+.mapa .estado{font-family:var(--dato);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;flex-shrink:0;font-weight:700}
+.estado--claro{color:var(--acierto)}
+.estado--medio{color:var(--oro-texto)}
+.estado--nada{color:var(--tinta-4)}
+
+.reco{list-style:none}
+.reco li{padding:10px 0 10px 20px;border-bottom:1px solid var(--linea);font-size:15px;position:relative}
+.reco li:last-child{border-bottom:0}
+.reco li::before{content:'→';position:absolute;left:0;color:var(--oro);font-weight:700}
+
+/* ── candado de compra ────────────────────────────────────────── */
+.candado{background:var(--tinta);color:var(--papel);border-radius:var(--r);padding:24px 20px;text-align:center;margin-bottom:16px}
+.candado h2{color:var(--papel);font-size:20px}
+.candado p{color:#C7C2B6;font-size:15px}
+.candado .precio{font-family:var(--dato);font-size:24px;font-weight:700;color:var(--oro);display:block;margin:14px 0 6px}
+
+.acciones{display:flex;flex-direction:column;gap:10px;margin-top:18px}
+#acciones-nota{min-height:18px;font-size:13px;color:var(--tinta-3);text-align:center}
+.vacio{text-align:center;color:var(--tinta-3);padding:24px 10px;font-size:15px}
+
+/* ── barra de navegación inferior ─────────────────────────────── */
+.barra{
+  position:fixed;left:0;right:0;bottom:0;z-index:40;
+  background:rgba(246,243,236,.97);border-top:1px solid var(--linea);
+  padding:6px 10px calc(6px + env(safe-area-inset-bottom));backdrop-filter:blur(8px);
+}
+.barra-int{max-width:640px;margin:0 auto;display:flex;align-items:stretch;gap:6px}
+.nav-btn{
+  flex:1;background:none;border:0;border-radius:8px;font:inherit;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+  padding:7px 4px;min-height:48px;color:var(--tinta-4);
+  font-family:var(--dato);font-size:10px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;
+}
+.nav-btn svg{width:19px;height:19px}
+.nav-btn:hover{background:var(--papel-2)}
+.nav-btn:focus-visible{outline:2px solid var(--acento);outline-offset:-2px}
+.nav-btn[aria-pressed="true"]{color:var(--tinta);background:var(--papel-2)}
+
+@media (max-width:400px){ .marcador .cifra{font-size:21px} }
+@media print{
+  body{background:#fff;padding:0;font-size:11pt}
+  #progreso,#cabeza,.barra,.acciones,.filtros,.buscar,.no-imprimir{display:none!important}
+  .tarjeta,.marcador,.recurso{border:1px solid #999;break-inside:avoid}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<div id="progreso" aria-hidden="true"><i></i></div>
+<header id="cabeza" hidden></header>
+<main class="envoltura" id="lienzo"></main>
+<nav class="barra" id="barra" aria-label="Navegación principal"></nav>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   ▼▼▼  ÚNICA ZONA A EDITAR PARA AÑADIR O QUITAR RECURSOS  ▼▼▼
+
+   REFERENCIA RÁPIDA DE CAMPOS (biblioteca v1.0)
+
+   materias:  clave → {nombre, paleta}
+              paletas: 'violeta' | 'verde' | 'azul' | 'terracota' | 'vino'
+              (sugerido: matemáticas=violeta, ciencias=verde,
+               sociales=azul, lectura=terracota, inglés=vino)
+
+   tipos:     clave → {nombre}  (guía, simulacro, video, lectura, fichas…)
+
+   recursos:  cada recurso acepta:
+     id           único y estable (se usa para guardar el avance)
+     tipo         clave de `tipos`
+     materia      clave de `materias`
+     titulo, descripcion, nivel, minutos
+     preguntas    número de preguntas (recursos evaluables)
+     contenido    texto libre si no aplica `preguntas` («40 fichas»)
+     temas        lista de temas que cubre (alimenta el buscador)
+     enlace       URL o ruta del archivo del recurso; vacío = «pronto»
+     nuevo        true → etiqueta NUEVO en el catálogo
+     premium      true → se muestra candado y compra por WhatsApp
+     precio       opcional, prima sobre ajustes.precio
+     clave        {titulo, version} de una guía Punto Ciego abierta en
+                  este mismo dispositivo → la biblioteca lee su avance
+                  guardado y pinta la barra de progreso sola
+   ═══════════════════════════════════════════════════════════════ */
+
+const BIBLIOTECA = {
+
+  meta:{
+    coleccion:'Punto Ciego',
+    titulo:'Biblioteca de recursos',
+    tagline:'Estudia lo que no sabes que no sabes.',
+    version:'1.0'
+  },
+
+  ajustes:{
+    guardarProgreso:true,        // guarda favoritos y avance en el navegador
+    precio:'$18.000',            // precio por defecto de los recursos premium
+    whatsapp:'573000000000',
+    mensajeCompra:'Hola, quiero el recurso: '
+  },
+
+  materias:{
+    matematicas:{nombre:'Matemáticas',     paleta:'violeta'},
+    ciencias:   {nombre:'Ciencias',        paleta:'verde'},
+    sociales:   {nombre:'Sociales',        paleta:'azul'},
+    lectura:    {nombre:'Lectura crítica', paleta:'terracota'},
+    ingles:     {nombre:'Inglés',          paleta:'vino'}
+  },
+
+  tipos:{
+    guia:     {nombre:'Guía interactiva'},
+    simulacro:{nombre:'Simulacro'},
+    video:    {nombre:'Video'},
+    lectura:  {nombre:'Lectura'},
+    fichas:   {nombre:'Fichas de repaso'}
+  },
+
+  recursos:[
+
+    { id:'r1', tipo:'guia', materia:'matematicas',
+      titulo:'Razonamiento cuantitativo sin calculadora',
+      descripcion:'Porcentajes, proporciones, gráficas y promedios: las cuatro trampas que más puntos cuestan en el Saber 11.',
+      nivel:'10° y 11°', minutos:35, preguntas:20,
+      temas:['Porcentajes','Proporciones','Lectura de gráficas','Promedios'],
+      enlace:'guias/razonamiento-cuantitativo.html',
+      clave:{titulo:'Razonamiento cuantitativo sin calculadora', version:'3.0'},
+      nuevo:true },
+
+    { id:'r2', tipo:'simulacro', materia:'matematicas',
+      titulo:'Simulacro Saber 11 · Matemáticas',
+      descripcion:'25 preguntas seguidas, con reloj y una sola oportunidad por pregunta, como el día del examen.',
+      nivel:'11°', minutos:40, preguntas:25,
+      temas:['Álgebra','Geometría','Estadística','Aritmética'],
+      enlace:'guias/simulacro-matematicas.html',
+      premium:true },
+
+    { id:'r3', tipo:'guia', materia:'lectura',
+      titulo:'El texto no dice lo que crees',
+      descripcion:'Inferencias, intención del autor y las opciones «casi correctas» que fabrica la prueba de lectura crítica.',
+      nivel:'10° y 11°', minutos:30, preguntas:18,
+      temas:['Inferencias','Intención del autor','Ideas principales'],
+      enlace:'guias/lectura-critica.html' },
+
+    { id:'r4', tipo:'video', materia:'ciencias',
+      titulo:'El método científico en 12 minutos',
+      descripcion:'Variables, hipótesis y control experimental con los ejemplos exactos que usa el Icfes.',
+      nivel:'9° a 11°', minutos:12, contenido:'1 video',
+      temas:['Método científico','Variables','Hipótesis'],
+      enlace:'https://youtu.be/XXXXXXXXXXX' },
+
+    { id:'r5', tipo:'fichas', materia:'ingles',
+      titulo:'Phrasal verbs que sí salen en la prueba',
+      descripcion:'Las 40 combinaciones más frecuentes, con la trampa típica de cada una y su ejemplo en contexto.',
+      nivel:'10° y 11°', minutos:20, contenido:'40 fichas',
+      temas:['Phrasal verbs','Vocabulario'],
+      enlace:'fichas/phrasal-verbs.html' },
+
+    { id:'r6', tipo:'guia', materia:'ciencias',
+      titulo:'Biología: de la célula al ecosistema',
+      descripcion:'Flujos de energía, cadenas tróficas y los diagramas que la prueba usa para confundirte.',
+      nivel:'10° y 11°', minutos:35, preguntas:22,
+      temas:['Célula','Ecosistemas','Cadenas tróficas','Energía'],
+      enlace:'guias/biologia.html' },
+
+    { id:'r7', tipo:'lectura', materia:'sociales',
+      titulo:'Constitución del 91: lo esencial',
+      descripcion:'Derechos, mecanismos de participación y estructura del Estado en una lectura de una sentada.',
+      nivel:'9° a 11°', minutos:25, contenido:'Lectura guiada',
+      temas:['Constitución','Derechos','Mecanismos de participación'],
+      enlace:'' },
+
+    { id:'r8', tipo:'guia', materia:'sociales',
+      titulo:'Colombia en mapas',
+      descripcion:'Regiones, pisos térmicos y la geografía económica que el Icfes pregunta con mapas y tablas.',
+      nivel:'10° y 11°', minutos:30, preguntas:16,
+      temas:['Regiones','Pisos térmicos','Geografía económica'],
+      enlace:'guias/colombia-en-mapas.html' },
+
+    { id:'r9', tipo:'simulacro', materia:'lectura',
+      titulo:'Simulacro de lectura crítica',
+      descripcion:'Tres textos completos con el tiempo real de la prueba. Sin pistas y sin segunda oportunidad.',
+      nivel:'11°', minutos:35, preguntas:15,
+      temas:['Texto argumentativo','Texto informativo','Caricatura'],
+      enlace:'guias/simulacro-lectura.html',
+      premium:true },
+
+    { id:'r10', tipo:'video', materia:'matematicas',
+      titulo:'Las 7 trampas de porcentajes',
+      descripcion:'Cada trampa explicada en tablero, con el error real de un estudiante y cómo detectarlo a tiempo.',
+      nivel:'9° a 11°', minutos:15, contenido:'1 video',
+      temas:['Porcentajes','Trampas frecuentes'],
+      enlace:'https://youtu.be/XXXXXXXXXXX' },
+
+    { id:'r11', tipo:'fichas', materia:'ciencias',
+      titulo:'Fórmulas de física sin memorizar a ciegas',
+      descripcion:'Cada fórmula con su idea física detrás: qué mide, cuándo aplica y el error clásico al usarla.',
+      nivel:'10° y 11°', minutos:25, contenido:'32 fichas',
+      temas:['Cinemática','Fuerzas','Energía','Ondas'],
+      enlace:'fichas/formulas-fisica.html' },
+
+    { id:'r12', tipo:'guia', materia:'ingles',
+      titulo:'Reading: skimming y scanning',
+      descripcion:'Cómo responder sin traducir palabra por palabra: la técnica que separa el B1 del A2.',
+      nivel:'10° y 11°', minutos:25, preguntas:14,
+      temas:['Reading','Skimming','Scanning'],
+      enlace:'guias/reading.html',
+      nuevo:true }
+
+  ]
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   ▲▲▲  FIN DE LA ZONA EDITABLE — motor de aquí en adelante ▲▲▲
+   ═══════════════════════════════════════════════════════════════ */
+
+try{ window.BIBLIOTECA = BIBLIOTECA; }catch(e){}
+
+(function(){
+'use strict';
+
+const lienzo = document.getElementById('lienzo');
+const barra  = document.getElementById('barra');
+const cabeza = document.getElementById('cabeza');
+const avance = document.querySelector('#progreso i');
+
+/* ── paleta por materia ───────────────────────────────────────── */
+const PAL = {
+  violeta:  {a:'#6C4AB6', c:'#EFEAFA'},
+  verde:    {a:'#1F6E5C', c:'#E2F0EC'},
+  azul:     {a:'#2B5FA3', c:'#E7EEF6'},
+  terracota:{a:'#B4552D', c:'#F8ECE4'},
+  vino:     {a:'#8E3B5C', c:'#F6E8EE'}
+};
+function pal(mid){
+  const m = BIBLIOTECA.materias[mid];
+  return (m && PAL[m.paleta]) || PAL.violeta;
+}
+
+/* ── iconos SVG (mismos en todo dispositivo, sin emojis) ──────── */
+const IC = {
+  candado:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="9.5" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>',
+  estrella:'<svg class="ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.7 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 2.9 1.1-6.3-4.6-4.4 6.3-.9z"/></svg>',
+  estrellaO:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.8l2.8 5.7 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 2.9 1.1-6.3-4.6-4.4 6.3-.9z"/></svg>',
+  reloj:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.6V12l2.9 1.9"/></svg>',
+  lupa:'<svg class="lupa" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L20 20"/></svg>',
+  casa:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.8 10.8L12 4l8.2 6.8"/><path d="M6 9.3V20h12V9.3"/></svg>',
+  marcador:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3.5h10a1 1 0 0 1 1 1V21l-6-4-6 4V4.5a1 1 0 0 1 1-1z"/></svg>',
+  pulso:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 20v-8"/><path d="M12 20V5"/><path d="M19 20v-5"/><path d="M3.5 20h17"/></svg>'
+};
+
+/* ── almacén ──────────────────────────────────────────────────── */
+const almacen = (function(){
+  const mem = {};
+  const k = 'pc-biblioteca:' + BIBLIOTECA.meta.version;
+  let disp = false;
+
+  // Sonda real: algunos navegadores dentro de WhatsApp, Instagram o en modo
+  // incógnito exponen localStorage pero lanzan error al escribir.
+  if(BIBLIOTECA.ajustes.guardarProgreso === true){
+    try{
+      const p = '__pcb_sonda__';
+      window.localStorage.setItem(p, '1');
+      window.localStorage.removeItem(p);
+      disp = true;
+    }catch(e){ disp = false; }
+  }
+
+  return {
+    get disponible(){ return disp; },
+    leer(){
+      if(!disp) return mem.d || null;
+      try{ const v = window.localStorage.getItem(k); return v ? JSON.parse(v) : (mem.d || null); }
+      catch(e){ return mem.d || null; }
+    },
+    escribir(d){
+      mem.d = d;
+      if(!disp) return false;
+      try{ window.localStorage.setItem(k, JSON.stringify(d)); return true; }
+      catch(e){ disp = false; return false; }
+    },
+    borrar(){
+      delete mem.d;
+      if(!disp) return;
+      try{ window.localStorage.removeItem(k); }catch(e){}
+    }
+  };
+})();
+
+/* ── estado ───────────────────────────────────────────────────── */
+const est = {
+  pantalla:'inicio',
+  fMateria:'todas', fTipo:'todos', busqueda:'',
+  recurso:null, reg:{}, confirmarBorrado:false
+};
+(function(){
+  const g = almacen.leer();
+  if(g && g.reg) est.reg = g.reg;
+})();
+
+/* ── utilidades ───────────────────────────────────────────────── */
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const normaliza = t => String(t).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+
+function fechaCorta(ms){
+  const d = new Date(ms), hoy = new Date();
+  const mismoDia = d.toDateString() === hoy.toDateString();
+  const hora = d.toLocaleTimeString('es-CO',{hour:'numeric',minute:'2-digit'});
+  return mismoDia ? 'hoy ' + hora : d.toLocaleDateString('es-CO',{day:'numeric',month:'short'}) + ' ' + hora;
+}
+
+function regDe(id){
+  return est.reg[id] || {abierto:null, veces:0, pct:0, terminado:false, favorito:false};
+}
+function guardar(){
+  return almacen.escribir({v:BIBLIOTECA.meta.version, reg:est.reg, sello:Date.now()});
+}
+
+/* ── progreso de un recurso ───────────────────────────────────── */
+// Si el recurso declara `clave`, la biblioteca lee el avance que la
+// propia guía Punto Ciego guardó en este dispositivo y calcula el
+// porcentaje sola. Si no, usa lo marcado a mano en la biblioteca.
+function progresoDe(r){
+  const g = regDe(r.id);
+  let pct = g.pct || 0;
+  if(r.clave && r.preguntas){
+    try{
+      const v = window.localStorage.getItem('pc:' + r.clave.titulo + ':' + r.clave.version);
+      if(v){
+        const d = JSON.parse(v);
+        const n = d && d.reg
+          ? Object.keys(d.reg).filter(k => d.reg[k] && d.reg[k].intentos > 0).length : 0;
+        pct = Math.max(pct, Math.round(n / r.preguntas * 100));
+      }
+    }catch(e){}
+  }
+  if(g.terminado) pct = 100;
+  return Math.min(100, pct);
+}
+function estadoDe(r){
+  const g = regDe(r.id);
+  const pct = progresoDe(r);
+  if(g.terminado || pct >= 100) return 'hecho';
+  if(pct > 0 || g.abierto) return 'curso';
+  return 'nuevo';
+}
+function contenidoDe(r){
+  if(r.preguntas) return r.preguntas + ' preguntas';
+  if(r.contenido) return r.contenido;
+  return (BIBLIOTECA.tipos[r.tipo] || {}).nombre || '';
+}
+function pintarAvance(){
+  const R = BIBLIOTECA.recursos;
+  const hechos = R.filter(r => estadoDe(r) === 'hecho').length;
+  avance.style.width = (R.length ? hechos / R.length * 100 : 0) + '%';
+}
+
+/* ── análisis (panel de actividad) ────────────────────────────── */
+function analizar(){
+  const R = BIBLIOTECA.recursos;
+  let curso = 0, hechos = 0, favs = 0, favsSinAbrir = 0;
+  const mat = {};
+  R.forEach(function(r){
+    const e = estadoDe(r);
+    const g = regDe(r.id);
+    if(e === 'hecho') hechos++;
+    else if(e === 'curso') curso++;
+    if(g.favorito){ favs++; if(e === 'nuevo') favsSinAbrir++; }
+    mat[r.materia] = mat[r.materia] || {n:0, hechos:0, curso:0};
+    mat[r.materia].n++;
+    if(e === 'hecho') mat[r.materia].hechos++;
+    else if(e === 'curso') mat[r.materia].curso++;
+  });
+  return {total:R.length, curso, hechos, favs, favsSinAbrir, mat,
+          pct: R.length ? Math.round(hechos / R.length * 100) : 0};
+}
+
+function ultimoEnCurso(){
+  let mejor = null;
+  BIBLIOTECA.recursos.forEach(function(r){
+    const g = est.reg[r.id];
+    if(!g || !g.abierto) return;
+    if(estadoDe(r) !== 'curso') return;
+    if(!mejor || g.abierto > mejor.g.abierto) mejor = {r:r, g:g};
+  });
+  return mejor;
+}
+
+function recomendaciones(a){
+  const R = [];
+  const u = ultimoEnCurso();
+  if(u)
+    R.push('Retoma <strong>«' + esc(u.r.titulo) + '»</strong>: lo dejaste en ' + progresoDe(u.r) + '% (última vez: ' + fechaCorta(u.g.abierto) + ').');
+  if(a.favsSinAbrir > 0)
+    R.push('Tienes <strong>' + a.favsSinAbrir + '</strong> ' + (a.favsSinAbrir === 1 ? 'favorito guardado' : 'favoritos guardados') + ' sin empezar. Guardar no es estudiar: abre uno hoy.');
+  const sinTocar = Object.keys(a.mat).filter(m => a.mat[m].hechos + a.mat[m].curso === 0);
+  if(sinTocar.length && sinTocar.length < Object.keys(a.mat).length)
+    R.push('No has abierto nada de: <strong>' + sinTocar.map(m => esc(BIBLIOTECA.materias[m].nombre)).join(', ') + '</strong>. Los puntos ciegos suelen estar donde no miras.');
+  if(a.hechos === a.total && a.total > 0)
+    R.push('Biblioteca al día. Repite un simulacro en tres días sin mirar las explicaciones: ahí sabrás si de verdad quedó.');
+  if(!R.length)
+    R.push('Empieza por una guía interactiva de la materia que más te cueste: te corrige al instante y te dice por qué la opción que elegiste era tentadora.');
+  return R;
+}
+
+/* ── cabecera ─────────────────────────────────────────────────── */
+function pintarCabeza(titulo, sub, conVolver){
+  if(!titulo){ cabeza.hidden = true; return; }
+  cabeza.hidden = false;
+  cabeza.innerHTML = '<div class="cabeza-int">' +
+    (conVolver ? '<button class="icono" data-accion="inicio">‹ Biblioteca</button>' : '') +
+    '<div class="cabeza-tit">' + esc(sub || '') + '<b>' + esc(titulo) + '</b></div>' +
+    '</div>';
+}
+
+/* ── barra de navegación ──────────────────────────────────────── */
+function pintarNav(){
+  const items = [
+    ['inicio', 'Biblioteca', IC.casa],
+    ['mios',   'Mis recursos', IC.marcador],
+    ['panel',  'Actividad', IC.pulso]
+  ];
+  barra.innerHTML = '<div class="barra-int">' + items.map(function(it){
+    return '<button class="nav-btn" data-accion="' + it[0] + '" aria-pressed="' + (est.pantalla === it[0]) + '">' +
+      it[2] + '<span>' + it[1] + '</span></button>';
+  }).join('') + '</div>';
+}
+
+/* ── tarjeta de recurso ───────────────────────────────────────── */
+function htmlRecurso(r){
+  const p = pal(r.materia);
+  const g = regDe(r.id);
+  const e = estadoDe(r);
+  const pct = progresoDe(r);
+  const tipo = (BIBLIOTECA.tipos[r.tipo] || {}).nombre || r.tipo;
+  const materia = (BIBLIOTECA.materias[r.materia] || {}).nombre || r.materia;
+
+  let marca, marcaEstado = '';
+  if(r.premium)            marca = IC.candado;
+  else if(e === 'hecho'){  marca = '✓'; marcaEstado = ' data-m="hecho"'; }
+  else if(!r.enlace)       marca = 'PRONTO';
+  else                     marca = r.minutos + ' min';
+  if(g.favorito) marca = IC.estrella + marca;
+
+  return '<button class="recurso" data-accion="ver" data-id="' + r.id + '" data-estado="' + e + '"' +
+    ' style="--acento:' + p.a + ';--acento-claro:' + p.c + '">' +
+    '<div class="rec-fila">' +
+      '<span class="rec-tipo">' + esc(tipo) + '</span>' +
+      (r.nuevo && e === 'nuevo' ? '<span class="rec-nuevo">Nuevo</span>' : '') +
+      '<span class="rec-materia">' + esc(materia) + '</span>' +
+      '<span class="rec-marca"' + marcaEstado + '>' + marca + '</span>' +
+    '</div>' +
+    '<div class="rec-tit">' + esc(r.titulo) + '</div>' +
+    '<div class="rec-desc">' + esc(r.descripcion) + '</div>' +
+    '<div class="rec-meta">' + esc(r.nivel) + ' · ' + r.minutos + ' min · ' + esc(contenidoDe(r)) + '</div>' +
+    (pct > 0 ? '<div class="rec-riel"><i style="width:' + pct + '%"></i></div>' : '') +
+    '</button>';
+}
+
+/* ═══ PANTALLA · INICIO (catálogo) ════════════════════════════ */
+
+function coincide(r, q){
+  if(!q) return true;
+  const bolsa = normaliza([
+    r.titulo, r.descripcion, (r.temas || []).join(' '),
+    (BIBLIOTECA.materias[r.materia] || {}).nombre || '',
+    (BIBLIOTECA.tipos[r.tipo] || {}).nombre || ''
+  ].join(' '));
+  return normaliza(q).split(/\s+/).every(p => !p || bolsa.indexOf(p) > -1);
+}
+function listaFiltrada(){
+  return BIBLIOTECA.recursos.filter(function(r){
+    if(est.fMateria !== 'todas' && r.materia !== est.fMateria) return false;
+    if(est.fTipo !== 'todos' && r.tipo !== est.fTipo) return false;
+    return coincide(r, est.busqueda);
+  });
+}
+function htmlResultados(){
+  const lista = listaFiltrada();
+  const n = lista.length;
+  return '<div class="resultado-n">' + n + (n === 1 ? ' recurso' : ' recursos') + '</div>' +
+    (n ? lista.map(htmlRecurso).join('')
+       : '<div class="vacio">Nada por aquí con esos filtros. Prueba con otra búsqueda.</div>');
+}
+function pintarResultados(){
+  const c = document.getElementById('resultados');
+  if(c) c.innerHTML = htmlResultados();
+}
+
+function vistaInicio(){
+  est.pantalla = 'inicio';
+  pintarCabeza(null);
+
+  const u = ultimoEnCurso();
+  const sigue = u ? '<div class="clave" style="margin:0 0 18px"><b>Sigue donde ibas</b>' +
+    '«' + esc(u.r.titulo) + '» va en ' + progresoDe(u.r) + '%' +
+    (u.g.abierto ? ' · última vez: ' + fechaCorta(u.g.abierto) : '') + '.' +
+    '<div style="margin-top:10px"><button class="btn btn--chico" data-accion="ver" data-id="' + u.r.id + '">Continuar</button></div>' +
+    '</div>' : '';
+
+  const chipsMateria = '<div class="filtros" role="group" aria-label="Filtrar por materia">' +
+    '<button class="chip" data-accion="f-materia" data-f="todas" aria-pressed="' + (est.fMateria === 'todas') + '">Todas</button>' +
+    Object.keys(BIBLIOTECA.materias).map(function(m){
+      return '<button class="chip" data-accion="f-materia" data-f="' + m + '" aria-pressed="' + (est.fMateria === m) + '">' +
+        esc(BIBLIOTECA.materias[m].nombre) + '</button>';
+    }).join('') + '</div>';
+
+  const chipsTipo = '<div class="filtros" role="group" aria-label="Filtrar por tipo de recurso">' +
+    '<button class="chip" data-accion="f-tipo" data-f="todos" aria-pressed="' + (est.fTipo === 'todos') + '">Todos los formatos</button>' +
+    Object.keys(BIBLIOTECA.tipos).map(function(t){
+      return '<button class="chip" data-accion="f-tipo" data-f="' + t + '" aria-pressed="' + (est.fTipo === t) + '">' +
+        esc(BIBLIOTECA.tipos[t].nombre) + '</button>';
+    }).join('') + '</div>';
+
+  lienzo.innerHTML = '<section>' +
+    '<div class="marca-grande">' + esc(BIBLIOTECA.meta.coleccion) + '</div>' +
+    '<p class="tagline">' + esc(BIBLIOTECA.meta.tagline) + '</p>' +
+    '<h1>' + esc(BIBLIOTECA.meta.titulo) + '</h1>' +
+    '<p class="subtitulo">Guías interactivas, simulacros, videos, lecturas y fichas: todo tu material de estudio en un solo lugar.</p>' +
+    sigue +
+    '<div class="buscar">' + IC.lupa +
+      '<input class="campo campo--buscar" id="buscador" type="search" autocomplete="off"' +
+      ' placeholder="Buscar por tema, título o materia" aria-label="Buscar recursos"' +
+      ' value="' + esc(est.busqueda) + '"></div>' +
+    chipsMateria + chipsTipo +
+    '<div id="resultados">' + htmlResultados() + '</div>' +
+
+    '<p style="font-size:13.5px;color:var(--tinta-3);margin-top:18px">' +
+    (almacen.disponible
+      ? 'Tus favoritos y tu avance se guardan solo en este dispositivo. Puedes cerrar la página y volver después.'
+      : 'Este navegador no permite guardar el avance, así que si recargas la página se pierde lo marcado. Suele pasar al abrir el archivo dentro de WhatsApp o en modo incógnito: ábrelo en Chrome o Safari y se soluciona.') +
+    '</p>' +
+
+    '<p class="sello">Un producto <b>BYMCYL</b> · biblioteca v' + esc(BIBLIOTECA.meta.version) + ' · ' +
+    '<button class="enlace-pista" data-accion="transferir">Transferir avance entre dispositivos</button></p>' +
+    '</section>';
+  pintarNav();
+}
+
+/* ═══ PANTALLA · FICHA DE RECURSO ═════════════════════════════ */
+
+function vistaRecurso(id){
+  const r = BIBLIOTECA.recursos.find(x => x.id === id);
+  if(!r) return vistaInicio();
+  est.pantalla = 'recurso';
+  est.recurso = id;
+
+  const p = pal(r.materia);
+  document.documentElement.style.setProperty('--acento', p.a);
+  document.documentElement.style.setProperty('--acento-claro', p.c);
+
+  const g = regDe(r.id);
+  const e = estadoDe(r);
+  const pct = progresoDe(r);
+  const tipo = (BIBLIOTECA.tipos[r.tipo] || {}).nombre || r.tipo;
+  const materia = (BIBLIOTECA.materias[r.materia] || {}).nombre || r.materia;
+  pintarCabeza(materia, tipo, true);
+
+  const temas = (r.temas && r.temas.length)
+    ? '<div class="eyebrow" style="margin-bottom:8px">Temas que cubre</div>' +
+      '<div class="temas">' + r.temas.map(t => '<span class="tema">' + esc(t) + '</span>').join('') + '</div>'
+    : '';
+
+  const progreso = pct > 0 ? '<div class="tarjeta ' + (e === 'hecho' ? 'tarjeta--bien' : 'tarjeta--cierre') + '">' +
+    '<div class="eyebrow">' + (e === 'hecho' ? 'Terminado' : 'En curso') + '</div>' +
+    '<p style="margin-top:6px">Llevas <strong>' + pct + '%</strong> de este recurso' +
+    (g.abierto ? ' · última vez: ' + fechaCorta(g.abierto) : '') + '.</p>' +
+    '<div class="rec-riel" style="margin-top:10px"><i style="width:' + pct + '%"></i></div>' +
+    '</div>' : '';
+
+  let abrir;
+  if(r.premium){
+    const aj = BIBLIOTECA.ajustes;
+    const enlace = 'https://wa.me/' + aj.whatsapp + '?text=' +
+      encodeURIComponent((aj.mensajeCompra || '') + r.titulo);
+    abrir = '<section class="candado">' +
+      '<h2>Este recurso es de pago</h2>' +
+      '<p>' + esc(r.descripcion) + '</p>' +
+      '<span class="precio">' + esc(r.precio || aj.precio) + '</span>' +
+      '<a class="btn btn--oro btn--ancho" style="display:block;margin-top:12px" href="' + enlace + '" target="_blank" rel="noopener">Pedirlo por WhatsApp</a>' +
+      '</section>';
+  }else if(!r.enlace){
+    abrir = '<div class="tarjeta tarjeta--cierre"><div class="eyebrow">Próximamente</div>' +
+      '<p style="margin-top:6px">Este recurso está en preparación. Márcalo como favorito y aparecerá en «Mis recursos» cuando lo busques.</p></div>';
+  }else{
+    abrir = '<a class="btn btn--ancho" data-accion="abrir" data-id="' + r.id + '" href="' + esc(r.enlace) + '"' +
+      (/^https?:/.test(r.enlace) ? ' target="_blank" rel="noopener"' : '') + '>' +
+      (e === 'curso' ? 'Continuar donde iba' : (e === 'hecho' ? 'Volver a abrirlo' : 'Abrir el recurso')) + '</a>';
+  }
+
+  lienzo.innerHTML = '<section>' +
+    '<div class="eyebrow">' + esc(tipo) + ' · ' + esc(materia) + '</div>' +
+    '<h1>' + esc(r.titulo) + '</h1>' +
+    '<p class="subtitulo">' + esc(r.descripcion) + '</p>' +
+    '<div class="ficha">' +
+      '<div><span>Nivel</span><b>' + esc(r.nivel) + '</b></div>' +
+      '<div><span>Duración</span><b>' + r.minutos + ' min</b></div>' +
+      '<div><span>Contenido</span><b>' + esc(contenidoDe(r)) + '</b></div>' +
+    '</div>' +
+    temas + progreso + abrir +
+    '<div class="acciones no-imprimir">' +
+      '<button class="btn btn--fantasma btn--ancho" data-accion="favorito" aria-pressed="' + g.favorito + '">' +
+        (g.favorito ? IC.estrella + 'Quitar de favoritos' : IC.estrellaO + 'Guardar en favoritos') + '</button>' +
+      (!r.premium ? '<button class="btn btn--fantasma btn--ancho" data-accion="terminado">' +
+        (g.terminado ? 'Desmarcar como terminado' : 'Marcar como terminado') + '</button>' : '') +
+    '</div>' +
+    '</section>';
+  pintarNav();
+}
+
+/* ═══ PANTALLA · MIS RECURSOS ═════════════════════════════════ */
+
+function vistaMios(){
+  est.pantalla = 'mios';
+  pintarCabeza(BIBLIOTECA.meta.titulo, BIBLIOTECA.meta.coleccion, false);
+
+  const R = BIBLIOTECA.recursos;
+  const enCurso = R.filter(r => estadoDe(r) === 'curso');
+  const favs = R.filter(r => regDe(r.id).favorito);
+  const hechos = R.filter(r => estadoDe(r) === 'hecho');
+
+  function grupo(titulo, lista, vacio){
+    return '<h3 style="margin-top:22px">' + titulo +
+      ' <span style="font-family:var(--dato);font-size:12px;color:var(--tinta-4)">' + lista.length + '</span></h3>' +
+      (lista.length ? lista.map(htmlRecurso).join('') :
+        '<div class="vacio" style="padding:14px 10px">' + vacio + '</div>');
+  }
+
+  lienzo.innerHTML = '<section>' +
+    '<div class="eyebrow">Mis recursos</div>' +
+    '<h2 style="margin-top:8px">Lo tuyo, en un solo sitio</h2>' +
+    grupo('En curso', enCurso, 'Nada en curso. Abre un recurso y aparecerá aquí solo.') +
+    grupo('Favoritos', favs, 'Todavía no guardas favoritos. Se marcan con la estrella dentro de cada recurso.') +
+    grupo('Terminados', hechos, 'Aún no terminas ninguno. El primero es el que más cuesta.') +
+    '</section>';
+  pintarNav();
+}
+
+/* ═══ PANTALLA · ACTIVIDAD ════════════════════════════════════ */
+
+function vistaPanel(){
+  est.pantalla = 'panel';
+  pintarCabeza(BIBLIOTECA.meta.titulo, BIBLIOTECA.meta.coleccion, false);
+  const a = analizar();
+
+  const filas = Object.keys(a.mat).map(function(m){
+    const g = a.mat[m];
+    const cl = g.hechos === g.n ? 'claro' : (g.hechos + g.curso > 0 ? 'medio' : 'nada');
+    const et = g.hechos === g.n ? 'Al día' : (g.hechos + g.curso > 0 ? 'En curso' : 'Sin empezar');
+    return '<li><span>' + esc(BIBLIOTECA.materias[m].nombre) +
+      ' <b style="font-family:var(--dato);font-size:12px;color:var(--tinta-3)">' + g.hechos + '/' + g.n + '</b></span>' +
+      '<span class="estado estado--' + cl + '">' + et + '</span></li>';
+  }).join('');
+
+  lienzo.innerHTML = '<section>' +
+    '<div class="marca-grande" style="font-size:11px">' + esc(BIBLIOTECA.meta.coleccion) + '</div>' +
+    '<div class="eyebrow" style="margin-top:6px">Mi actividad</div>' +
+    '<h1 style="font-size:24px">' + esc(BIBLIOTECA.meta.titulo) + '</h1>' +
+    '<p class="subtitulo" style="font-size:14px">' +
+      new Date().toLocaleDateString('es-CO',{day:'numeric',month:'long',year:'numeric'}) +
+      ' · ' + a.total + ' recursos en la biblioteca</p>' +
+
+    '<div class="marcador">' +
+      '<div><span class="cifra">' + a.hechos + '</span><span class="rotulo">Terminados</span></div>' +
+      '<div><span class="cifra">' + a.curso + '</span><span class="rotulo">En curso</span></div>' +
+      '<div><span class="cifra">' + a.favs + '</span><span class="rotulo">Favoritos</span></div>' +
+      '<div><span class="cifra">' + a.pct + '%</span><span class="rotulo">Del total</span></div>' +
+    '</div>' +
+
+    '<article class="tarjeta"><h3>Mapa por materia</h3>' +
+      '<ul class="mapa">' + (filas || '<li>Sin datos todavía</li>') + '</ul></article>' +
+
+    '<article class="tarjeta ' + (a.hechos + a.curso > 0 ? 'tarjeta--bien' : 'tarjeta--cierre') + '">' +
+      '<h3>Qué hacer ahora</h3>' +
+      '<ul class="reco">' + recomendaciones(a).map(r => '<li>' + r + '</li>').join('') + '</ul>' +
+    '</article>' +
+
+    '<div class="acciones no-imprimir">' +
+      '<button class="btn btn--fantasma btn--ancho" data-accion="transferir">Código de respaldo · cambiar de dispositivo</button>' +
+      '<button class="btn btn--fantasma btn--ancho" data-accion="reiniciar">Borrar mi actividad</button>' +
+      '<div id="acciones-nota" role="status"></div>' +
+    '</div>' +
+    '</section>';
+  pintarNav();
+}
+
+/* ═══ TRANSFERIR AVANCE (código de rescate) ═══════════════════ */
+
+function codigoExportar(){
+  const d = {v:BIBLIOTECA.meta.version, reg:est.reg, sello:Date.now()};
+  const j = JSON.stringify({t:'biblioteca', v:BIBLIOTECA.meta.version, d:d});
+  return 'PB1.' + btoa(unescape(encodeURIComponent(j)));
+}
+function codigoImportar(txt){
+  try{
+    txt = String(txt || '').trim();
+    if(txt.indexOf('PB1.') === 0) txt = txt.slice(4);
+    const o = JSON.parse(decodeURIComponent(escape(atob(txt))));
+    if(!o || !o.d) return {err:'El código no tiene el formato esperado.'};
+    if(o.t !== 'biblioteca') return {err:'Ese código es de una guía, no de la biblioteca.'};
+    return {ok:o.d};
+  }catch(e){
+    return {err:'No se pudo leer el código. Revisa que lo copiaste completo, sin espacios de más.'};
+  }
+}
+function vistaTransferir(){
+  est.pantalla = 'transferir';
+  pintarCabeza('Transferir avance', BIBLIOTECA.meta.titulo, true);
+  const hay = Object.keys(est.reg).length > 0;
+  lienzo.innerHTML = '<section>' +
+    '<div class="eyebrow">Transferir avance</div>' +
+    '<h2 style="margin:8px 0 14px">De un dispositivo a otro</h2>' +
+    (hay ? '<article class="tarjeta">' +
+      '<h3>1 · Saca tu código de este dispositivo</h3>' +
+      '<p style="font-size:14.5px;color:var(--tinta-3)">Cópialo y envíatelo por WhatsApp o correo. Son tus favoritos y tu avance convertidos en texto.</p>' +
+      '<textarea class="campo cod" id="cod" readonly rows="4">' + codigoExportar() + '</textarea>' +
+      '<button class="btn btn--fantasma btn--chico" style="margin-top:10px" data-accion="copiar-cod">Copiar código</button>' +
+      '</article>'
+    : '<article class="tarjeta"><h3>1 · Saca tu código</h3>' +
+      '<p style="font-size:14.5px;color:var(--tinta-3)">Todavía no hay actividad guardada en este dispositivo, así que no hay nada que exportar.</p></article>') +
+    '<article class="tarjeta">' +
+      '<h3>2 · Pega el código en el otro dispositivo</h3>' +
+      '<p style="font-size:14.5px;color:var(--tinta-3)">Abre esta misma biblioteca allá, entra a esta pantalla y pega el código. Ojo: reemplaza la actividad que ese dispositivo tenga.</p>' +
+      '<textarea class="campo cod" id="cod-in" rows="4" placeholder="PB1.…"></textarea>' +
+      '<button class="btn btn--chico" style="margin-top:10px" data-accion="cargar-cod">Cargar este código</button>' +
+      '<div id="cod-nota" role="status" style="font-size:13.5px;margin-top:8px;color:var(--trampa)"></div>' +
+    '</article>' +
+    '</section>';
+  pintarNav();
+}
+
+/* ── acciones sueltas ─────────────────────────────────────────── */
+function notaAccion(txt){
+  const n = document.getElementById('acciones-nota');
+  if(!n) return;
+  n.textContent = txt;
+  setTimeout(function(){ if(n.isConnected && n.textContent === txt) n.textContent = ''; }, 4000);
+}
+
+/* ── delegación de eventos ────────────────────────────────────── */
+document.addEventListener('click', function(ev){
+  const el = ev.target.closest('[data-accion]');
+  if(!el) return;
+  const a = el.dataset.accion;
+
+  if(a === 'inicio')     return vistaInicio();
+  if(a === 'mios')       return vistaMios();
+  if(a === 'panel')      return vistaPanel();
+  if(a === 'transferir') return vistaTransferir();
+  if(a === 'ver')        return vistaRecurso(el.dataset.id);
+
+  if(a === 'abrir'){
+    // no se cancela el clic: el enlace abre normal; solo registramos la visita
+    const r = regDe(el.dataset.id);
+    r.abierto = Date.now();
+    r.veces = (r.veces || 0) + 1;
+    est.reg[el.dataset.id] = r;
+    guardar(); pintarAvance();
+    return;
+  }
+
+  if(a === 'favorito'){
+    const r = regDe(est.recurso);
+    r.favorito = !r.favorito;
+    est.reg[est.recurso] = r;
+    guardar();
+    return vistaRecurso(est.recurso);
+  }
+  if(a === 'terminado'){
+    const r = regDe(est.recurso);
+    r.terminado = !r.terminado;
+    est.reg[est.recurso] = r;
+    guardar(); pintarAvance();
+    return vistaRecurso(est.recurso);
+  }
+
+  if(a === 'f-materia'){ est.fMateria = el.dataset.f; return vistaInicio(); }
+  if(a === 'f-tipo'){    est.fTipo = el.dataset.f;    return vistaInicio(); }
+
+  if(a === 'copiar-cod'){
+    const t = document.getElementById('cod');
+    if(!t) return;
+    t.select();
+    try{ t.setSelectionRange(0, 999999); }catch(e){}
+    let copiado = false;
+    try{ copiado = document.execCommand('copy'); }catch(e){}
+    if(!copiado && navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(t.value).then(function(){}, function(){});
+      copiado = true;
+    }
+    el.textContent = copiado ? 'Copiado ✓' : 'Selecciona y copia manualmente';
+    setTimeout(function(){ if(el.isConnected) el.textContent = 'Copiar código'; }, 2500);
+    return;
+  }
+  if(a === 'cargar-cod'){
+    const t = document.getElementById('cod-in');
+    const nota = document.getElementById('cod-nota');
+    const r = codigoImportar(t ? t.value : '');
+    if(r.err){ if(nota) nota.textContent = r.err; return; }
+    est.reg = r.ok.reg || {};
+    guardar(); pintarAvance();
+    return vistaInicio();
+  }
+
+  if(a === 'reiniciar'){
+    if(!est.confirmarBorrado){
+      est.confirmarBorrado = true;
+      el.textContent = 'Confirmar: borrar favoritos y avance';
+      el.classList.remove('btn--fantasma');
+      setTimeout(function(){
+        if(est.confirmarBorrado && el.isConnected){
+          est.confirmarBorrado = false;
+          el.textContent = 'Borrar mi actividad';
+          el.classList.add('btn--fantasma');
+        }
+      }, 5000);
+      return;
+    }
+    est.confirmarBorrado = false;
+    almacen.borrar();
+    est.reg = {};
+    pintarAvance();
+    return vistaPanel();
+  }
+});
+
+document.addEventListener('input', function(ev){
+  if(ev.target && ev.target.id === 'buscador'){
+    est.busqueda = ev.target.value;
+    pintarResultados();
+  }
+});
+
+// gancho de depuración: abrir el archivo con #debug al final de la URL
+try{
+  if(window.location.hash.indexOf('debug') > -1){
+    window.__pcb = {est:est, guardar:guardar, analizar:analizar, almacen:almacen, progresoDe:progresoDe};
+  }
+}catch(e){}
+
+pintarAvance();
+vistaInicio();
+
+})();
+</script>
+</body>
+</html>
