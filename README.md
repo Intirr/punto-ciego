@@ -4,11 +4,15 @@ Interfaz de biblioteca para los recursos didácticos de estudio de **Punto Ciego
 Reúne en un solo catálogo las guías interactivas hechas con la plantilla v3 y deja sitio
 para simulacros, videos, lecturas y fichas cuando los haya.
 
-Es un archivo autocontenido (`index.html`), sin dependencias ni servidor: se abre directo
-en el navegador, igual que las guías. Comparte con ellas el mismo sistema visual
-(tinta / papel / oro, acento por materia, Fraunces + Inter + Space Mono) y las mismas
-convenciones de código (zona editable de datos + motor, delegación de eventos, guardado en
-`localStorage` con sonda, código de transferencia entre dispositivos).
+**Es un solo archivo: `index.html` lleva las diez guías dentro.** Se manda por WhatsApp
+o se sube a cualquier hosting, se abre y funciona —sin servidor, sin dependencias y sin
+descargar nada aparte—. Las guías se abren desde el propio catálogo: no hay que enviar
+diez archivos ni pedirle a nadie que los guarde en la misma carpeta.
+
+Comparte con las guías el mismo sistema visual (tinta / papel / oro, acento por materia,
+Fraunces + Inter + Space Mono) y las mismas convenciones de código (zona editable de datos
++ motor, delegación de eventos, guardado en `localStorage` con sonda, código de
+transferencia entre dispositivos).
 
 ## Contenido actual
 
@@ -51,11 +55,14 @@ sabe, marca *Adivinando* y elige: eso también es un dato.
   nadie se estrelle con el candado a mitad de camino.
 - **Sigue donde ibas**: la biblioteca recuerda el último recurso en curso y lo ofrece
   de primero en la portada.
+- **Lector incrustado**: al abrir una guía, esta se despliega dentro de la misma página,
+  con una barra «‹ Biblioteca» para volver. La guía corre entera y sin recortes —su
+  índice, su simulacro, su informe—; al volver, el catálogo ya refleja lo que se avanzó.
 - **Progreso automático**: como cada recurso declara `clave:{titulo, version}`, la
-  biblioteca lee el avance que esa guía guardó en el mismo dispositivo (clave
-  `pc:<titulo>:<version>` de `localStorage`) y pinta la barra de progreso sola, sin que
-  el estudiante marque nada. El porcentaje se calcula sobre la guía completa: una muestra
-  terminada marca 25%, que es la verdad.
+  biblioteca lee el avance que esa guía guardó (clave `pc:<titulo>:<version>` de
+  `localStorage`) y pinta la barra de progreso sola, sin que el estudiante marque nada.
+  El porcentaje se calcula sobre la guía completa: una muestra terminada marca 25%, que
+  es la verdad.
 - **Mis recursos**: en curso, favoritos y terminados.
 - **Actividad**: marcador de totales, mapa por materia y recomendaciones de qué hacer ahora.
 - **Transferir avance**: código de respaldo `PB1.…` para pasar favoritos y avance de un
@@ -63,15 +70,22 @@ sabe, marca *Adivinando* y elige: eso también es un dato.
 - Guardado local con sonda real (funciona también donde `localStorage` existe pero falla
   al escribir, como navegadores dentro de WhatsApp o modo incógnito: avisa en vez de romperse).
 
-> Para que la biblioteca lea el avance de las guías, ambas deben abrirse desde el mismo
-> origen (mismo dominio, o la misma carpeta servida por un servidor). Abriendo los archivos
-> con doble clic (`file://`) cada página queda aislada y el progreso automático no se ve;
-> todo lo demás funciona igual.
+> Como todo vive en un solo documento, el avance se comparte también al abrir el archivo
+> con doble clic (`file://`): la guía se carga en un iframe `srcdoc`, que hereda el origen
+> de la página y por tanto su `localStorage`. Antes, con las guías en archivos aparte, eso
+> solo funcionaba sirviendo la carpeta desde un servidor.
 
 ## Cómo añadir o quitar recursos
 
-Todo se edita en la **única zona editable** al inicio del `<script>` de `index.html`
-(el objeto `BIBLIOTECA`). El motor de ahí en adelante no se toca.
+1. Deja el archivo de la guía en `guias/`.
+2. Añade su entrada al objeto `BIBLIOTECA`, en la **única zona editable** al inicio del
+   `<script>` de `index.html`. El motor de ahí en adelante no se toca.
+3. Ejecuta **`node construir.js`**: vuelve a meter las guías de `guias/` dentro de
+   `index.html` y avisa del tamaño final.
+
+El paso 3 también hay que repetirlo cuando cambie el contenido de una guía ya listada
+(por ejemplo, al migrarlas a una plantilla nueva): `index.html` lleva una copia, y sin
+reconstruir seguiría sirviendo la vieja.
 
 ```js
 { id:'g06',                    // único y estable: es la llave del avance guardado
@@ -105,10 +119,17 @@ tengan recursos.
 
 ## Estructura
 
+`index.html` es lo único que hay que repartir: las guías de `guias/` viajan dentro, en
+bloques `<script type="text/html">` inertes al final del archivo, entre las marcas
+`GUIAS:INICIO` y `GUIAS:FIN`. Esa zona la escribe `construir.js`; no se edita a mano.
+Los archivos de `guias/` siguen siendo la fuente —y se pueden seguir enviando sueltos
+si quieres compartir una sola guía—.
+
 ```
 punto-ciego/
-├── index.html                                    ← la biblioteca
-└── guias/
+├── index.html          ← la biblioteca CON las guías dentro (~1,4 MB) · esto es lo que se reparte
+├── construir.js        ← node construir.js → vuelve a incrustar las guías
+└── guias/              ← las guías sueltas, fuente de lo que se incrusta
     ├── 01-lectura-critica-inferir-sin-inventar.html
     ├── 02-argumentacion-y-falacias.html
     ├── 03-algebra-del-enunciado-a-la-ecuacion.html
