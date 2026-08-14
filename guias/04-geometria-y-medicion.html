@@ -160,6 +160,24 @@ p{margin:0 0 12px} p:last-child{margin-bottom:0}
 }
 .chip:focus-visible{outline:2px solid var(--acento);outline-offset:2px}
 .chip[aria-pressed="true"]{background:var(--tinta);border-color:var(--tinta);color:var(--papel);font-weight:600}
+.chip:disabled{cursor:default}
+
+/* escala de seguridad: verde / amarillo / rojo (el orden importa: va después
+   de la regla general de .chip para ganarle en la cascada) */
+.chip--conf{font-weight:600;border-width:1.5px;padding:9px 15px;min-height:42px}
+.chip--conf .punto{
+  display:inline-block;width:9px;height:9px;border-radius:50%;
+  background:currentColor;margin-right:7px;vertical-align:1px;
+}
+.chip--seguro{color:var(--acierto);border-color:var(--acierto)}
+.chip--seguro[aria-pressed="true"]{background:var(--acierto);border-color:var(--acierto);color:#fff}
+.chip--medio{color:var(--oro-texto);border-color:var(--oro-texto)}
+.chip--medio[aria-pressed="true"]{background:var(--oro);border-color:var(--oro);color:var(--tinta)}
+.chip--azar{color:var(--trampa);border-color:var(--trampa)}
+.chip--azar[aria-pressed="true"]{background:var(--trampa);border-color:var(--trampa);color:#fff}
+.chip--conf[aria-pressed="true"] .punto{background:currentColor;box-shadow:0 0 0 2px rgba(255,255,255,.5)}
+.confianza p.exige{color:var(--tinta);font-weight:600;font-size:14px}
+.confianza .marca-elegida{font-size:13px;color:var(--tinta-3);margin-bottom:7px}
 
 .opciones{list-style:none;display:flex;flex-direction:column;gap:9px}
 .opcion{
@@ -328,6 +346,13 @@ p{margin:0 0 12px} p:last-child{margin-bottom:0}
                         portada, informe y tarjeta compartible
      barajarOpciones    true = mezcla el orden de las opciones en
                         cada sesión (evita memorizar letras)
+     confianzaObligatoria  true = las opciones quedan bloqueadas hasta
+                        que el estudiante elige su nivel de seguridad.
+                        Requiere pedirConfianza:true.
+     responderObligatorio  true = una pregunta sin responder no se puede
+                        saltar: se ocultan «Atrás» y «Índice» hasta que
+                        haya respuesta. Si no sabe, debe marcar
+                        «Adivinando» y elegir: eso también es un dato.
      diasRepaso         días para que una pregunta frágil o fallada
                         entre al repaso espaciado (por defecto 3)
      simulacroMinutos   duración del modo simulacro
@@ -373,6 +398,8 @@ const GUIA = {
     rondaRepaso:true,
     permitirPista:true,
     barajarOpciones:true,
+    confianzaObligatoria:true,  // sin elegir seguridad no se puede responder
+    responderObligatorio:true,  // no se puede avanzar, retroceder ni salir sin responder
     umbralApuro:12,
     diasRepaso:3,
     simulacroMinutos:20,
@@ -831,7 +858,7 @@ const est = {
   pantalla:'portada', s:0, b:0,
   respondida:false, pista:false, confianza:null, intento:0, t0:null,
   reg:{}, cola:[], j:0, filtro:'todas', abierta:null,
-  seg:0, tSesion:null, confirmarBorrado:false,
+  seg:0, tSesion:null, confirmarBorrado:false, borrador:'',
   orden:{}, gancho:null,
   simCola:[], simIdx:0, simReg:{}, simIni:null, simFin:null, simTimer:null,
   sim:null, simUlt:null
@@ -875,10 +902,17 @@ function barajar(a){
 }
 
 const CONF = {
-  seguro:{et:'Seguro', peso:2},
-  medio :{et:'Más o menos', peso:1},
-  azar  :{et:'Adivinando', peso:0}
+  seguro:{et:'Seguro',      peso:2, cl:'chip--seguro'},   // verde
+  medio :{et:'Más o menos', peso:1, cl:'chip--medio'},    // amarillo
+  azar  :{et:'Adivinando',  peso:0, cl:'chip--azar'}      // rojo
 };
+function chipsConf(activo, deshabilitados){
+  return '<div class="chips">' + Object.keys(CONF).map(function(k){
+    return '<button class="chip chip--conf '+CONF[k].cl+'" data-accion="confianza" data-c="'+k+'"' +
+      ' aria-pressed="'+(activo===k)+'"'+(deshabilitados?' disabled':'')+'>' +
+      '<span class="punto" aria-hidden="true"></span>'+CONF[k].et+'</button>';
+  }).join('') + '</div>';
+}
 
 /* ── gráficas SVG ─────────────────────────────────────────────── */
 function nEje(v){ v = Math.round(v * 10) / 10; return String(v).replace('.',','); }
@@ -1259,11 +1293,23 @@ function vistaPregunta(b){
   const r = regDe(b.id);
   est.t0 = Date.now();
 
+  // yaRegistrada = se responde de nuevo una pregunta que ya tiene registro
+  // (pasa al volver con «Atrás»): esa no vuelve a bloquear la navegación.
+  const yaRegistrada = modo === 'seccion' && respondida(b.id) && !est.respondida;
+  // pendiente = pregunta sin responder que la guía exige responder:
+  // mientras dure, no hay Índice ni Atrás por ningún lado.
+  const pendiente = GUIA.ajustes.responderObligatorio !== false && !est.respondida && !yaRegistrada;
+  // bloqueo = falta declarar la seguridad antes de poder responder
+  const bloqueo = GUIA.ajustes.pedirConfianza && GUIA.ajustes.confianzaObligatoria !== false &&
+                  !est.confianza && !est.respondida;
+
   if(modo === 'sim'){
     pintarCabeza('Modo simulacro', GUIA.meta.titulo, false,
       '<span class="crono" id="crono">--:--</span>');
   }else if(modo === 'repaso'){
-    pintarCabeza('Ronda de repaso', 'Lo que quedó pendiente', true);
+    pintarCabeza('Ronda de repaso', 'Lo que quedó pendiente', !pendiente);
+  }else{
+    pintarCabeza(SEC[est.s].titulo, 'Sección '+(est.s+1)+' de '+SEC.length, !pendiente);
   }
 
   const etiqueta = modo === 'sim'
@@ -1277,22 +1323,34 @@ function vistaPregunta(b){
       '<tbody>'+b.datos.filas.map(f=>'<tr>'+f.map(c=>'<td>'+esc(c)+'</td>').join('')+'</tr>').join('')+'</tbody>' +
     '</table>' : '';
 
-  const conf = (GUIA.ajustes.pedirConfianza && !est.respondida)
-    ? '<div class="confianza"><p>Antes de responder: ¿qué tan seguro estás?</p><div class="chips">' +
-        Object.keys(CONF).map(k => '<button class="chip" data-accion="confianza" data-c="'+k+'" aria-pressed="'+(est.confianza===k)+'">'+CONF[k].et+'</button>').join('') +
-      '</div></div>' : '';
+  let conf = '';
+  if(GUIA.ajustes.pedirConfianza){
+    if(!est.respondida){
+      conf = '<div class="confianza">' +
+        '<p'+(bloqueo?' class="exige"':'')+'>' +
+          (bloqueo ? 'Antes de responder, elige tu nivel de seguridad. Sin eso las opciones siguen bloqueadas.'
+                   : 'Antes de responder: ¿qué tan seguro estás?') +
+        '</p>' + chipsConf(est.confianza, false) + '</div>';
+    }else if(est.confianza){
+      conf = '<div class="confianza">' +
+        '<p class="marca-elegida">Respondiste sintiéndote:</p>' +
+        chipsConf(est.confianza, true) + '</div>';
+    }
+  }
 
   let cuerpo;
   if(b.tipo === 'opcion'){
     const ord = ordenDe(b);
     cuerpo = '<ul class="opciones">' + ord.map(function(real, k){
-      return '<li><button class="opcion" data-accion="responder" data-op="'+k+'">' +
+      return '<li><button class="opcion" data-accion="responder" data-op="'+k+'"'+(bloqueo?' disabled':'')+'>' +
         '<span class="letra">'+LETRAS[k]+'</span><span>'+esc(b.opciones[real].texto)+'</span></button></li>';
     }).join('') + '</ul>';
   }else{
     const numerica = (b.respuestas||[]).every(x => /^[\d.,\s$%]+$/.test(String(x)));
     cuerpo = '<input class="campo" id="campo" type="text" autocomplete="off" enterkeyhint="done"' +
-      ' inputmode="'+(numerica?'decimal':'text')+'" placeholder="Escribe tu respuesta" aria-label="Tu respuesta">';
+      ' inputmode="'+(numerica?'decimal':'text')+'"'+(bloqueo?' disabled':'') +
+      ' value="'+esc(est.borrador||'')+'"' +
+      ' placeholder="'+(bloqueo?'Elige tu seguridad para escribir':'Escribe tu respuesta')+'" aria-label="Tu respuesta">';
   }
 
   const pista = (modo !== 'sim' && GUIA.ajustes.permitirPista && b.pista && !est.respondida)
@@ -1311,18 +1369,22 @@ function vistaPregunta(b){
     '<div id="retro" role="status" aria-live="polite"></div>' +
     '</article>';
 
+  const notaBloqueo = bloqueo ? 'Paso 1 de 2<b>Elige tu seguridad</b>' : null;
+
   if(modo === 'sim'){
     tickSim();
     accion([
       {texto:'Terminar ahora', accion:'sim-terminar', clase:'btn btn--fantasma btn--chico'},
-      b.tipo === 'abierta' ? {texto:'Comprobar', accion:'comprobar', clase:'btn'} : null
-    ], b.tipo === 'opcion' ? 'Responde<b>para avanzar</b>' : null);
+      b.tipo === 'abierta' ? {texto:'Comprobar', accion:'comprobar', clase:'btn', attr:(bloqueo?' disabled':'')} : null
+    ], notaBloqueo || (b.tipo === 'opcion' ? 'Responde<b>para avanzar</b>' : null));
     return;
   }
-  if(b.tipo === 'abierta' && !est.respondida){
-    navegar(null, {texto:'Comprobar', accion:'comprobar', clase:'btn'});
+  if(yaRegistrada){
+    navegar('Continuar', null, 'Ya la respondiste<b>Repítela o sigue</b>');
+  }else if(b.tipo === 'abierta' && !est.respondida){
+    navegar(null, {texto:'Comprobar', accion:'comprobar', clase:'btn', attr:(bloqueo?' disabled':'')}, notaBloqueo);
   }else if(!est.respondida){
-    navegar(null, null, 'Elige una opción');
+    navegar(null, null, notaBloqueo || 'Esta pregunta no se puede saltar<b>Elige una opción</b>');
   }else{
     navegar('Continuar');
   }
@@ -1331,7 +1393,12 @@ function vistaPregunta(b){
 /* barra con retroceso + acción principal */
 function navegar(textoSiguiente, botonPropio, nota){
   const enRepaso = est.pantalla === 'repaso';
-  const puedeAtras = !enRepaso && !(est.s === 0 && est.b === 0);
+  // si el bloque actual es una pregunta sin responder y la guía lo exige,
+  // tampoco se puede retroceder para esquivarla
+  const bl = (est.pantalla === 'seccion') ? SEC[est.s].bloques[est.b] : null;
+  const pendiente = GUIA.ajustes.responderObligatorio !== false &&
+                    bl && esPregunta(bl) && !est.respondida && !respondida(bl.id);
+  const puedeAtras = !enRepaso && !pendiente && !(est.s === 0 && est.b === 0);
   const principal = botonPropio || (textoSiguiente
     ? {texto:textoSiguiente, accion:'siguiente', clase:'btn' + (puedeAtras ? '' : ' btn--ancho')}
     : null);
@@ -1369,8 +1436,12 @@ function registrar(b, acerto, elegida, trampa){
   pintarAvance();
 }
 
+function faltaConfianza(){
+  return GUIA.ajustes.pedirConfianza && GUIA.ajustes.confianzaObligatoria !== false && !est.confianza;
+}
+
 function responderOpcion(k){
-  if(est.respondida) return;
+  if(est.respondida || faltaConfianza()) return;
   const b = bloqueActual();
   const ord = ordenDe(b);
   const real = ord[k];
@@ -1421,7 +1492,18 @@ function responderOpcion(k){
       avisoConfianza(acerto, r) +
       (vid ? '<a class="video" href="'+esc(vid)+'" target="_blank" rel="noopener">Ver el video de esta trampa →</a>' : '') +
     '</div>';
+  trasResponder();
   navegar('Continuar');
+}
+
+// Tras responder se recupera la navegación (Índice) y la escala de
+// seguridad queda visible pero congelada, como registro de la decisión.
+function trasResponder(){
+  if(est.pantalla === 'seccion')
+    pintarCabeza(SEC[est.s].titulo, 'Sección '+(est.s+1)+' de '+SEC.length, true);
+  else if(est.pantalla === 'repaso')
+    pintarCabeza('Ronda de repaso', 'Lo que quedó pendiente', true);
+  document.querySelectorAll('.chip--conf').forEach(function(c){ c.disabled = true; });
 }
 
 function avisoConfianza(acerto, r){
@@ -1438,7 +1520,7 @@ function avisoConfianza(acerto, r){
 }
 
 function comprobarAbierta(){
-  if(est.respondida) return;
+  if(est.respondida || faltaConfianza()) return;
   const b = bloqueActual();
   const campo = document.getElementById('campo');
   const dado = campo ? campo.value : '';
@@ -1476,11 +1558,18 @@ function comprobarAbierta(){
       (b.explicacion ? '<div class="porque">'+b.explicacion+'</div>' : '') +
       avisoConfianza(acerto, r) +
     '</div>';
+  trasResponder();
   navegar('Continuar');
 }
 
 /* ── navegación ───────────────────────────────────────────────── */
-function limpiar(){ est.respondida=false; est.pista=false; est.confianza=null; est.intento=0; }
+function guardarBorrador(){
+  const c = document.getElementById('campo');
+  est.borrador = (c && !c.disabled) ? c.value : est.borrador;
+}
+function limpiar(){
+  est.respondida=false; est.pista=false; est.confianza=null; est.intento=0; est.borrador='';
+}
 
 function siguiente(){
   limpiar();
@@ -2266,8 +2355,13 @@ document.addEventListener('click', function(ev){
     return vistaInformeSim(est.simUlt);
   }
 
-  if(a === 'pista'){ est.pista = true; return vistaPregunta(bloqueActual()); }
-  if(a === 'confianza'){ est.confianza = el.dataset.c; return vistaPregunta(bloqueActual()); }
+  if(a === 'pista'){ guardarBorrador(); est.pista = true; return vistaPregunta(bloqueActual()); }
+  if(a === 'confianza'){
+    if(est.respondida) return;                 // ya no se puede cambiar
+    guardarBorrador();
+    est.confianza = el.dataset.c;
+    return vistaPregunta(bloqueActual());
+  }
   if(a === 'marcar'){
     const b = bloqueActual(); const r = regDe(b.id);
     r.marcada = !r.marcada; est.reg[b.id] = r; guardar();

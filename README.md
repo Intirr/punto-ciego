@@ -16,6 +16,13 @@ Diez guías interactivas que cubren las cinco áreas del Saber 11, cada una con 
 y 20 preguntas, en **modo muestra** (`modo:'demo'`): se abre gratis la sección 1 y las
 otras tres se desbloquean por WhatsApp.
 
+Las diez corren sobre la misma plantilla v3 con la escala de seguridad obligatoria:
+las opciones quedan bloqueadas hasta que el estudiante declara qué tan seguro está
+(`confianzaObligatoria`), en una escala de tres colores —verde *Seguro*, amarillo
+*Más o menos*, rojo *Adivinando*— y una pregunta sin responder no se puede saltar
+(`responderObligatorio`): mientras esté pendiente no hay «Atrás» ni «Índice». Si no
+sabe, marca *Adivinando* y elige: eso también es un dato.
+
 | # | Guía | Materia |
 |---|------|---------|
 | 01 | Lectura crítica: inferir sin inventar | Lectura crítica |
