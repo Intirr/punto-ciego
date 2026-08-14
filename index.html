@@ -302,7 +302,7 @@ const BIBLIOTECA = {
     lectura:    {nombre:'Lectura crítica',    paleta:'terracota'},
     matematicas:{nombre:'Matemáticas',        paleta:'violeta'},
     ciencias:   {nombre:'Ciencias naturales', paleta:'verde'},
-    sociales:   {nombre:'Sociales',           paleta:'azul'},
+    sociales:   {nombre:'Sociales y ciudadanas', paleta:'azul'},
     ingles:     {nombre:'Inglés',             paleta:'vino'}
   },
 
@@ -364,6 +364,56 @@ const BIBLIOTECA = {
              'Ecosistemas y energía','Cuerpo humano'],
       enlace:'guias/05-biologia-celula-genetica-y-ecosistemas.html',
       clave:{titulo:'Biología: célula, genética y ecosistemas', version:'3.0'},
+      muestra:{secciones:1, preguntas:5} },
+
+    { id:'g06', tipo:'guia', materia:'ciencias',
+      titulo:'Física: movimiento, fuerzas y energía',
+      descripcion:'Posición, velocidad y aceleración no son lo mismo. Las leyes de Newton, cuándo hay trabajo físico de verdad y los puntos fáciles de ondas, calor y electricidad.',
+      nivel:'10° y 11°', minutos:35, secciones:4, preguntas:20,
+      temas:['Movimiento','Fuerzas y leyes de Newton',
+             'Trabajo y energía','Ondas, calor y electricidad'],
+      enlace:'guias/06-fisica-movimiento-fuerzas-y-energia.html',
+      clave:{titulo:'Física: movimiento, fuerzas y energía', version:'3.0'},
+      muestra:{secciones:1, preguntas:5} },
+
+    { id:'g07', tipo:'guia', materia:'ciencias',
+      titulo:'Química: átomos, enlaces y reacciones',
+      descripcion:'Protones, isótopos y enlaces: qué define a un elemento y qué solo lo modifica. Balancear es contar átomos, no adornar. Y el mol, la concentración y el pH, donde se pierden puntos regalados.',
+      nivel:'10° y 11°', minutos:35, secciones:4, preguntas:20,
+      temas:['Átomo y tabla periódica','Enlaces y compuestos',
+             'Reacciones y cantidades','Soluciones, ácidos y bases'],
+      enlace:'guias/07-quimica-atomos-enlaces-y-reacciones.html',
+      clave:{titulo:'Química: átomos, enlaces y reacciones', version:'3.0'},
+      muestra:{secciones:1, preguntas:5} },
+
+    { id:'g08', tipo:'guia', materia:'sociales',
+      titulo:'Constitución, Estado y ciudadanía',
+      descripcion:'Qué dice el artículo 1 y por qué importa. Quién hace qué en cada rama, cuándo va una tutela y cuándo un habeas corpus o una acción popular, y los mecanismos de participación —referendo, plebiscito, revocatoria— que se confunden todos los años.',
+      nivel:'10° y 11°', minutos:35, secciones:4, preguntas:20,
+      temas:['El Estado colombiano','Ramas del poder y control',
+             'Derechos y cómo protegerlos','Participación ciudadana'],
+      enlace:'guias/08-constitucion-estado-y-ciudadania.html',
+      clave:{titulo:'Constitución, Estado y ciudadanía', version:'3.0'},
+      muestra:{secciones:1, preguntas:5} },
+
+    { id:'g09', tipo:'guia', materia:'sociales',
+      titulo:'Colombia: historia y territorio',
+      descripcion:'Las instituciones coloniales y el largo camino a 1819, del siglo XIX al Frente Nacional, y el relieve, las regiones y la población que explican el país de hoy.',
+      nivel:'10° y 11°', minutos:35, secciones:4, preguntas:20,
+      temas:['Colonia e independencia','República, violencia y Estado',
+             'El territorio','Población y economía'],
+      enlace:'guias/09-colombia-historia-y-territorio.html',
+      clave:{titulo:'Colombia: historia y territorio', version:'3.0'},
+      muestra:{secciones:1, preguntas:5} },
+
+    { id:'g10', tipo:'guia', materia:'ingles',
+      titulo:'Inglés: los errores que todos repiten',
+      descripcion:'Los tiempos donde el español te traiciona, empezando por el present perfect. False friends, preposiciones y comparativos, y cómo entender un texto sin traducir palabra por palabra.',
+      nivel:'10° y 11°', minutos:35, secciones:4, preguntas:20,
+      temas:['Tenses that trip you up','False friends',
+             'Grammar and structure','Reading in context'],
+      enlace:'guias/10-ingles-los-errores-que-todos-repiten.html',
+      clave:{titulo:'Inglés: los errores que todos repiten', version:'3.0'},
       muestra:{secciones:1, preguntas:5} }
 
   ]
@@ -556,8 +606,12 @@ function ultimoEnCurso(){
 function recomendaciones(a){
   const R = [];
   const u = ultimoEnCurso();
-  if(u)
-    R.push('Retoma <strong>«' + esc(u.r.titulo) + '»</strong>: lo dejaste en ' + progresoDe(u.r).pct + '% (última vez: ' + fechaCorta(u.g.abierto) + ').');
+  if(u){
+    const p = progresoDe(u.r).pct;
+    R.push('Retoma <strong>«' + esc(u.r.titulo) + '»</strong>: ' +
+      (p ? 'lo dejaste en ' + p + '%' : 'lo abriste y todavía no respondes nada') +
+      ' (última vez: ' + fechaCorta(u.g.abierto) + ').');
+  }
   if(a.favsSinAbrir > 0)
     R.push('Tienes <strong>' + a.favsSinAbrir + '</strong> ' + (a.favsSinAbrir === 1 ? 'favorito guardado' : 'favoritos guardados') + ' sin empezar. Guardar no es estudiar: abre uno hoy.');
   const sinTocar = Object.keys(a.mat).filter(m => a.mat[m].hechos + a.mat[m].curso === 0);
@@ -670,7 +724,8 @@ function vistaInicio(){
 
   const u = ultimoEnCurso();
   const sigue = u ? '<div class="clave" style="margin:0 0 18px"><b>Sigue donde ibas</b>' +
-    conPunto('«' + esc(u.r.titulo) + '» va en ' + progresoDe(u.r).pct + '%' +
+    conPunto('«' + esc(u.r.titulo) + '» ' +
+      (progresoDe(u.r).pct ? 'va en ' + progresoDe(u.r).pct + '%' : 'está abierta y sin responder') +
       (u.g.abierto ? ' · última vez: ' + fechaCorta(u.g.abierto) : '')) +
     '<div style="margin-top:10px"><button class="btn btn--chico" data-accion="ver" data-id="' + u.r.id + '">Continuar</button></div>' +
     '</div>' : '';

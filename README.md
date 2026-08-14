@@ -12,8 +12,9 @@ convenciones de código (zona editable de datos + motor, delegación de eventos,
 
 ## Contenido actual
 
-Cinco guías interactivas, cada una con 4 secciones y 20 preguntas, en **modo muestra**
-(`modo:'demo'`): se abre gratis la sección 1 y las otras tres se desbloquean por WhatsApp.
+Diez guías interactivas que cubren las cinco áreas del Saber 11, cada una con 4 secciones
+y 20 preguntas, en **modo muestra** (`modo:'demo'`): se abre gratis la sección 1 y las
+otras tres se desbloquean por WhatsApp.
 
 | # | Guía | Materia |
 |---|------|---------|
@@ -22,12 +23,20 @@ Cinco guías interactivas, cada una con 4 secciones y 20 preguntas, en **modo mu
 | 03 | Álgebra: del enunciado a la ecuación | Matemáticas |
 | 04 | Geometría y medición sin fórmulas de memoria | Matemáticas |
 | 05 | Biología: célula, genética y ecosistemas | Ciencias naturales |
+| 06 | Física: movimiento, fuerzas y energía | Ciencias naturales |
+| 07 | Química: átomos, enlaces y reacciones | Ciencias naturales |
+| 08 | Constitución, Estado y ciudadanía | Sociales y ciudadanas |
+| 09 | Colombia: historia y territorio | Sociales y ciudadanas |
+| 10 | Inglés: los errores que todos repiten | Inglés |
 
 ## Qué hace
 
 - **Catálogo** con buscador en vivo (título, descripción, secciones, materia, formato) y
   filtros por materia. La fila de formatos aparece sola cuando haya más de un tipo de
   recurso; los filtros solo listan lo que existe, nunca opciones que devuelven cero.
+  El buscador solo ve lo que está en la ficha del recurso, no dentro del archivo de la
+  guía: si un término clave importa («tutela», «mol», «present perfect»), nómbralo en la
+  descripción o en `temas`.
 - **Ficha de cada recurso**: nivel, duración, preguntas, secciones, las secciones que trae
   y botón de abrir/continuar.
 - **Muestra**: las guías en `modo:'demo'` avisan antes de abrirse cuánto es gratis
@@ -97,7 +106,12 @@ punto-ciego/
     ├── 02-argumentacion-y-falacias.html
     ├── 03-algebra-del-enunciado-a-la-ecuacion.html
     ├── 04-geometria-y-medicion.html
-    └── 05-biologia-celula-genetica-y-ecosistemas.html
+    ├── 05-biologia-celula-genetica-y-ecosistemas.html
+    ├── 06-fisica-movimiento-fuerzas-y-energia.html
+    ├── 07-quimica-atomos-enlaces-y-reacciones.html
+    ├── 08-constitucion-estado-y-ciudadania.html
+    ├── 09-colombia-historia-y-territorio.html
+    └── 10-ingles-los-errores-que-todos-repiten.html
 ```
 
 ## Depuración
