@@ -1,34 +1,56 @@
 # Punto Ciego · Biblioteca de recursos
 
-Interfaz de biblioteca para los recursos didácticos de estudio de **Punto Ciego** (BYMCYL):
-guías interactivas, simulacros, videos, lecturas y fichas de repaso, todo en un solo catálogo.
+Interfaz de biblioteca para los recursos didácticos de estudio de **Punto Ciego** (BYMCYL).
+Reúne en un solo catálogo las guías interactivas hechas con la plantilla v3 y deja sitio
+para simulacros, videos, lecturas y fichas cuando los haya.
 
-Es un único archivo autocontenido (`index.html`), sin dependencias ni servidor: se abre
-directo en el navegador, igual que las guías hechas con la plantilla v3. Comparte con ellas
-el mismo sistema visual (tinta / papel / oro, acento por materia, Fraunces + Inter + Space Mono)
-y las mismas convenciones de código (zona editable de datos + motor, delegación de eventos,
-guardado en `localStorage` con sonda, código de transferencia entre dispositivos).
+Es un archivo autocontenido (`index.html`), sin dependencias ni servidor: se abre directo
+en el navegador, igual que las guías. Comparte con ellas el mismo sistema visual
+(tinta / papel / oro, acento por materia, Fraunces + Inter + Space Mono) y las mismas
+convenciones de código (zona editable de datos + motor, delegación de eventos, guardado en
+`localStorage` con sonda, código de transferencia entre dispositivos).
+
+## Contenido actual
+
+Cinco guías interactivas, cada una con 4 secciones y 20 preguntas, en **modo muestra**
+(`modo:'demo'`): se abre gratis la sección 1 y las otras tres se desbloquean por WhatsApp.
+
+| # | Guía | Materia |
+|---|------|---------|
+| 01 | Lectura crítica: inferir sin inventar | Lectura crítica |
+| 02 | Argumentación y falacias | Lectura crítica |
+| 03 | Álgebra: del enunciado a la ecuación | Matemáticas |
+| 04 | Geometría y medición sin fórmulas de memoria | Matemáticas |
+| 05 | Biología: célula, genética y ecosistemas | Ciencias naturales |
 
 ## Qué hace
 
-- **Catálogo** con buscador en vivo (título, descripción, temas, materia, formato) y
-  filtros por materia y por tipo de recurso.
-- **Ficha de cada recurso**: nivel, duración, contenido, temas que cubre, y botón de
-  abrir/continuar. Los recursos `premium` muestran el candado con compra por WhatsApp;
-  los que no tienen `enlace` se marcan como «Pronto».
+- **Catálogo** con buscador en vivo (título, descripción, secciones, materia, formato) y
+  filtros por materia. La fila de formatos aparece sola cuando haya más de un tipo de
+  recurso; los filtros solo listan lo que existe, nunca opciones que devuelven cero.
+- **Ficha de cada recurso**: nivel, duración, preguntas, secciones, las secciones que trae
+  y botón de abrir/continuar.
+- **Muestra**: las guías en `modo:'demo'` avisan antes de abrirse cuánto es gratis
+  («sección 1, 5 de las 20 preguntas») y ofrecen la guía completa por WhatsApp, para que
+  nadie se estrelle con el candado a mitad de camino.
 - **Sigue donde ibas**: la biblioteca recuerda el último recurso en curso y lo ofrece
   de primero en la portada.
+- **Progreso automático**: como cada recurso declara `clave:{titulo, version}`, la
+  biblioteca lee el avance que esa guía guardó en el mismo dispositivo (clave
+  `pc:<titulo>:<version>` de `localStorage`) y pinta la barra de progreso sola, sin que
+  el estudiante marque nada. El porcentaje se calcula sobre la guía completa: una muestra
+  terminada marca 25%, que es la verdad.
 - **Mis recursos**: en curso, favoritos y terminados.
 - **Actividad**: marcador de totales, mapa por materia y recomendaciones de qué hacer ahora.
-- **Progreso automático de las guías Punto Ciego**: si un recurso declara
-  `clave:{titulo, version}`, la biblioteca lee el avance que esa guía guardó en el mismo
-  dispositivo (clave `pc:<titulo>:<version>` de `localStorage`) y pinta la barra de
-  progreso sola, sin que el estudiante marque nada. Para eso la biblioteca y las guías
-  deben servirse desde el mismo origen (misma carpeta o mismo dominio).
 - **Transferir avance**: código de respaldo `PB1.…` para pasar favoritos y avance de un
   dispositivo a otro, igual que el `PC1.…` de las guías.
 - Guardado local con sonda real (funciona también donde `localStorage` existe pero falla
   al escribir, como navegadores dentro de WhatsApp o modo incógnito: avisa en vez de romperse).
+
+> Para que la biblioteca lea el avance de las guías, ambas deben abrirse desde el mismo
+> origen (mismo dominio, o la misma carpeta servida por un servidor). Abriendo los archivos
+> con doble clic (`file://`) cada página queda aislada y el progreso automático no se ve;
+> todo lo demás funciona igual.
 
 ## Cómo añadir o quitar recursos
 
@@ -36,39 +58,49 @@ Todo se edita en la **única zona editable** al inicio del `<script>` de `index.
 (el objeto `BIBLIOTECA`). El motor de ahí en adelante no se toca.
 
 ```js
-{ id:'r13',                    // único y estable: es la llave del avance guardado
+{ id:'g06',                    // único y estable: es la llave del avance guardado
   tipo:'guia',                 // clave de `tipos`
-  materia:'matematicas',       // clave de `materias`
+  materia:'sociales',          // clave de `materias`
   titulo:'…',
   descripcion:'…',
   nivel:'10° y 11°',
   minutos:35,
-  preguntas:20,                // recursos evaluables (o usa `contenido:'40 fichas'`)
+  secciones:4,
+  preguntas:20,                // o `contenido:'40 fichas'` si no es evaluable
   temas:['…','…'],             // alimenta el buscador
-  enlace:'guias/mi-guia.html', // ruta o URL; vacío = «Pronto»
+  enlace:'guias/06-mi-guia.html',      // ruta o URL; vacío = «Pronto»
+  clave:{titulo:'…', version:'3.0'},   // título y versión exactos de la guía
+  muestra:{secciones:1, preguntas:5},  // guía en modo demo
   nuevo:true,                  // etiqueta NUEVO
-  premium:true,                // candado + compra por WhatsApp
-  precio:'$18.000',            // opcional, prima sobre ajustes.precio
-  clave:{titulo:'…', version:'3.0'} } // lee el avance de esa guía Punto Ciego
+  premium:true,                // no se abre: candado + compra
+  precio:'$18.000' }           // opcional, prima sobre ajustes.precio
 ```
+
+`clave.titulo` y `clave.version` deben coincidir **exactamente** con el `meta.titulo` y
+`meta.version` del archivo de la guía: es así como la biblioteca encuentra su avance.
+
+Para pasar una guía de muestra a completa: cambia `modo:'demo'` por `modo:'completa'`
+dentro del archivo de la guía y borra aquí su campo `muestra`. Nada más.
 
 Paletas por materia (mismas de la plantilla de guías): `violeta` (matemáticas),
 `verde` (ciencias), `azul` (sociales), `terracota` (lectura), `vino` (inglés).
+Puedes dejar declaradas materias todavía vacías: no aparecen en los filtros hasta que
+tengan recursos.
 
-## Estructura sugerida
+## Estructura
 
 ```
 punto-ciego/
-├── index.html            ← la biblioteca (este archivo)
-├── guias/                ← guías hechas con la plantilla v3
-│   └── razonamiento-cuantitativo.html
-└── fichas/               ← otros recursos
+├── index.html                                    ← la biblioteca
+└── guias/
+    ├── 01-lectura-critica-inferir-sin-inventar.html
+    ├── 02-argumentacion-y-falacias.html
+    ├── 03-algebra-del-enunciado-a-la-ecuacion.html
+    ├── 04-geometria-y-medicion.html
+    └── 05-biologia-celula-genetica-y-ecosistemas.html
 ```
-
-Los `enlace` de los recursos de ejemplo apuntan a rutas de esta estructura; reemplázalos
-por los archivos reales (o URLs de YouTube para los videos).
 
 ## Depuración
 
 Abrir con `#debug` al final de la URL expone `window.__pcb` con el estado, el almacén
-y las funciones de análisis.
+y las funciones de análisis. Las guías tienen su propio `window.__pc`.

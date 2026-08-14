@@ -1,0 +1,2340 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#14161B">
+<title>Punto Ciego · Guía interactiva</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   PUNTO CIEGO · plantilla base v3.0
+   Sistema visual BYMCYL — tinta / oro / acento por materia
+   No editar esta hoja al crear una guía nueva.
+   ═══════════════════════════════════════════════════════════════ */
+
+:root{
+  --tinta:#14161B; --tinta-2:#232733; --tinta-3:#3A404F; --tinta-4:#6B7385;
+  --papel:#F6F3EC; --papel-2:#EDE8DD;
+  --oro:#C9A227; --oro-claro:#FAF3DC; --oro-texto:#8A6D12;
+  --violeta:#6C4AB6; --violeta-claro:#EFEAFA;
+  --acento:var(--violeta); --acento-claro:var(--violeta-claro);
+  --acierto:#2F6F52; --acierto-claro:#E6F0EA;
+  --trampa:#A8382F; --trampa-claro:#F7E9E7;
+  --linea:#D8D2C4;
+  --display:'Fraunces',Georgia,'Times New Roman',serif;
+  --texto:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  --dato:'Space Mono','SFMono-Regular',Consolas,monospace;
+  --r:10px; --barra:78px; --cabeza:52px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--texto);background:var(--papel);color:var(--tinta);
+  line-height:1.6;font-size:16px;-webkit-font-smoothing:antialiased;
+  padding-bottom:calc(var(--barra) + env(safe-area-inset-bottom));
+}
+
+/* ── progreso ─────────────────────────────────────────────────── */
+#progreso{position:fixed;top:0;left:0;right:0;height:3px;background:var(--papel-2);z-index:60}
+#progreso i{display:block;height:100%;width:0;background:var(--oro);transition:width .25s ease}
+
+/* ── cabecera de sección ──────────────────────────────────────── */
+#cabeza{
+  position:sticky;top:3px;z-index:45;background:rgba(246,243,236,.97);
+  border-bottom:1px solid var(--linea);backdrop-filter:blur(8px);
+}
+.cabeza-int{
+  max-width:640px;margin:0 auto;height:var(--cabeza);
+  display:flex;align-items:center;gap:12px;padding:0 14px;
+}
+.cabeza-tit{
+  flex:1;min-width:0;font-family:var(--dato);font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--tinta-3);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.cabeza-tit b{color:var(--tinta);display:block;font-size:12px;letter-spacing:.06em}
+.icono{
+  background:none;border:1px solid var(--linea);border-radius:8px;
+  font:inherit;font-size:12px;font-weight:600;padding:7px 11px;
+  color:var(--tinta);cursor:pointer;min-height:36px;white-space:nowrap;
+}
+.icono:hover{background:var(--papel-2)}
+.icono:focus-visible{outline:2px solid var(--acento);outline-offset:2px}
+.icono[aria-pressed="true"]{background:var(--oro-claro);border-color:var(--oro)}
+.crono{
+  font-family:var(--dato);font-size:13px;font-weight:700;flex-shrink:0;
+  border:1px solid var(--linea);border-radius:8px;padding:6px 10px;color:var(--tinta);
+}
+.crono--fin{color:var(--trampa);border-color:var(--trampa)}
+
+.envoltura{max-width:640px;margin:0 auto;padding:24px 18px}
+
+/* ── tipografía ───────────────────────────────────────────────── */
+.eyebrow{font-family:var(--dato);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--tinta-3)}
+h1{font-family:var(--display);font-weight:700;font-size:30px;line-height:1.15;letter-spacing:-.015em;margin:10px 0 8px}
+h2{font-family:var(--display);font-weight:600;font-size:21px;line-height:1.25;margin:0 0 12px}
+h3{font-family:var(--display);font-weight:600;font-size:17px;margin:0 0 10px}
+p{margin:0 0 12px} p:last-child{margin-bottom:0}
+.ic{width:13px;height:13px;vertical-align:-2px;margin-right:5px}
+
+/* ── marca ────────────────────────────────────────────────────── */
+.marca-grande{
+  font-family:var(--dato);font-size:13px;font-weight:700;
+  letter-spacing:.26em;text-transform:uppercase;color:var(--oro-texto);
+}
+.tagline{font-family:var(--display);font-size:16px;color:var(--tinta-3);margin:6px 0 16px}
+.edicion{
+  font-family:var(--dato);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--tinta-3);margin:-10px 0 16px;
+}
+.edicion b{color:var(--tinta)}
+.sello{font-size:12.5px;color:var(--tinta-4);margin-top:26px;padding-top:14px;border-top:1px solid var(--linea)}
+.sello b{color:var(--tinta-3)}
+.fila-enlaces{margin-top:16px}
+
+/* ── tarjetas ─────────────────────────────────────────────────── */
+.tarjeta{background:#fff;border:1px solid var(--linea);border-radius:var(--r);padding:20px 18px;margin-bottom:16px}
+.tarjeta--concepto{border-left:3px solid var(--acento)}
+.tarjeta--cierre{border-left:3px solid var(--oro)}
+.tarjeta--alerta{border-left:3px solid var(--trampa)}
+.tarjeta--bien{border-left:3px solid var(--acierto)}
+.clave{margin-top:16px;padding:12px 14px;background:var(--acento-claro);border-radius:8px;font-size:15px}
+.clave b{display:block;font-family:var(--dato);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--acento);margin-bottom:4px}
+
+/* ── portada ──────────────────────────────────────────────────── */
+.subtitulo{font-size:17px;color:var(--tinta-3);margin-bottom:18px}
+.ficha{display:flex;flex-wrap:wrap;gap:10px;border-top:1px solid var(--linea);border-bottom:1px solid var(--linea);padding:14px 0;margin-bottom:22px}
+.ficha div{flex:1 1 30%}
+.ficha span{display:block;font-family:var(--dato);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--tinta-3)}
+.ficha b{font-size:14px;font-weight:600}
+
+/* ── índice de secciones ──────────────────────────────────────── */
+.seccion-btn{
+  display:block;width:100%;text-align:left;background:#fff;
+  border:1px solid var(--linea);border-radius:var(--r);
+  padding:15px 16px;margin-bottom:10px;font:inherit;color:var(--tinta);cursor:pointer;
+}
+.seccion-btn:hover{border-color:var(--tinta-3)}
+.seccion-btn:focus-visible{outline:2px solid var(--acento);outline-offset:2px}
+.seccion-btn[data-estado="curso"]{border-left:3px solid var(--oro)}
+.seccion-btn[data-estado="hecha"]{border-left:3px solid var(--acierto)}
+.sec-fila{display:flex;align-items:baseline;gap:10px}
+.sec-num{font-family:var(--dato);font-size:11px;font-weight:700;color:var(--tinta-4);flex-shrink:0}
+.sec-tit{font-weight:600;font-size:16px;flex:1}
+.sec-marca{font-family:var(--dato);font-size:11px;font-weight:700;flex-shrink:0}
+.sec-desc{font-size:14px;color:var(--tinta-3);margin-top:5px}
+.sec-riel{height:4px;background:var(--papel-2);border-radius:2px;margin-top:11px;overflow:hidden}
+.sec-riel i{display:block;height:100%;background:var(--oro)}
+
+/* ── pregunta ─────────────────────────────────────────────────── */
+.pregunta-cab{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.numero{font-family:var(--dato);font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--oro-texto);flex:1}
+.enunciado{font-size:17px;font-weight:500;margin:8px 0 14px;line-height:1.45}
+
+.datos{width:100%;border-collapse:collapse;margin:0 0 16px;font-size:14.5px}
+.datos th,.datos td{border:1px solid var(--linea);padding:8px 10px;text-align:left}
+.datos th{background:var(--papel-2);font-family:var(--dato);font-size:11px;letter-spacing:.06em;text-transform:uppercase;font-weight:700}
+.datos td{font-family:var(--dato)}
+
+/* ── gráficas SVG ─────────────────────────────────────────────── */
+.grafico{margin:0 0 16px;border:1px solid var(--linea);border-radius:8px;background:#fff;padding:10px 8px 4px}
+.grafico svg{display:block;width:100%;height:auto}
+.grafico figcaption{font-family:var(--dato);font-size:11.5px;color:var(--tinta-3);padding:6px 6px 4px}
+.graficos{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 16px}
+.graficos .grafico{margin:0}
+.gr-eje{font-family:var(--dato);font-size:10px;fill:var(--tinta-4)}
+.gr-cat{font-family:var(--dato);font-size:11px;fill:var(--tinta-3)}
+.gr-val{font-family:var(--dato);font-size:12px;font-weight:700;fill:var(--tinta)}
+.gr-tit{font-family:var(--dato);font-size:11px;letter-spacing:.08em;text-transform:uppercase;fill:var(--tinta-3)}
+
+.confianza{margin-bottom:14px}
+.confianza p{font-size:13px;color:var(--tinta-3);margin-bottom:7px}
+.chips{display:flex;gap:7px;flex-wrap:wrap}
+.chip{
+  font:inherit;font-size:13px;padding:8px 13px;border-radius:20px;
+  border:1px solid var(--linea);background:#fff;color:var(--tinta-3);
+  cursor:pointer;min-height:38px;
+}
+.chip:focus-visible{outline:2px solid var(--acento);outline-offset:2px}
+.chip[aria-pressed="true"]{background:var(--tinta);border-color:var(--tinta);color:var(--papel);font-weight:600}
+
+.opciones{list-style:none;display:flex;flex-direction:column;gap:9px}
+.opcion{
+  display:flex;gap:11px;align-items:flex-start;width:100%;text-align:left;
+  background:#fff;border:1px solid var(--linea);border-radius:8px;
+  padding:13px 14px;font:inherit;font-size:15.5px;color:var(--tinta);
+  cursor:pointer;transition:border-color .12s,background .12s;min-height:48px;
+}
+.opcion:hover:not(:disabled){border-color:var(--tinta-3)}
+.opcion:focus-visible{outline:2px solid var(--acento);outline-offset:2px}
+.opcion:disabled{cursor:default;opacity:.5}
+.opcion .letra{font-family:var(--dato);font-size:12px;font-weight:700;color:var(--tinta-3);flex-shrink:0;padding-top:2px;min-width:16px}
+.opcion[data-estado="acierto"]{border-color:var(--acierto);background:var(--acierto-claro);opacity:1}
+.opcion[data-estado="acierto"] .letra{color:var(--acierto)}
+.opcion[data-estado="fallo"]{border-color:var(--trampa);background:var(--trampa-claro);opacity:1}
+.opcion[data-estado="fallo"] .letra{color:var(--trampa)}
+.opcion[data-estado="descartada"]{border-color:var(--linea);background:var(--papel-2);opacity:.45;text-decoration:line-through}
+.opcion[data-estado="elegida"]{border-color:var(--tinta);background:var(--papel-2);opacity:1}
+
+.respuesta{margin-top:16px;border-radius:8px;padding:14px;font-size:15px}
+.respuesta[data-tipo="acierto"]{background:var(--acierto-claro);border-left:3px solid var(--acierto)}
+.respuesta[data-tipo="fallo"]{background:var(--trampa-claro);border-left:3px solid var(--trampa)}
+.respuesta[data-tipo="nudge"]{background:var(--oro-claro);border-left:3px solid var(--oro)}
+.respuesta .titulo{font-family:var(--dato);font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;margin-bottom:6px;display:block}
+.respuesta[data-tipo="acierto"] .titulo{color:var(--acierto)}
+.respuesta[data-tipo="fallo"] .titulo{color:var(--trampa)}
+.respuesta[data-tipo="nudge"] .titulo{color:var(--oro-texto)}
+.respuesta .porque{margin-top:12px;padding-top:12px;border-top:1px solid rgba(0,0,0,.09)}
+.aviso-confianza{
+  margin-top:12px;padding:10px 12px;background:rgba(0,0,0,.045);
+  border-radius:6px;font-size:14px;
+}
+.video{display:inline-block;margin-top:10px;font-size:14px;color:var(--acento);text-decoration:underline;text-underline-offset:3px}
+
+.pista{margin-top:14px;font-size:14px;color:var(--tinta-3);background:var(--papel-2);border-radius:8px;padding:11px 13px}
+.enlace-pista{background:none;border:0;padding:0;margin-top:14px;cursor:pointer;font:inherit;font-size:14px;color:var(--acento);text-decoration:underline;text-underline-offset:3px}
+.enlace-pista:focus-visible{outline:2px solid var(--acento);outline-offset:3px}
+
+.campo{width:100%;font:inherit;font-size:16px;padding:13px 14px;border:1px solid var(--linea);border-radius:8px;background:#fff;font-family:var(--dato)}
+.campo:focus{outline:2px solid var(--acento);outline-offset:1px;border-color:var(--acento)}
+.cod{font-size:12.5px;line-height:1.5;resize:vertical;word-break:break-all}
+
+/* ── barra inferior ───────────────────────────────────────────── */
+.barra{
+  position:fixed;left:0;right:0;bottom:0;z-index:40;
+  background:rgba(246,243,236,.97);border-top:1px solid var(--linea);
+  padding:12px 18px calc(12px + env(safe-area-inset-bottom));backdrop-filter:blur(8px);
+}
+.barra-int{max-width:640px;margin:0 auto;display:flex;align-items:center;gap:10px}
+.contador{font-family:var(--dato);font-size:11px;line-height:1.3;color:var(--tinta-3);flex:1;min-width:0}
+.contador b{display:block;color:var(--tinta);font-size:13px}
+.btn{
+  font:inherit;font-weight:600;font-size:15px;padding:13px 20px;border-radius:8px;
+  border:1px solid var(--tinta);background:var(--tinta);color:var(--papel);
+  cursor:pointer;min-height:48px;transition:opacity .12s;
+}
+.btn:hover:not(:disabled){opacity:.86}
+.btn:focus-visible{outline:2px solid var(--acento);outline-offset:2px}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.btn--fantasma{background:transparent;color:var(--tinta);border-color:var(--linea)}
+.btn--ancho{width:100%}
+.btn--oro{background:var(--oro);border-color:var(--oro);color:var(--tinta)}
+.btn--chico{padding:9px 14px;font-size:13.5px;min-height:40px}
+
+/* ── informe ──────────────────────────────────────────────────── */
+.marcador{display:flex;border:1px solid var(--linea);border-radius:var(--r);overflow:hidden;background:#fff;margin-bottom:16px}
+.marcador div{flex:1;padding:16px 8px;text-align:center;border-right:1px solid var(--linea)}
+.marcador div:last-child{border-right:0}
+.marcador .cifra{font-family:var(--dato);font-size:25px;font-weight:700;display:block;line-height:1.1}
+.marcador .rotulo{font-family:var(--dato);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--tinta-3);display:block;margin-top:4px}
+
+.matriz{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px}
+.celda{border:1px solid var(--linea);border-radius:8px;padding:13px 12px}
+.celda .n{font-family:var(--dato);font-size:22px;font-weight:700;line-height:1}
+.celda .t{font-weight:600;font-size:14px;margin-top:5px}
+.celda .d{font-size:12.5px;color:var(--tinta-3);margin-top:3px;line-height:1.4}
+.celda--ciego{border-color:var(--trampa);background:var(--trampa-claro)}
+.celda--ciego .n{color:var(--trampa)}
+.celda--dominio{border-color:var(--acierto);background:var(--acierto-claro)}
+.celda--dominio .n{color:var(--acierto)}
+.celda--fragil{border-color:var(--oro);background:var(--oro-claro)}
+.celda--fragil .n{color:var(--oro-texto)}
+
+.mapa{list-style:none;margin-top:4px}
+.mapa li{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px solid var(--linea);font-size:15px}
+.mapa li:last-child{border-bottom:0}
+.mapa .estado{font-family:var(--dato);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;flex-shrink:0;font-weight:700}
+.estado--claro{color:var(--acierto)}
+.estado--ciego{color:var(--trampa)}
+.estado--medio{color:var(--oro-texto)}
+
+.trampas{list-style:none;margin-top:4px}
+.trampas li{padding:9px 0;border-bottom:1px solid var(--linea)}
+.trampas li:last-child{border-bottom:0}
+.trampas .fila{display:flex;justify-content:space-between;gap:10px;font-size:14.5px;margin-bottom:6px}
+.trampas .veces{font-family:var(--dato);font-size:12px;font-weight:700;color:var(--trampa);flex-shrink:0}
+.trampas .riel{height:5px;background:var(--papel-2);border-radius:3px;overflow:hidden}
+.trampas .riel i{display:block;height:100%;background:var(--trampa)}
+
+.reco{list-style:none}
+.reco li{padding:10px 0 10px 20px;border-bottom:1px solid var(--linea);font-size:15px;position:relative}
+.reco li:last-child{border-bottom:0}
+.reco li::before{content:'→';position:absolute;left:0;color:var(--oro);font-weight:700}
+
+/* ── revisión ─────────────────────────────────────────────────── */
+.rev-item{border:1px solid var(--linea);border-radius:var(--r);background:#fff;margin-bottom:10px;overflow:hidden}
+.rev-cab{
+  display:flex;gap:10px;align-items:center;width:100%;text-align:left;
+  background:none;border:0;padding:13px 14px;font:inherit;cursor:pointer;color:var(--tinta);
+}
+.rev-cab:focus-visible{outline:2px solid var(--acento);outline-offset:-2px}
+.rev-marca{font-family:var(--dato);font-size:11px;font-weight:700;flex-shrink:0;width:26px}
+.rev-marca[data-r="ok"]{color:var(--acierto)}
+.rev-marca[data-r="mal"]{color:var(--trampa)}
+.rev-marca[data-r="no"]{color:var(--tinta-4)}
+.rev-txt{flex:1;font-size:14.5px;line-height:1.4}
+.rev-cuerpo{padding:0 14px 14px;border-top:1px solid var(--linea);padding-top:13px;font-size:14.5px}
+.rev-cuerpo dl{margin-top:8px}
+.rev-cuerpo dt{font-family:var(--dato);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--tinta-3);margin-top:10px}
+.rev-cuerpo dd{margin-top:3px}
+
+.filtros{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+
+.candado{background:var(--tinta);color:var(--papel);border-radius:var(--r);padding:24px 20px;text-align:center}
+.candado h2{color:var(--papel);font-size:20px}
+.candado p{color:#C7C2B6;font-size:15px}
+.candado .precio{font-family:var(--dato);font-size:24px;font-weight:700;color:var(--oro);display:block;margin:14px 0 6px}
+
+.acciones{display:flex;flex-direction:column;gap:10px;margin-top:18px}
+#acciones-nota{min-height:18px;font-size:13px;color:var(--tinta-3);text-align:center}
+.vacio{text-align:center;color:var(--tinta-3);padding:24px 10px;font-size:15px}
+
+@media (max-width:430px){
+  .graficos{grid-template-columns:1fr}
+  .marcador .cifra{font-size:21px}
+}
+@media print{
+  body{background:#fff;padding:0;font-size:11pt}
+  #progreso,#cabeza,.barra,.acciones,.filtros,.no-imprimir{display:none!important}
+  .tarjeta,.marcador,.celda,.grafico{border:1px solid #999;break-inside:avoid}
+  .rev-cuerpo{display:block!important}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<div id="progreso" aria-hidden="true"><i></i></div>
+<header id="cabeza" hidden></header>
+<main class="envoltura" id="lienzo"></main>
+<div class="barra" id="barra" hidden></div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   ▼▼▼  ÚNICA ZONA A EDITAR PARA CREAR UNA GUÍA NUEVA  ▼▼▼
+
+   REFERENCIA RÁPIDA DE CAMPOS (v3.0)
+
+   meta:
+     paleta        'violeta' | 'verde' | 'azul' | 'terracota' | 'vino'
+                   (sugerido: matemáticas=violeta, ciencias=verde,
+                    sociales=azul, lectura=terracota, inglés=vino)
+
+   ajustes:
+     comprador          '' o el nombre del comprador → personaliza
+                        portada, informe y tarjeta compartible
+     barajarOpciones    true = mezcla el orden de las opciones en
+                        cada sesión (evita memorizar letras)
+     diasRepaso         días para que una pregunta frágil o fallada
+                        entre al repaso espaciado (por defecto 3)
+     simulacroMinutos   duración del modo simulacro
+     videosTrampa       { 'Nombre de la trampa':'https://youtu.be/…' }
+                        muestra un enlace de video al fallar por esa
+                        trampa (también en la revisión)
+
+   gancho: pregunta de un toque en la portada (opciones con
+     correcta:true, y textos acierto / fallo). Bórralo si no quieres.
+
+   bloques de pregunta ('opcion' y 'abierta') aceptan además:
+     grafico   una gráfica SVG generada por el motor. Tipos:
+               {tipo:'barras',   etiquetas:[], valores:[], ejeInicio, ejeFin, unidad, titulo, alt, pie}
+               {tipo:'linea',    etiquetas:[], valores:[], unidad, titulo, alt}
+               {tipo:'circular', segmentos:[{etiqueta, valor}], alt}
+                 → un segmento con valor:null se dibuja con «?»
+               Ejemplos vivos: c3 (comparativa), p12, p14, p15.
+     graficos  arreglo de gráficas lado a lado (ver c3)
+     video     URL de video para esa pregunta (prima sobre videosTrampa)
+
+   Las respuestas abiertas aceptan coma o punto decimal y puntos de
+   miles: «31.500», «31500» y «31 500» cuentan como la misma cifra.
+   ═══════════════════════════════════════════════════════════════ */
+
+const GUIA = {
+
+  meta:{
+    coleccion:'Punto Ciego',
+    titulo:'Álgebra: del enunciado a la ecuación',
+    area:'Matemáticas · Saber 11',
+    nivel:'10° y 11°',
+    minutos:35,
+    version:'3.0',
+    paleta:'violeta'
+  },
+
+  ajustes:{
+    modo:'demo',
+    seccionesGratis:1,
+    comprador:'',
+    pedirConfianza:true,
+    segundaOportunidad:true,
+    rondaRepaso:true,
+    permitirPista:true,
+    barajarOpciones:true,
+    umbralApuro:12,
+    diasRepaso:3,
+    simulacroMinutos:20,
+    guardarProgreso:true,
+    videosTrampa:{},
+    precio:'$18.000',
+    whatsapp:'573000000000',
+    mensajeCompra:'Hola, quiero la guía completa de Álgebra: del enunciado a la ecuación.'
+  },
+
+  gancho:{
+    pregunta:'¿Cuánto vale x en la ecuación 2x + 6 = 2(x + 3)?',
+    opciones:[
+      {texto:'x = 0'},
+      {texto:'x = 3'},
+      {texto:'Cualquier valor de x', correcta:true}
+    ],
+    acierto:'Correcto: los dos lados son la misma expresión, así que la igualdad se cumple siempre.',
+    fallo:'Distribuye el 2 del lado derecho y te queda 2x + 6 = 2x + 6. Es una identidad: se cumple para cualquier x. Si buscaste un número único, esta guía te va a servir.'
+  },
+
+  secciones:[
+
+  /* ══ SECCIÓN 1 ═════════════════════════════════════════════ */
+  { id:'s1', titulo:'De las palabras a la ecuación', descripcion:'El 80% del error ocurre antes de calcular nada.',
+    bloques:[
+
+    { tipo:'concepto', id:'c1',
+      titulo:'Traducir es la parte difícil',
+      cuerpo:[
+        'En Saber 11 casi nunca te dan una ecuación lista: te dan una situación. El puntaje se pierde <strong>al traducir</strong>, no al despejar.',
+        'Dos traducciones que casi todo el mundo confunde: «el doble de un número disminuido en 5» es <strong>2x − 5</strong>; «el doble de la diferencia entre un número y 5» es <strong>2(x − 5)</strong>. La coma y el orden de las palabras deciden dónde va el paréntesis.',
+        'Y antes de escribir nada: define qué representa tu letra, con unidades. «x = edad de Beto hoy, en años» te ahorra la mitad de los errores.'
+      ],
+      clave:'Escribe siempre qué significa tu letra antes de plantear la ecuación.' },
+
+    { tipo:'opcion', id:'p1', tema:'Traducción algebraica',
+      enunciado:'«El doble de un número, disminuido en 5, es igual a 17.» ¿Cuál ecuación lo representa?',
+      pista:'Primero se dobla el número y después se le quitan 5.',
+      opciones:[
+        {texto:'2x − 5 = 17', correcta:true,
+         feedback:'Correcto. Primero el doble (2x) y después la resta. Da x = 11.'},
+        {texto:'2(x − 5) = 17', trampa:'Perder el paréntesis al distribuir',
+         feedback:'Eso sería «el doble de la diferencia entre el número y 5». La coma del enunciado separa las dos operaciones.'},
+        {texto:'2x = 17 − 5', trampa:'Equivocar un signo al mover o distribuir',
+         feedback:'Moviste el 5 sin cambiarle el signo correctamente: de 2x − 5 = 17 se pasa a 2x = 17 + 5.'},
+        {texto:'x/2 − 5 = 17', trampa:'Invertir la operación o el orden',
+         feedback:'«El doble» multiplica por 2, no divide. Es un error de lectura, no de álgebra.'}
+      ],
+      explicacion:'Regla del paréntesis: si la operación se aplica a <strong>todo un bloque</strong> («el doble de la suma de…»), va paréntesis. Si se aplica solo a un término, no.' },
+
+    { tipo:'opcion', id:'p2', tema:'Traducción algebraica',
+      enunciado:'Hoy Ana tiene el triple de la edad de Beto. Dentro de 5 años, Ana tendrá el doble de la edad que tenga Beto. Si b es la edad de Beto hoy, ¿cuál ecuación plantea la situación?',
+      pista:'Dentro de 5 años los dos cumplen años, no solo uno.',
+      opciones:[
+        {texto:'3b + 5 = 2(b + 5)', correcta:true,
+         feedback:'Correcto. A los dos hay que sumarles 5. Da b = 5 y Ana tiene 15 hoy.'},
+        {texto:'3b + 5 = 2b + 5', trampa:'Perder el paréntesis al distribuir',
+         feedback:'Duplicaste solo la edad de Beto y dejaste el +5 sin duplicar. El doble se aplica a la edad futura completa.'},
+        {texto:'3b = 2(b + 5)', trampa:'Envejecer a uno solo',
+         feedback:'Le sumaste 5 años a Beto pero no a Ana. Dentro de 5 años los dos son 5 años mayores.'},
+        {texto:'3(b + 5) = 2b', trampa:'Invertir la operación o el orden',
+         feedback:'Pusiste el doble del lado equivocado. Dentro de 5 años Ana es el doble de Beto, no al revés.'}
+      ],
+      explicacion:'En problemas de edades, dibuja dos columnas: <strong>hoy</strong> y <strong>después</strong>. A todos los personajes se les suma el mismo número de años.' },
+
+    { tipo:'opcion', id:'p3', tema:'Traducción algebraica',
+      enunciado:'Un cuaderno cuesta c pesos y un lapicero cuesta $3.000 menos que el cuaderno. ¿Cuál expresión representa el costo de 4 cuadernos y 3 lapiceros?',
+      opciones:[
+        {texto:'4c + 3(c − 3000)', correcta:true,
+         feedback:'Correcto. Cada lapicero vale c − 3000 y son tres, así que va entre paréntesis.'},
+        {texto:'4c + 3c − 3000', trampa:'Perder el paréntesis al distribuir',
+         feedback:'Le restaste $3.000 una sola vez, no a cada lapicero. Son tres lapiceros, tres descuentos.'},
+        {texto:'4c + 3(3000 − c)', trampa:'Invertir la operación o el orden',
+         feedback:'«$3.000 menos que el cuaderno» es c − 3000. Lo escribiste al revés.'},
+        {texto:'7c − 3000', trampa:'Repartir a ojo en vez de plantear',
+         feedback:'Sumaste cuadernos y lapiceros como si costaran lo mismo. Son dos precios diferentes.'}
+      ],
+      explicacion:'Cuando un descuento o recargo se aplica a <strong>cada</strong> unidad, va dentro del paréntesis que se multiplica por la cantidad.' },
+
+    { tipo:'abierta', id:'p4', tema:'Traducción algebraica',
+      enunciado:'La suma de tres números enteros consecutivos es 87. ¿Cuál es el mayor de los tres? Escribe solo el número.',
+      pista:'Llama x al del medio: los otros son x − 1 y x + 1.',
+      respuestas:['30'],
+      explicacion:'Si el del medio es x, la suma es (x − 1) + x + (x + 1) = 3x = 87, entonces x = 29 y el mayor es 30. Llamar x al número <strong>del medio</strong> hace que los ±1 se cancelen y el problema se vuelve una división.' },
+
+    { tipo:'opcion', id:'p5', tema:'Traducción algebraica',
+      enunciado:'Un rectángulo tiene el largo 4 cm mayor que el ancho y su perímetro es 36 cm. ¿Cuánto mide el ancho?',
+      pista:'El perímetro suma dos anchos y dos largos.',
+      opciones:[
+        {texto:'7 cm', correcta:true,
+         feedback:'Correcto. 2a + 2(a + 4) = 36 → 4a + 8 = 36 → a = 7, y el largo es 11.'},
+        {texto:'16 cm', trampa:'Repartir a ojo en vez de plantear',
+         feedback:'Usaste a + (a + 4) = 36, es decir la mitad del contorno. El perímetro recorre los cuatro lados.'},
+        {texto:'8 cm', trampa:'Repartir a ojo en vez de plantear',
+         feedback:'36 ÷ 4 = 9 sería el lado de un cuadrado. Aquí los lados no son iguales.'},
+        {texto:'11 cm', trampa:'Responder por la otra cantidad',
+         feedback:'Ese es el largo. El cálculo te salió bien; la lectura de qué te pedían, no.'}
+      ],
+      explicacion:'Perímetro de un rectángulo: <strong>2(a + l)</strong>. Escribir la fórmula antes de reemplazar evita el error de usar solo dos lados.' }
+  ]},
+
+  /* ══ SECCIÓN 2 ═════════════════════════════════════════════ */
+  { id:'s2', titulo:'Ecuaciones y despejes', descripcion:'Lo que le haces a un lado se lo haces al otro.',
+    bloques:[
+
+    { tipo:'concepto', id:'c2',
+      titulo:'Despejar es deshacer, en orden inverso',
+      cuerpo:[
+        'Una ecuación es una balanza: cualquier operación que hagas de un lado la haces del otro y el equilibrio se mantiene.',
+        'Para despejar x, deshaz las operaciones <strong>al revés</strong> de como se aplicaron: primero sumas y restas, después multiplicaciones y divisiones, al final potencias y raíces.',
+        'Y una regla que ahorra puntos: si hay paréntesis con un signo menos delante, ese menos cambia el signo de <strong>todo</strong> lo que hay adentro.'
+      ],
+      clave:'Al terminar, reemplaza tu resultado en la ecuación original. Verificar cuesta 15 segundos.' },
+
+    { tipo:'opcion', id:'p6', tema:'Ecuaciones',
+      enunciado:'Resuelve: x/3 + 2 = 7',
+      opciones:[
+        {texto:'x = 15', correcta:true,
+         feedback:'Correcto. x/3 = 5, entonces x = 15. Verifica: 15/3 + 2 = 7.'},
+        {texto:'x = 5', trampa:'Dejar el procedimiento a medias',
+         feedback:'Llegaste a x/3 = 5 y te detuviste. Falta multiplicar por 3.'},
+        {texto:'x = 27', trampa:'Equivocar un signo al mover o distribuir',
+         feedback:'Sumaste el 2 al otro lado en vez de restarlo: x/3 = 7 + 2. El +2 pasa restando.'},
+        {texto:'x = 21', trampa:'Dejar el procedimiento a medias',
+         feedback:'Multiplicaste 7 por 3 y olvidaste el +2. El 2 hay que quitarlo primero.'}
+      ],
+      explicacion:'Orden de despeje: quita primero lo que está <strong>sumando o restando</strong>, después lo que está multiplicando o dividiendo.' },
+
+    { tipo:'opcion', id:'p7', tema:'Ecuaciones',
+      enunciado:'Resuelve: 3(x − 2) − 4 = 2x + 1',
+      pista:'Distribuye el 3 antes de mover nada.',
+      opciones:[
+        {texto:'x = 11', correcta:true,
+         feedback:'Correcto. 3x − 6 − 4 = 2x + 1 → 3x − 10 = 2x + 1 → x = 11.'},
+        {texto:'x = 5', trampa:'Perder el paréntesis al distribuir',
+         feedback:'Multiplicaste el 3 solo por la x y dejaste el −2 sin multiplicar. El 3 entra a los dos términos.'},
+        {texto:'x = 3', trampa:'Equivocar un signo al mover o distribuir',
+         feedback:'3(x − 2) es 3x − 6, no 3x + 6. Ese cambio de signo mueve el resultado completo.'},
+        {texto:'x = 7', trampa:'Dejar el procedimiento a medias',
+         feedback:'Se te fue el −4 en algún paso. Escribe la línea completa antes de agrupar.'}
+      ],
+      explicacion:'El error número uno de esta sección es <strong>distribuir a medias</strong>. Cuando hay un número pegado a un paréntesis, tócalo con todos los términos de adentro.' },
+
+    { tipo:'opcion', id:'p8', tema:'Ecuaciones',
+      enunciado:'Camilo compró 6 prendas entre camisas de $30.000 y pantalones de $70.000, y pagó $260.000 en total. ¿Cuántas camisas compró?',
+      pista:'Si compró c camisas, compró 6 − c pantalones.',
+      opciones:[
+        {texto:'4 camisas', correcta:true,
+         feedback:'Correcto. 30c + 70(6 − c) = 260 (en miles) → 420 − 40c = 260 → c = 4. Verifica: 4×30 + 2×70 = 260.'},
+        {texto:'2 camisas', trampa:'Responder por la otra cantidad',
+         feedback:'Ese es el número de pantalones. El planteamiento te salió; la lectura final no.'},
+        {texto:'3 camisas', trampa:'Repartir a ojo en vez de plantear',
+         feedback:'Partir 6 en dos iguales ignora que los precios son distintos. 3 y 3 dan $300.000.'},
+        {texto:'5 camisas', trampa:'Equivocar un signo al mover o distribuir',
+         feedback:'Probablemente escribiste 420 + 40c. Al distribuir el 70 sobre (6 − c) el término con c queda negativo.'}
+      ],
+      explicacion:'Truco de mezclas: si hay dos cantidades que suman un total conocido, llama <strong>c</strong> a una y <strong>total − c</strong> a la otra. Así trabajas con una sola incógnita.' },
+
+    { tipo:'opcion', id:'p9', tema:'Ecuaciones',
+      enunciado:'La velocidad se calcula como v = d/t. Si conoces v y d, ¿cómo queda t despejado?',
+      opciones:[
+        {texto:'t = d/v', correcta:true,
+         feedback:'Correcto. Multiplicas ambos lados por t y luego divides entre v.'},
+        {texto:'t = v/d', trampa:'Invertir la operación o el orden',
+         feedback:'Le diste vuelta a la división. Comprueba con números: 100 km a 50 km/h son 2 horas, no 0,5.'},
+        {texto:'t = v·d', trampa:'Confundir la operación inversa',
+         feedback:'Lo que divide pasa multiplicando, pero t estaba dividiendo a d, no multiplicando a v.'},
+        {texto:'t = d − v', trampa:'Confundir la operación inversa',
+         feedback:'La operación inversa de dividir es multiplicar o dividir, nunca restar. Además las unidades no cuadrarían.'}
+      ],
+      explicacion:'Verificación rápida de cualquier despeje: reemplaza con números fáciles. Si 100 km y 50 km/h no te dan 2 horas, el despeje está mal.' },
+
+    { tipo:'abierta', id:'p10', tema:'Ecuaciones',
+      enunciado:'Sara tiene $50.000 y cada pasaje cuesta $2.800. ¿Cuál es el número máximo de pasajes que puede comprar? Escribe solo el número.',
+      pista:'La división no da exacta: piensa qué significa el sobrante.',
+      respuestas:['17','17 pasajes'],
+      explicacion:'50.000 ÷ 2.800 = 17,85. Como no se venden pasajes partidos, la respuesta se <strong>redondea hacia abajo</strong>: 17 pasajes ($47.600) y le sobran $2.400. En problemas de conteo, el redondeo siempre va hacia abajo aunque el decimal sea alto.' }
+  ]},
+
+  /* ══ SECCIÓN 3 ═════════════════════════════════════════════ */
+  { id:'s3', titulo:'Expresiones y factorización', descripcion:'Los productos notables y lo que no se puede cancelar.',
+    bloques:[
+
+    { tipo:'concepto', id:'c3',
+      titulo:'Elevar al cuadrado no es elevar cada parte',
+      cuerpo:[
+        '(a + b)² <strong>no</strong> es a² + b². Es a² + 2ab + b², y ese 2ab es el término que desaparece en la mitad de las respuestas equivocadas del país.',
+        'Compruébalo con números: (3 + 4)² = 49, mientras que 3² + 4² = 25. No se parecen ni de lejos.',
+        'La otra regla de oro: en una fracción solo se puede cancelar lo que está <strong>multiplicando</strong> arriba y abajo. Términos que están sumando no se cancelan nunca.'
+      ],
+      clave:'Ante cualquier duda algebraica, reemplaza con números pequeños y compara. La aritmética no miente.' },
+
+    { tipo:'opcion', id:'p11', tema:'Expresiones algebraicas',
+      enunciado:'¿A qué equivale (x + 3)²?',
+      opciones:[
+        {texto:'x² + 6x + 9', correcta:true,
+         feedback:'Correcto. El término del medio es 2·x·3 = 6x, y es el que casi nadie escribe.'},
+        {texto:'x² + 9', trampa:'Aplicar mal una regla de potencias',
+         feedback:'Elevaste cada parte por separado. Prueba con x = 1: (1+3)² = 16, pero 1 + 9 = 10.'},
+        {texto:'x² + 3x + 9', trampa:'Aplicar mal una regla de potencias',
+         feedback:'Casi: el término del medio lleva un 2 porque el producto cruzado aparece dos veces.'},
+        {texto:'2x + 6', trampa:'Aplicar mal una regla de potencias',
+         feedback:'Multiplicaste por 2 en vez de elevar al cuadrado. Son operaciones distintas.'}
+      ],
+      explicacion:'(a ± b)² = a² ± 2ab + b². Vale la pena escribirla en la hoja de fórmulas: aparece en álgebra, en geometría y en trigonometría.' },
+
+    { tipo:'opcion', id:'p12', tema:'Expresiones algebraicas',
+      enunciado:'Factoriza: x² − 25',
+      opciones:[
+        {texto:'(x − 5)(x + 5)', correcta:true,
+         feedback:'Correcto: diferencia de cuadrados. Al multiplicar, los términos cruzados se cancelan.'},
+        {texto:'(x − 5)²', trampa:'Factorizar sin verificar multiplicando de vuelta',
+         feedback:'(x − 5)² sería x² − 10x + 25. Sobra el término del medio y el signo del 25 no cuadra.'},
+        {texto:'(x − 25)(x + 1)', trampa:'Factorizar sin verificar multiplicando de vuelta',
+         feedback:'Al multiplicar te daría x² − 24x − 25. Comprueba siempre deshaciendo la factorización.'},
+        {texto:'No se puede factorizar', trampa:'Escepticismo automático',
+         feedback:'La resta de cuadrados sí se factoriza; la que no se puede es la suma (x² + 25).'}
+      ],
+      explicacion:'a² − b² = (a − b)(a + b). Y ojo con el caso opuesto: <strong>a² + b² no se factoriza</strong> en los números reales.' },
+
+    { tipo:'opcion', id:'p13', tema:'Expresiones algebraicas',
+      enunciado:'Simplifica la fracción (x² − 9)/(x − 3), con x distinto de 3.',
+      pista:'Factoriza el numerador antes de cancelar.',
+      opciones:[
+        {texto:'x + 3', correcta:true,
+         feedback:'Correcto. x² − 9 = (x − 3)(x + 3), y el factor (x − 3) se cancela.'},
+        {texto:'x − 3', trampa:'Factorizar sin verificar multiplicando de vuelta',
+         feedback:'Cancelaste bien pero te quedaste con el paréntesis que no era. Queda el otro factor.'},
+        {texto:'x² − 3', trampa:'Cancelar términos que están sumando',
+         feedback:'Tachaste el 9 con el 3 como si estuvieran multiplicando. Solo se cancelan factores completos.'},
+        {texto:'x² − 6', trampa:'Cancelar términos que están sumando',
+         feedback:'Mismo error: restaste por dentro de la fracción. Hay que factorizar primero.'}
+      ],
+      explicacion:'Regla dura: <strong>si hay sumas o restas sin factorizar, no se cancela nada</strong>. Primero conviertes todo en productos, después tachas.' },
+
+    { tipo:'opcion', id:'p14', tema:'Expresiones algebraicas',
+      enunciado:'Factoriza sacando factor común: 4x² + 8x',
+      opciones:[
+        {texto:'4x(x + 2)', correcta:true,
+         feedback:'Correcto. Sale el 4 y sale una x, porque ambos términos los tienen.'},
+        {texto:'4(x² + 2x)', trampa:'Factorizar sin verificar multiplicando de vuelta',
+         feedback:'Va bien pero incompleto: los dos términos también comparten una x.'},
+        {texto:'4x(x + 8)', trampa:'Factorizar sin verificar multiplicando de vuelta',
+         feedback:'Si sacaste 4x, el segundo término queda 8x ÷ 4x = 2, no 8.'},
+        {texto:'x(4x + 8x)', trampa:'Factorizar sin verificar multiplicando de vuelta',
+         feedback:'Al distribuir te daría 12x², que no es lo que había. Verifica multiplicando de vuelta.'}
+      ],
+      explicacion:'El factor común es el <strong>mayor</strong> que comparten todos los términos, con letras incluidas. Y siempre se comprueba distribuyendo de nuevo.' },
+
+    { tipo:'opcion', id:'p15', tema:'Expresiones algebraicas',
+      enunciado:'Simplifica: (2x³)²',
+      opciones:[
+        {texto:'4x⁶', correcta:true,
+         feedback:'Correcto. El cuadrado afecta al 2 y al x³: 2² = 4 y (x³)² = x⁶.'},
+        {texto:'2x⁶', trampa:'Aplicar mal una regla de potencias',
+         feedback:'Elevaste la potencia de x pero dejaste el 2 quieto. El paréntesis abarca todo.'},
+        {texto:'4x⁵', trampa:'Aplicar mal una regla de potencias',
+         feedback:'Al elevar una potencia a otra los exponentes se <strong>multiplican</strong>: 3 × 2 = 6.'},
+        {texto:'4x⁹', trampa:'Aplicar mal una regla de potencias',
+         feedback:'3² = 9 sería elevar el exponente, no multiplicarlo por 2.'}
+      ],
+      explicacion:'Tres reglas que se confunden entre sí: xᵃ·xᵇ = xᵃ⁺ᵇ, (xᵃ)ᵇ = xᵃᵇ, y (kx)ᵃ = kᵃxᵃ. Cuando dudes, escribe la potencia como multiplicación repetida.' }
+  ]},
+
+  /* ══ SECCIÓN 4 ═════════════════════════════════════════════ */
+  { id:'s4', titulo:'Funciones y su gráfica', descripcion:'Qué significa la pendiente en un problema real.',
+    bloques:[
+
+    { tipo:'concepto', id:'c4',
+      titulo:'La pendiente es lo que cambia; el intercepto es lo que ya estaba',
+      cuerpo:[
+        'En y = mx + b, la <strong>m</strong> dice cuánto cambia y cada vez que x aumenta en 1, y la <strong>b</strong> dice dónde arranca y cuando x vale 0.',
+        'En un problema real la b suele ser el costo fijo, la cuota de arranque o el saldo inicial; la m es la tarifa, el consumo por unidad o la velocidad.',
+        'Cuidado con una idea muy común y muy falsa: en y = 3x + 2, si x se duplica, y <strong>no</strong> se duplica. Eso solo pasa cuando b = 0.'
+      ],
+      clave:'Antes de calcular, di en voz alta qué significan m y b en el contexto del problema.' },
+
+    { tipo:'opcion', id:'p16', tema:'Funciones',
+      enunciado:'Un plan de celular cobra $30.000 fijos al mes más $500 por cada minuto usado. ¿Cuál función representa el costo mensual C según los minutos m?',
+      opciones:[
+        {texto:'C(m) = 30000 + 500m', correcta:true,
+         feedback:'Correcto. El fijo es el intercepto y la tarifa por minuto es la pendiente.'},
+        {texto:'C(m) = 30500m', trampa:'Intercambiar pendiente e intercepto',
+         feedback:'Eso cobraría $30.500 por cada minuto. El fijo se paga una sola vez.'},
+        {texto:'C(m) = 500 + 30000m', trampa:'Intercambiar pendiente e intercepto',
+         feedback:'Invertiste los papeles: cobrarías $30.000 por minuto y $500 fijos.'},
+        {texto:'C(m) = 30000m + 500', trampa:'Intercambiar pendiente e intercepto',
+         feedback:'Mismo intercambio. Lo que se repite por unidad va acompañando a la variable.'}
+      ],
+      explicacion:'Traducción rápida: lo que se paga <strong>siempre</strong> es b; lo que se paga <strong>por cada</strong> es m.' },
+
+    { tipo:'opcion', id:'p17', tema:'Funciones',
+      enunciado:'La gráfica muestra el saldo de una tarjeta de transporte durante seis días de uso. ¿Cuánto gasta por día y qué saldo tenía al principio?',
+      grafico:{tipo:'linea', titulo:'Saldo de la tarjeta',
+        etiquetas:['Día 0','Día 1','Día 2','Día 3','Día 4','Día 5','Día 6'],
+        valores:[24000,20000,16000,12000,8000,4000,0], unidad:'',
+        ejeInicio:0, ejeFin:26000,
+        alt:'Línea recta descendente que va de 24.000 en el día 0 hasta 0 en el día 6'},
+      pista:'Mira cuánto baja la línea entre dos días seguidos.',
+      opciones:[
+        {texto:'Gasta $4.000 por día y empezó con $24.000', correcta:true,
+         feedback:'Correcto. La pendiente es −4.000 (baja constante) y el intercepto es el valor del día 0.'},
+        {texto:'Gasta $24.000 por día y empezó con $4.000', trampa:'Intercambiar pendiente e intercepto',
+         feedback:'Cambiaste los dos papeles. El punto donde la línea toca el eje vertical es el saldo inicial.'},
+        {texto:'Gasta $4.000 por día y empezó con $20.000', trampa:'Leer mal la gráfica',
+         feedback:'$20.000 es el saldo después del primer día. El inicial es el del día 0.'},
+        {texto:'Gasta $6.000 por día y empezó con $24.000', trampa:'Leer mal la gráfica',
+         feedback:'Dividiste 24.000 entre 4 en vez de entre 6. Cuenta los intervalos, no los días marcados.'}
+      ],
+      explicacion:'Pendiente = <strong>cambio vertical ÷ cambio horizontal</strong>. En una gráfica de saldo, una pendiente negativa constante significa gasto fijo por período.' },
+
+    { tipo:'opcion', id:'p18', tema:'Funciones',
+      enunciado:'Si f(x) = x² − 3x, ¿cuánto vale f(−2)?',
+      pista:'Un número negativo elevado al cuadrado da positivo.',
+      opciones:[
+        {texto:'10', correcta:true,
+         feedback:'Correcto. (−2)² = 4 y −3(−2) = +6, entonces 4 + 6 = 10.'},
+        {texto:'2', trampa:'Aplicar mal una regla de potencias',
+         feedback:'Calculaste (−2)² como −4. El cuadrado de un negativo siempre da positivo: (−2)² = 4.'},
+        {texto:'−2', trampa:'Equivocar un signo al mover o distribuir',
+         feedback:'−3 por −2 da +6, no −6. Menos por menos es más.'},
+        {texto:'4', trampa:'Dejar el procedimiento a medias',
+         feedback:'Calculaste solo x² y olvidaste el −3x. Escribe la sustitución completa antes de operar.'}
+      ],
+      explicacion:'Al evaluar con negativos, <strong>pon el número entre paréntesis</strong>: f(−2) = (−2)² − 3(−2). Ese paréntesis previene los dos errores de signo más caros.' },
+
+    { tipo:'opcion', id:'p19', tema:'Funciones',
+      enunciado:'Una empresa modela con B(n) = 12n − 500 la ganancia por vender n buzos. ¿Qué valores de n tienen sentido en el problema?',
+      opciones:[
+        {texto:'Los enteros mayores o iguales a 0', correcta:true,
+         feedback:'Correcto. No se venden buzos partidos ni cantidades negativas, aunque la fórmula acepte cualquier número.'},
+        {texto:'Todos los números reales', trampa:'Ignorar el contexto del problema',
+         feedback:'La fórmula sí acepta cualquier real, pero el problema no: no existen 2,7 buzos.'},
+        {texto:'Los mayores o iguales a 42', trampa:'Ignorar el contexto del problema',
+         feedback:'A partir de 42 la ganancia es positiva, pero vender menos también es posible: solo se pierde plata.'},
+        {texto:'Solo los múltiplos de 12', trampa:'Ignorar el contexto del problema',
+         feedback:'El 12 es el precio por buzo, no una condición sobre la cantidad.'}
+      ],
+      explicacion:'El <strong>dominio en contexto</strong> lo fija la realidad, no la fórmula. Pregúntate siempre: ¿esta cantidad puede ser negativa? ¿puede tener decimales?' },
+
+    { tipo:'opcion', id:'p20', tema:'Funciones',
+      enunciado:'En la función y = 3x + 2, si x pasa de 4 a 8, ¿qué le ocurre a y?',
+      pista:'Calcula los dos valores en vez de razonarlo de memoria.',
+      opciones:[
+        {texto:'Aumenta 12, pero no se duplica', correcta:true,
+         feedback:'Correcto. Pasa de 14 a 26: sube 12 unidades, no al doble, porque el +2 no se duplica.'},
+        {texto:'Se duplica', trampa:'Tratar una función afín como proporcional',
+         feedback:'Duplicar x duplica y solo si b = 0. Aquí el término independiente rompe la proporción.'},
+        {texto:'Aumenta 4 unidades', trampa:'Confundir el cambio de x con el cambio de y',
+         feedback:'4 es lo que aumentó x. El aumento de y es 3 veces eso.'},
+        {texto:'No se puede saber sin la gráfica', trampa:'Escepticismo automático',
+         feedback:'Con la fórmula basta: reemplazas los dos valores y comparas.'}
+      ],
+      explicacion:'<strong>Proporcional</strong> (y = mx) y <strong>afín</strong> (y = mx + b) no son lo mismo. Solo en la proporcional «el doble de x da el doble de y».' },
+
+    { tipo:'cierre', id:'z1',
+      titulo:'Lo que te llevas de toda la guía',
+      cuerpo:[
+        'Define qué representa tu letra antes de plantear la ecuación.',
+        'El paréntesis va cuando la operación afecta a un bloque completo.',
+        '(a + b)² lleva el término 2ab. Compruébalo con números.',
+        'Solo se cancela lo que está multiplicando, nunca lo que está sumando.',
+        'En problemas de conteo, el redondeo va siempre hacia abajo.',
+        'y = mx + b no es proporcional: duplicar x no duplica y.'
+      ] }
+  ]}
+
+  ]
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   ▲▲▲  FIN DE LA ZONA EDITABLE — motor de aquí en adelante ▲▲▲
+   ═══════════════════════════════════════════════════════════════ */
+
+try{ window.GUIA = GUIA; }catch(e){}
+
+(function(){
+'use strict';
+
+const lienzo = document.getElementById('lienzo');
+const barra  = document.getElementById('barra');
+const cabeza = document.getElementById('cabeza');
+const avance = document.querySelector('#progreso i');
+
+/* ── paleta por materia ───────────────────────────────────────── */
+const PAL = {
+  violeta:  {a:'#6C4AB6', c:'#EFEAFA'},
+  verde:    {a:'#1F6E5C', c:'#E2F0EC'},
+  azul:     {a:'#2B5FA3', c:'#E7EEF6'},
+  terracota:{a:'#B4552D', c:'#F8ECE4'},
+  vino:     {a:'#8E3B5C', c:'#F6E8EE'}
+};
+(function(){
+  const p = PAL[GUIA.meta.paleta] || PAL.violeta;
+  const s = document.documentElement.style;
+  s.setProperty('--acento', p.a);
+  s.setProperty('--acento-claro', p.c);
+})();
+
+/* ── iconos SVG (mismos en todo dispositivo, sin emojis) ──────── */
+const IC = {
+  candado:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="9.5" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>',
+  estrella:'<svg class="ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.7 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 2.9 1.1-6.3-4.6-4.4 6.3-.9z"/></svg>',
+  estrellaO:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.8l2.8 5.7 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 2.9 1.1-6.3-4.6-4.4 6.3-.9z"/></svg>',
+  reloj:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.6V12l2.9 1.9"/></svg>'
+};
+
+/* ── índice plano de bloques ──────────────────────────────────── */
+const esPregunta = b => b.tipo === 'opcion' || b.tipo === 'abierta';
+const SEC = GUIA.secciones;
+const TODOS = [];
+SEC.forEach((s, si) => s.bloques.forEach((b, bi) => TODOS.push({b, si, bi})));
+const PREG = TODOS.filter(x => esPregunta(x.b));
+const porId = {};
+TODOS.forEach(x => { porId[x.b.id] = x; });
+const NUM = {};
+PREG.forEach((x,i) => { NUM[x.b.id] = i + 1; });
+
+/* ── almacén ──────────────────────────────────────────────────── */
+const almacen = (function(){
+  const mem = {};
+  const k = 'pc:' + GUIA.meta.titulo + ':' + GUIA.meta.version;
+  let disp = false;
+
+  // Sonda real: algunos navegadores dentro de WhatsApp, Instagram o en modo
+  // incógnito exponen localStorage pero lanzan error al escribir.
+  if(GUIA.ajustes.guardarProgreso === true){
+    try{
+      const p = '__pc_sonda__';
+      window.localStorage.setItem(p, '1');
+      window.localStorage.removeItem(p);
+      disp = true;
+    }catch(e){ disp = false; }
+  }
+
+  return {
+    get disponible(){ return disp; },
+    leer(){
+      if(!disp) return mem.d || null;
+      try{ const v = window.localStorage.getItem(k); return v ? JSON.parse(v) : (mem.d || null); }
+      catch(e){ return mem.d || null; }
+    },
+    escribir(d){
+      mem.d = d;                       // la memoria siempre queda al día
+      if(!disp) return false;
+      try{ window.localStorage.setItem(k, JSON.stringify(d)); return true; }
+      catch(e){ disp = false; return false; }   // cuota llena o permiso revocado
+    },
+    borrar(){
+      delete mem.d;
+      if(!disp) return;
+      try{ window.localStorage.removeItem(k); }catch(e){}
+    }
+  };
+})();
+
+/* ── estado ───────────────────────────────────────────────────── */
+const est = {
+  pantalla:'portada', s:0, b:0,
+  respondida:false, pista:false, confianza:null, intento:0, t0:null,
+  reg:{}, cola:[], j:0, filtro:'todas', abierta:null,
+  seg:0, tSesion:null, confirmarBorrado:false,
+  orden:{}, gancho:null,
+  simCola:[], simIdx:0, simReg:{}, simIni:null, simFin:null, simTimer:null,
+  sim:null, simUlt:null
+};
+
+/* ── utilidades ───────────────────────────────────────────────── */
+function fechaCorta(ms){
+  const d = new Date(ms), hoy = new Date();
+  const mismoDia = d.toDateString() === hoy.toDateString();
+  const hora = d.toLocaleTimeString('es-CO',{hour:'numeric',minute:'2-digit'});
+  return mismoDia ? 'hoy ' + hora : d.toLocaleDateString('es-CO',{day:'numeric',month:'short'}) + ' ' + hora;
+}
+function fmtCrono(ms){
+  const s = Math.max(0, Math.ceil(ms/1000));
+  const m = Math.floor(s/60), r = s % 60;
+  return m + ':' + String(r).padStart(2,'0');
+}
+
+const LETRAS = 'ABCDE';
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+// Normaliza respuestas abiertas: acepta $ , espacios, %, puntos de miles
+// y coma o punto decimal al estilo es-CO. «31.500», «31500» y «31 500»
+// terminan siendo la misma cifra; «3,5» y «3.5» también.
+function norm(t){
+  t = String(t).toLowerCase().trim().normalize('NFD')
+      .replace(/[\u0300-\u036f]/g,'').replace(/[$\s%]/g,'');
+  if(/^\d{1,3}(\.\d{3})+(,\d+)?$/.test(t))      t = t.replace(/\./g,'').replace(',','.');
+  else if(/^\d{1,3}(,\d{3})+(\.\d+)?$/.test(t)) t = t.replace(/,/g,'');
+  else if(/^\d+,\d+$/.test(t))                  t = t.replace(',','.');
+  if(/^\d+(\.\d+)?$/.test(t)) return 'n' + parseFloat(t);
+  return t.replace(/[.,]/g,'');
+}
+
+function barajar(a){
+  for(let i = a.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    const t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+
+const CONF = {
+  seguro:{et:'Seguro', peso:2},
+  medio :{et:'Más o menos', peso:1},
+  azar  :{et:'Adivinando', peso:0}
+};
+
+/* ── gráficas SVG ─────────────────────────────────────────────── */
+function nEje(v){ v = Math.round(v * 10) / 10; return String(v).replace('.',','); }
+
+function svgBarras(g){
+  const W = g.ancho || 560, H = g.alto || 300;
+  const padL = 46, padR = 14, padT = g.titulo ? 32 : 18, padB = 34;
+  const v = g.valores, n = v.length;
+  const ini = (g.ejeInicio != null) ? g.ejeInicio : 0;
+  let fin = (g.ejeFin != null) ? g.ejeFin : Math.max.apply(null, v) * 1.12;
+  if(fin <= ini) fin = ini + 1;
+  const pw = W - padL - padR, ph = H - padT - padB;
+  const X = i => padL + pw * (i + .5) / n;
+  const bw = Math.min(64, pw / n * .56);
+  const Y = val => padT + ph * (1 - (val - ini) / (fin - ini));
+  let s = '';
+  for(let t = 0; t <= 4; t++){
+    const val = ini + (fin - ini) * t / 4, yy = Y(val).toFixed(1);
+    s += '<line x1="'+padL+'" y1="'+yy+'" x2="'+(W-padR)+'" y2="'+yy+'" stroke="var(--linea)"/>';
+    s += '<text x="'+(padL-7)+'" y="'+(+yy+3.5)+'" text-anchor="end" class="gr-eje">'+nEje(val)+'</text>';
+  }
+  v.forEach(function(val, i){
+    const bx = (X(i) - bw/2).toFixed(1), by = Y(val);
+    s += '<rect x="'+bx+'" y="'+by.toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+(padT+ph-by).toFixed(1)+'" rx="3" fill="var(--tinta-2)"/>';
+    s += '<text x="'+X(i)+'" y="'+(by-7).toFixed(1)+'" text-anchor="middle" class="gr-val">'+nEje(val)+(g.unidad||'')+'</text>';
+    s += '<text x="'+X(i)+'" y="'+(H-padB+16)+'" text-anchor="middle" class="gr-cat">'+esc(String(g.etiquetas[i]))+'</text>';
+  });
+  s += '<line x1="'+padL+'" y1="'+(padT+ph)+'" x2="'+(W-padR)+'" y2="'+(padT+ph)+'" stroke="var(--tinta-3)" stroke-width="1.5"/>';
+  if(ini > 0) s += '<path d="M '+padL+' '+(padT+ph+3)+' l 4 4 l -8 4 l 4 4" fill="none" stroke="var(--tinta-3)" stroke-width="1.5"/>';
+  const tt = g.titulo ? '<text x="'+padL+'" y="17" class="gr-tit">'+esc(g.titulo)+'</text>' : '';
+  return '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(g.alt||g.titulo||'Gráfico de barras')+'">'+tt+s+'</svg>';
+}
+
+function svgLinea(g){
+  const W = g.ancho || 560, H = g.alto || 300;
+  const padL = 46, padR = 16, padT = g.titulo ? 32 : 18, padB = 34;
+  const v = g.valores, n = v.length;
+  const mn = Math.min.apply(null, v), mx = Math.max.apply(null, v), rg = (mx - mn) || 1;
+  const ini = (g.ejeInicio != null) ? g.ejeInicio : Math.max(0, mn - rg * .18);
+  const fin = (g.ejeFin != null) ? g.ejeFin : mx + rg * .15;
+  const pw = W - padL - padR, ph = H - padT - padB;
+  const X = i => padL + pw * (n === 1 ? .5 : i / (n - 1));
+  const Y = val => padT + ph * (1 - (val - ini) / (fin - ini));
+  let s = '';
+  for(let t = 0; t <= 3; t++){
+    const val = fin - (fin - ini) * t / 3, yy = Y(val).toFixed(1);
+    s += '<line x1="'+padL+'" y1="'+yy+'" x2="'+(W-padR)+'" y2="'+yy+'" stroke="var(--linea)"/>';
+    s += '<text x="'+(padL-7)+'" y="'+(+yy+3.5)+'" text-anchor="end" class="gr-eje">'+nEje(val)+'</text>';
+  }
+  const pts = v.map(function(val, i){ return X(i).toFixed(1) + ',' + Y(val).toFixed(1); }).join(' ');
+  s += '<polyline points="'+pts+'" fill="none" stroke="var(--acento)" stroke-width="2.5" stroke-linejoin="round"/>';
+  const iMax = v.indexOf(mx);
+  v.forEach(function(val, i){
+    s += '<circle cx="'+X(i).toFixed(1)+'" cy="'+Y(val).toFixed(1)+'" r="3.4" fill="var(--acento)"/>';
+    if(i === 0 || i === n - 1 || i === iMax)
+      s += '<text x="'+X(i).toFixed(1)+'" y="'+(Y(val)-9).toFixed(1)+'" text-anchor="middle" class="gr-val">'+nEje(val)+(g.unidad||'')+'</text>';
+    s += '<text x="'+X(i).toFixed(1)+'" y="'+(H-padB+16)+'" text-anchor="middle" class="gr-cat">'+esc(String(g.etiquetas[i]))+'</text>';
+  });
+  s += '<line x1="'+padL+'" y1="'+(padT+ph)+'" x2="'+(W-padR)+'" y2="'+(padT+ph)+'" stroke="var(--tinta-3)" stroke-width="1.5"/>';
+  const tt = g.titulo ? '<text x="'+padL+'" y="17" class="gr-tit">'+esc(g.titulo)+'</text>' : '';
+  return '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(g.alt||g.titulo||'Gráfica de línea')+'">'+tt+s+'</svg>';
+}
+
+function svgCircular(g){
+  const W = g.ancho || 460, H = g.alto || 250;
+  const cx = 118, cy = H / 2, R = 88, r = 48;
+  const segs = g.segmentos.map(function(o){ return {e:o.etiqueta, v:o.valor, inc:false}; });
+  const suma = segs.reduce(function(a, o){ return a + (o.v || 0); }, 0);
+  segs.forEach(function(o){ if(o.v == null){ o.v = Math.max(0, 100 - suma); o.inc = true; } });
+  const cols = ['var(--acento)','var(--oro)','var(--tinta-3)','#8E3B5C','var(--tinta-2)'];
+  let a0 = -Math.PI / 2, s = '';
+  segs.forEach(function(o, i){
+    const a1 = a0 + o.v / 100 * 2 * Math.PI;
+    const grande = (a1 - a0) > Math.PI ? 1 : 0;
+    const p = 'M ' + (cx + R * Math.cos(a0)).toFixed(2) + ' ' + (cy + R * Math.sin(a0)).toFixed(2) +
+      ' A ' + R + ' ' + R + ' 0 ' + grande + ' 1 ' + (cx + R * Math.cos(a1)).toFixed(2) + ' ' + (cy + R * Math.sin(a1)).toFixed(2) +
+      ' L ' + (cx + r * Math.cos(a1)).toFixed(2) + ' ' + (cy + r * Math.sin(a1)).toFixed(2) +
+      ' A ' + r + ' ' + r + ' 0 ' + grande + ' 0 ' + (cx + r * Math.cos(a0)).toFixed(2) + ' ' + (cy + r * Math.sin(a0)).toFixed(2) + ' Z';
+    s += o.inc
+      ? '<path d="'+p+'" fill="var(--papel-2)" stroke="var(--tinta-4)" stroke-width="1.5" stroke-dasharray="4 3"/>'
+      : '<path d="'+p+'" fill="'+cols[i % cols.length]+'" stroke="#fff" stroke-width="1.5"/>';
+    const mid = (a0 + a1) / 2;
+    const lx = (cx + (R + r) / 2 * Math.cos(mid)).toFixed(1);
+    const ly = (cy + (R + r) / 2 * Math.sin(mid) + 4).toFixed(1);
+    s += '<text x="'+lx+'" y="'+ly+'" text-anchor="middle" class="gr-val" style="fill:'+(o.inc?'var(--tinta)':'#fff')+'">'+(o.inc?'?':o.v+'%')+'</text>';
+    a0 = a1;
+  });
+  segs.forEach(function(o, i){
+    const yy = cy - (segs.length - 1) * 13 + i * 26;
+    s += '<rect x="228" y="'+(yy-9)+'" width="12" height="12" rx="3" fill="'+(o.inc?'var(--papel-2)':cols[i % cols.length])+'"'+(o.inc?' stroke="var(--tinta-4)" stroke-dasharray="3 2"':'')+'/>';
+    s += '<text x="248" y="'+(yy+2)+'" class="gr-cat">'+esc(String(o.e))+' · '+(o.inc?'?':o.v+'%')+'</text>';
+  });
+  return '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(g.alt||'Gráfico circular')+'">'+s+'</svg>';
+}
+
+function figura(g){
+  if(!g) return '';
+  let svg = '';
+  if(g.tipo === 'barras') svg = svgBarras(g);
+  else if(g.tipo === 'linea') svg = svgLinea(g);
+  else if(g.tipo === 'circular') svg = svgCircular(g);
+  if(!svg) return '';
+  return '<figure class="grafico">' + svg + (g.pie ? '<figcaption>'+esc(g.pie)+'</figcaption>' : '') + '</figure>';
+}
+function figuras(b){
+  if(b.graficos && b.graficos.length) return '<div class="graficos">' + b.graficos.map(figura).join('') + '</div>';
+  return figura(b.grafico);
+}
+
+/* ── datos y guardado ─────────────────────────────────────────── */
+function secVisible(i){
+  if(GUIA.ajustes.modo !== 'demo') return true;
+  return i < GUIA.ajustes.seccionesGratis;
+}
+function pregVisibles(){ return PREG.filter(x => secVisible(x.si)); }
+function simMin(){
+  return GUIA.ajustes.simulacroMinutos || Math.max(5, pregVisibles().length);
+}
+function respondida(id){
+  const r = est.reg[id];
+  return !!(r && r.intentos > 0);
+}
+function regDe(id){
+  return est.reg[id] || {primera:null, intentos:0, dominada:false, confianza:null, seg:0, marcada:false, elegida:null, trampa:null, cuando:null};
+}
+function segundosTotales(){
+  const enCurso = est.tSesion ? (Date.now() - est.tSesion)/1000 : 0;
+  return Math.round(est.seg + enCurso);
+}
+function minutos(){
+  const t = segundosTotales();
+  return t ? Math.max(1, Math.round(t/60)) : 0;
+}
+function datosGuardado(){
+  return {
+    v: GUIA.meta.version,
+    s: est.s, b: est.b,
+    pantalla: est.pantalla === 'repaso' ? 'repaso' : 'seccion',
+    reg: est.reg, cola: est.cola, j: est.j,
+    seg: segundosTotales(),
+    sim: est.sim,
+    sCola: est.simCola, sIdx: est.simIdx, sReg: est.simReg,
+    sIni: est.simIni, sFin: est.simFin,
+    sello: Date.now()
+  };
+}
+function guardar(){ return almacen.escribir(datosGuardado()); }
+
+function progSeccion(i){
+  const qs = SEC[i].bloques.filter(esPregunta);
+  if(!qs.length) return {hechas:0, total:0, pct:0, ok:0};
+  const hechas = qs.filter(q => respondida(q.id)).length;
+  const ok = qs.filter(q => respondida(q.id) && est.reg[q.id].primera).length;
+  return {hechas, total:qs.length, pct:Math.round(hechas/qs.length*100), ok};
+}
+function pintarAvance(){
+  const hechas = PREG.filter(x => respondida(x.b.id)).length;
+  avance.style.width = (PREG.length ? hechas/PREG.length*100 : 0) + '%';
+}
+
+// Repaso espaciado: preguntas falladas alguna vez, o acertadas sin
+// seguridad, que ya cumplieron los días configurados.
+function repasables(reg){
+  reg = reg || est.reg;
+  const dms = (GUIA.ajustes.diasRepaso || 3) * 86400000, ahora = Date.now();
+  const listas = [], futuras = [];
+  PREG.forEach(function(x){
+    const r = reg[x.b.id];
+    if(!r || !r.intentos) return;
+    const firme = r.primera && r.dominada && r.confianza === 'seguro';
+    if(firme) return;
+    if(!r.cuando || ahora - r.cuando >= dms) listas.push(x.b.id);
+    else futuras.push(x.b.id);
+  });
+  return {listas, futuras};
+}
+
+function videoDe(b, op){
+  return (op && op.video) || (b && b.video) ||
+         (op && op.trampa && (GUIA.ajustes.videosTrampa || {})[op.trampa]) || null;
+}
+
+/* ── cabecera ─────────────────────────────────────────────────── */
+function pintarCabeza(titulo, sub, conIndice, extra){
+  if(!titulo){ cabeza.hidden = true; return; }
+  cabeza.hidden = false;
+  cabeza.innerHTML = '<div class="cabeza-int">' +
+    (conIndice ? '<button class="icono" data-accion="indice">Índice</button>' : '') +
+    '<div class="cabeza-tit">' + esc(sub||'') + '<b>' + esc(titulo) + '</b></div>' +
+    (extra || '') +
+    '</div>';
+}
+
+/* ── barra inferior ───────────────────────────────────────────── */
+function accion(botones, nota){
+  botones = (botones||[]).filter(Boolean);
+  if(!botones.length && !nota){ barra.hidden = true; return; }
+  barra.hidden = false;
+  barra.innerHTML = '<div class="barra-int">' +
+    (nota ? '<div class="contador">'+nota+'</div>' : '') +
+    botones.map(b => '<button class="'+b.clase+'" data-accion="'+b.accion+'"'+(b.attr||'')+'>'+esc(b.texto)+'</button>').join('') +
+    '</div>';
+}
+
+/* ═══ PANTALLAS ═══════════════════════════════════════════════ */
+
+function htmlGancho(){
+  const gc = GUIA.gancho;
+  const r = est.gancho;
+  const ops = gc.opciones.map(function(o, i){
+    let estado = '';
+    if(r){
+      if(i === r.i) estado = r.ok ? 'acierto' : 'fallo';
+      else if(o.correcta) estado = 'acierto';
+    }
+    return '<li><button class="opcion" data-accion="gancho" data-g="'+i+'"'+(r?' disabled':'')+(estado?' data-estado="'+estado+'"':'')+'>' +
+      '<span class="letra">'+LETRAS[i]+'</span><span>'+esc(o.texto)+'</span></button></li>';
+  }).join('');
+  const caja = r ? '<div class="respuesta" data-tipo="'+(r.ok?'acierto':'fallo')+'" style="margin-top:12px">' +
+      '<span class="titulo">'+(r.ok?'Correcto':'Ahí está la trampa')+'</span>' +
+      '<p>'+esc(r.ok?gc.acierto:gc.fallo)+'</p>' +
+      '<div class="porque">Así funciona toda la guía: respondes primero, y cada opción equivocada te explica por qué era tentadora.</div>' +
+    '</div>' : '';
+  return '<article class="tarjeta" style="margin:4px 0 20px">' +
+    '<div class="eyebrow">Prueba de diez segundos</div>' +
+    '<p class="enunciado" style="font-size:16px">'+esc(gc.pregunta)+'</p>' +
+    '<ul class="opciones">'+ops+'</ul>'+caja+'</article>';
+}
+
+function vistaPortada(){
+  est.pantalla = 'portada';
+  pintarCabeza(null);
+  const m = GUIA.meta, aj = GUIA.ajustes;
+  const g = almacen.leer();
+  const nResp = g && g.reg
+    ? Object.keys(g.reg).filter(k => g.reg[k] && g.reg[k].intentos > 0).length : 0;
+  const hay = g && (g.s > 0 || g.b > 0 || nResp > 0);
+  const dondeIba = hay ? (SEC[Math.min(g.s||0, SEC.length-1)] || {}).titulo : '';
+  const rep = repasables(hay ? (g.reg || {}) : {});
+  const d = aj.diasRepaso || 3;
+
+  lienzo.innerHTML = '<section>' +
+    '<div class="marca-grande">Punto Ciego</div>' +
+    '<p class="tagline">Estudia lo que no sabes que no sabes.</p>' +
+    '<h1>'+esc(m.titulo)+'</h1>' +
+    '<p class="subtitulo">'+esc(m.area)+'</p>' +
+    (aj.comprador ? '<p class="edicion">Edición personal de <b>'+esc(aj.comprador)+'</b></p>' : '') +
+    (GUIA.gancho ? htmlGancho() : '') +
+    '<div class="ficha">' +
+      '<div><span>Nivel</span><b>'+esc(m.nivel)+'</b></div>' +
+      '<div><span>Duración</span><b>'+m.minutos+' min</b></div>' +
+      '<div><span>Preguntas</span><b>'+PREG.length+'</b></div>' +
+      '<div><span>Secciones</span><b>'+SEC.length+'</b></div>' +
+    '</div>' +
+    '<p>Esta guía no te explica y ya. Te pregunta, te corrige al instante y te dice <strong>por qué</strong> la opción que elegiste era tentadora.</p>' +
+    '<p>Antes de cada respuesta te pregunta qué tan seguro estás. Esa combinación —qué tan seguro te sentías y si acertaste— es la que revela tus puntos ciegos: las cosas que crees saber y no sabes.</p>' +
+    '<p>Puedes hacerla por secciones y en el orden que quieras, o en <strong>modo simulacro</strong>: con reloj, sin pistas y sin segunda oportunidad, como el día del examen.</p>' +
+
+    (hay ? '<div class="clave" style="margin-top:20px"><b>Tienes avance guardado</b>' +
+      'Llevas '+nResp+' de '+PREG.length+' preguntas respondidas. Ibas en <strong>'+esc(dondeIba)+'</strong>' +
+      (g.sello ? ' · última vez: '+fechaCorta(g.sello) : '') + '.' +
+      (rep.futuras.length ? ' '+rep.futuras.length+(rep.futuras.length===1?' pregunta está':' preguntas están')+' en cola de repaso espaciado.' : '') +
+      '</div>' : '') +
+
+    (hay && rep.listas.length ? '<div class="clave" style="margin-top:12px"><b>Repaso programado</b>' +
+      rep.listas.length + (rep.listas.length===1?' pregunta frágil o fallada ya cumplió':' preguntas frágiles o falladas ya cumplieron') +
+      ' los '+d+' días: es el mejor momento para volverlas firmes.' +
+      '<div style="margin-top:10px"><button class="btn btn--chico" data-accion="repaso-esp">Repasarlas ahora</button></div>' +
+      '</div>' : '') +
+
+    '<p class="fila-enlaces"><button class="enlace-pista" data-accion="sim-intro">'+IC.reloj+'Modo simulacro ('+pregVisibles().length+' preguntas · '+simMin()+' min)</button></p>' +
+
+    '<p style="font-size:13.5px;color:var(--tinta-3);margin-top:14px">' +
+    (almacen.disponible
+      ? 'Tu avance se guarda solo en este dispositivo. Puedes cerrar la página y volver después.'
+      : 'Este navegador no permite guardar el avance, así que si recargas la página empiezas de nuevo. Suele pasar al abrir el archivo dentro de WhatsApp o en modo incógnito: ábrelo en Chrome o Safari y se soluciona.') +
+    '</p>' +
+
+    '<p class="sello">Un producto <b>BYMCYL</b> · plantilla v'+esc(m.version)+' · ' +
+    '<button class="enlace-pista" style="margin-top:0" data-accion="transferir">Transferir avance entre dispositivos</button></p>' +
+    '</section>';
+
+  accion([
+    hay ? {texto:'Continuar donde iba', accion:'reanudar', clase:'btn btn--ancho'} : null,
+    {texto: hay ? 'Empezar de nuevo' : 'Empezar', accion:'empezar',
+     clase: hay ? 'btn btn--fantasma btn--ancho' : 'btn btn--ancho'}
+  ]);
+}
+
+function vistaIndice(){
+  est.pantalla = 'indice';
+  pintarCabeza(GUIA.meta.titulo, GUIA.meta.coleccion, false);
+  const hechas = PREG.filter(x => respondida(x.b.id)).length;
+  const rep = repasables();
+
+  const lista = SEC.map(function(s, i){
+    const p = progSeccion(i);
+    const bloqueada = !secVisible(i);
+    const estado = p.pct === 100 ? 'hecha' : (p.hechas > 0 ? 'curso' : 'nueva');
+    const marca = bloqueada ? IC.candado : (p.total ? p.hechas+'/'+p.total : '—');
+    return '<button class="seccion-btn" data-estado="'+estado+'" data-accion="ir-seccion" data-s="'+i+'">' +
+      '<div class="sec-fila">' +
+        '<span class="sec-num">'+String(i+1).padStart(2,'0')+'</span>' +
+        '<span class="sec-tit">'+esc(s.titulo)+'</span>' +
+        '<span class="sec-marca">'+marca+'</span>' +
+      '</div>' +
+      '<div class="sec-desc">'+esc(s.descripcion||'')+'</div>' +
+      '<div class="sec-riel"><i style="width:'+(bloqueada?0:p.pct)+'%"></i></div>' +
+      '</button>';
+  }).join('');
+
+  const simBtn = '<button class="seccion-btn" data-accion="sim-intro">' +
+    '<div class="sec-fila"><span class="sec-num">'+IC.reloj+'</span>' +
+    '<span class="sec-tit">Modo simulacro</span>' +
+    '<span class="sec-marca">'+simMin()+' min</span></div>' +
+    '<div class="sec-desc">'+pregVisibles().length+' preguntas seguidas, con reloj, sin pistas y sin segunda oportunidad. No toca tu avance de práctica.</div>' +
+    '</button>';
+
+  const repBtn = rep.listas.length ? '<button class="seccion-btn" data-estado="curso" data-accion="repaso-esp">' +
+    '<div class="sec-fila"><span class="sec-num">↻</span>' +
+    '<span class="sec-tit">Repaso programado</span>' +
+    '<span class="sec-marca">'+rep.listas.length+'</span></div>' +
+    '<div class="sec-desc">Preguntas frágiles o falladas que ya cumplieron los '+(GUIA.ajustes.diasRepaso||3)+' días.</div>' +
+    '</button>' : '';
+
+  lienzo.innerHTML = '<section>' +
+    '<div class="eyebrow">Índice</div>' +
+    '<h2 style="margin-top:8px">Elige por dónde seguir</h2>' +
+    lista + simBtn + repBtn +
+    (hechas > 0 ? '<div style="margin-top:18px"><button class="btn btn--fantasma btn--ancho" data-accion="informe">Ver mi informe ('+hechas+'/'+PREG.length+' respondidas)</button></div>' : '') +
+    '</section>';
+  accion([]);
+}
+
+function vistaBloque(){
+  est.pantalla = 'seccion';
+  const sec = SEC[est.s];
+  const bl = sec.bloques[est.b];
+  pintarCabeza(sec.titulo, 'Sección '+(est.s+1)+' de '+SEC.length, true);
+
+  if(bl.tipo === 'concepto') return vistaConcepto(bl);
+  if(bl.tipo === 'cierre')   return vistaCierre(bl);
+  return vistaPregunta(bl);
+}
+
+function vistaConcepto(b){
+  lienzo.innerHTML = '<article class="tarjeta tarjeta--concepto">' +
+    '<div class="eyebrow">Concepto</div>' +
+    '<h2>'+esc(b.titulo)+'</h2>' +
+    b.cuerpo.map(p => '<p>'+p+'</p>').join('') +
+    figuras(b) +
+    (b.clave ? '<div class="clave"><b>Para no olvidar</b>'+esc(b.clave)+'</div>' : '') +
+    '</article>';
+  navegar('Entendido');
+}
+
+function vistaCierre(b){
+  lienzo.innerHTML = '<article class="tarjeta tarjeta--cierre">' +
+    '<div class="eyebrow">Cierre</div>' +
+    '<h2>'+esc(b.titulo)+'</h2>' +
+    '<ul style="list-style:none;margin-top:4px">' +
+    b.cuerpo.map(p => '<li style="padding:9px 0;border-bottom:1px solid var(--linea);font-size:15.5px">'+p+'</li>').join('') +
+    '</ul></article>';
+  navegar('Continuar');
+}
+
+// Orden barajado de opciones: estable dentro de la sesión para que la
+// segunda oportunidad y el reintento no muevan las opciones de sitio.
+function ordenDe(b){
+  const ids = b.opciones.map(function(_, i){ return i; });
+  if(GUIA.ajustes.barajarOpciones === false) return ids;
+  if(!est.orden[b.id]) est.orden[b.id] = barajar(ids.slice());
+  return est.orden[b.id];
+}
+
+function vistaPregunta(b){
+  const modo = est.pantalla;                 // 'seccion' | 'repaso' | 'sim'
+  const r = regDe(b.id);
+  est.t0 = Date.now();
+
+  if(modo === 'sim'){
+    pintarCabeza('Modo simulacro', GUIA.meta.titulo, false,
+      '<span class="crono" id="crono">--:--</span>');
+  }else if(modo === 'repaso'){
+    pintarCabeza('Ronda de repaso', 'Lo que quedó pendiente', true);
+  }
+
+  const etiqueta = modo === 'sim'
+      ? 'SIMULACRO '+(est.simIdx+1)+' / '+est.simCola.length
+    : modo === 'repaso'
+      ? 'REPASO '+(est.j+1)+' / '+est.cola.length
+      : 'PREGUNTA '+NUM[b.id]+' / '+PREG.length;
+
+  const tabla = b.datos ? '<table class="datos">' +
+      '<thead><tr>'+b.datos.encabezados.map(h=>'<th>'+esc(h)+'</th>').join('')+'</tr></thead>' +
+      '<tbody>'+b.datos.filas.map(f=>'<tr>'+f.map(c=>'<td>'+esc(c)+'</td>').join('')+'</tr>').join('')+'</tbody>' +
+    '</table>' : '';
+
+  const conf = (GUIA.ajustes.pedirConfianza && !est.respondida)
+    ? '<div class="confianza"><p>Antes de responder: ¿qué tan seguro estás?</p><div class="chips">' +
+        Object.keys(CONF).map(k => '<button class="chip" data-accion="confianza" data-c="'+k+'" aria-pressed="'+(est.confianza===k)+'">'+CONF[k].et+'</button>').join('') +
+      '</div></div>' : '';
+
+  let cuerpo;
+  if(b.tipo === 'opcion'){
+    const ord = ordenDe(b);
+    cuerpo = '<ul class="opciones">' + ord.map(function(real, k){
+      return '<li><button class="opcion" data-accion="responder" data-op="'+k+'">' +
+        '<span class="letra">'+LETRAS[k]+'</span><span>'+esc(b.opciones[real].texto)+'</span></button></li>';
+    }).join('') + '</ul>';
+  }else{
+    const numerica = (b.respuestas||[]).every(x => /^[\d.,\s$%]+$/.test(String(x)));
+    cuerpo = '<input class="campo" id="campo" type="text" autocomplete="off" enterkeyhint="done"' +
+      ' inputmode="'+(numerica?'decimal':'text')+'" placeholder="Escribe tu respuesta" aria-label="Tu respuesta">';
+  }
+
+  const pista = (modo !== 'sim' && GUIA.ajustes.permitirPista && b.pista && !est.respondida)
+    ? (est.pista ? '<div class="pista">'+esc(b.pista)+'</div>'
+                 : '<button class="enlace-pista" data-accion="pista">Ver una pista</button>') : '';
+
+  lienzo.innerHTML = '<article class="tarjeta">' +
+    '<div class="pregunta-cab">' +
+      '<span class="numero">'+etiqueta+'</span>' +
+      '<button class="icono" data-accion="marcar" aria-pressed="'+r.marcada+'" title="Marcar para revisar después">' +
+        (r.marcada ? IC.estrella+'Marcada' : IC.estrellaO+'Marcar') + '</button>' +
+    '</div>' +
+    (b.tema ? '<div class="eyebrow">'+esc(b.tema)+'</div>' : '') +
+    '<p class="enunciado">'+esc(b.enunciado)+'</p>' +
+    figuras(b) + tabla + conf + cuerpo + pista +
+    '<div id="retro" role="status" aria-live="polite"></div>' +
+    '</article>';
+
+  if(modo === 'sim'){
+    tickSim();
+    accion([
+      {texto:'Terminar ahora', accion:'sim-terminar', clase:'btn btn--fantasma btn--chico'},
+      b.tipo === 'abierta' ? {texto:'Comprobar', accion:'comprobar', clase:'btn'} : null
+    ], b.tipo === 'opcion' ? 'Responde<b>para avanzar</b>' : null);
+    return;
+  }
+  if(b.tipo === 'abierta' && !est.respondida){
+    navegar(null, {texto:'Comprobar', accion:'comprobar', clase:'btn'});
+  }else if(!est.respondida){
+    navegar(null, null, 'Elige una opción');
+  }else{
+    navegar('Continuar');
+  }
+}
+
+/* barra con retroceso + acción principal */
+function navegar(textoSiguiente, botonPropio, nota){
+  const enRepaso = est.pantalla === 'repaso';
+  const puedeAtras = !enRepaso && !(est.s === 0 && est.b === 0);
+  const principal = botonPropio || (textoSiguiente
+    ? {texto:textoSiguiente, accion:'siguiente', clase:'btn' + (puedeAtras ? '' : ' btn--ancho')}
+    : null);
+  accion([
+    puedeAtras ? {texto:'Atrás', accion:'atras', clase:'btn btn--fantasma btn--chico'} : null,
+    principal
+  ], nota || null);
+}
+
+/* ── responder ────────────────────────────────────────────────── */
+function bloqueActual(){
+  if(est.pantalla === 'sim')    return porId[est.simCola[est.simIdx]].b;
+  if(est.pantalla === 'repaso') return porId[est.cola[est.j]].b;
+  return SEC[est.s].bloques[est.b];
+}
+
+function registrar(b, acerto, elegida, trampa){
+  const r = regDe(b.id);
+  const enRepaso = est.pantalla === 'repaso';
+  r.intentos++;
+  if(r.primera === null) r.primera = acerto;
+  r.cuando = Date.now();
+  if(acerto){
+    r.dominada = true;
+    if(enRepaso && est.confianza) r.confianza = est.confianza;   // el repaso puede afianzar
+  }else if(enRepaso){
+    r.dominada = false;                                          // fallar en repaso reabre la pregunta
+  }
+  if(r.confianza == null) r.confianza = est.confianza;
+  if(!r.seg) r.seg = Math.round((Date.now() - (est.t0||Date.now()))/1000);
+  if(r.elegida == null) r.elegida = elegida;
+  if(trampa && r.trampa == null) r.trampa = trampa;
+  est.reg[b.id] = r;
+  guardar();
+  pintarAvance();
+}
+
+function responderOpcion(k){
+  if(est.respondida) return;
+  const b = bloqueActual();
+  const ord = ordenDe(b);
+  const real = ord[k];
+  const op = b.opciones[real];
+  const acerto = op.correcta === true;
+
+  // — simulacro: una sola oportunidad, sin feedback, avance automático —
+  if(est.pantalla === 'sim'){
+    est.respondida = true;
+    const botones = document.querySelectorAll('.opcion');
+    botones.forEach(el => { el.disabled = true; });
+    if(botones[k]) botones[k].dataset.estado = 'elegida';
+    registrarSim(b, acerto, real, acerto ? null : (op.trampa || 'Error sin clasificar'));
+    setTimeout(avanzarSim, 240);
+    return;
+  }
+
+  est.intento++;
+
+  // segunda oportunidad: primer fallo no revela
+  if(!acerto && GUIA.ajustes.segundaOportunidad && est.intento === 1){
+    const btn = document.querySelectorAll('.opcion')[k];
+    if(btn){ btn.disabled = true; btn.dataset.estado = 'descartada'; }
+    document.getElementById('retro').innerHTML =
+      '<div class="respuesta" data-tipo="nudge">' +
+        '<span class="titulo">Todavía no · te queda un intento</span>' +
+        '<p>'+(b.pista ? esc(b.pista) : 'Vuelve a leer el enunciado y fíjate en qué te están preguntando exactamente.')+'</p>' +
+      '</div>';
+    return;
+  }
+
+  est.respondida = true;
+  registrar(b, acerto, real, acerto ? null : (op.trampa || 'Error sin clasificar'));
+
+  document.querySelectorAll('.opcion').forEach(function(el, i){
+    el.disabled = true;
+    if(i === k) el.dataset.estado = acerto ? 'acierto' : 'fallo';
+    else if(b.opciones[ord[i]].correcta) el.dataset.estado = 'acierto';
+  });
+
+  const r = regDe(b.id);
+  const vid = acerto ? null : videoDe(b, op);
+  document.getElementById('retro').innerHTML =
+    '<div class="respuesta" data-tipo="'+(acerto?'acierto':'fallo')+'">' +
+      '<span class="titulo">'+esc(acerto ? 'Correcto' : (op.trampa || 'Esa era la trampa'))+'</span>' +
+      '<p>'+(op.feedback || '')+'</p>' +
+      (b.explicacion ? '<div class="porque">'+b.explicacion+'</div>' : '') +
+      avisoConfianza(acerto, r) +
+      (vid ? '<a class="video" href="'+esc(vid)+'" target="_blank" rel="noopener">Ver el video de esta trampa →</a>' : '') +
+    '</div>';
+  navegar('Continuar');
+}
+
+function avisoConfianza(acerto, r){
+  if(!GUIA.ajustes.pedirConfianza || !r.confianza) return '';
+  if(!acerto && r.confianza === 'seguro')
+    return '<div class="aviso-confianza"><strong>Esto es un punto ciego.</strong> Estabas seguro y fallaste: ese es el error más peligroso, porque no lo ibas a repasar. Márcalo.</div>';
+  if(acerto && r.confianza === 'azar')
+    return '<div class="aviso-confianza"><strong>Acertaste adivinando.</strong> Cuenta como correcta, pero no la des por sabida: vuelve a esta pregunta en unos días.</div>';
+  if(!acerto && r.confianza === 'azar')
+    return '<div class="aviso-confianza">Sabías que no sabías, y eso ya es útil: es un vacío que sí puedes cerrar estudiando.</div>';
+  if(r.seg && r.seg < GUIA.ajustes.umbralApuro && !acerto)
+    return '<div class="aviso-confianza">Respondiste en ' + r.seg + ' segundos. Si te tomas más tiempo en leer el enunciado, varios de estos errores desaparecen.</div>';
+  return '';
+}
+
+function comprobarAbierta(){
+  if(est.respondida) return;
+  const b = bloqueActual();
+  const campo = document.getElementById('campo');
+  const dado = campo ? campo.value : '';
+  if(!dado.trim()) return;
+  const acerto = b.respuestas.some(x => norm(x) === norm(dado));
+
+  // — simulacro —
+  if(est.pantalla === 'sim'){
+    est.respondida = true;
+    if(campo) campo.disabled = true;
+    registrarSim(b, acerto, dado, acerto ? null : 'Respuesta abierta incorrecta');
+    setTimeout(avanzarSim, 240);
+    return;
+  }
+
+  est.intento++;
+  if(!acerto && GUIA.ajustes.segundaOportunidad && est.intento === 1){
+    document.getElementById('retro').innerHTML =
+      '<div class="respuesta" data-tipo="nudge">' +
+        '<span class="titulo">Todavía no · te queda un intento</span>' +
+        '<p>'+(b.pista ? esc(b.pista) : 'Revisa el procedimiento paso a paso.')+'</p>' +
+      '</div>';
+    if(campo){ campo.value = ''; campo.focus(); }
+    return;
+  }
+
+  est.respondida = true;
+  registrar(b, acerto, dado, acerto ? null : 'Respuesta abierta incorrecta');
+  if(campo) campo.disabled = true;
+  const r = regDe(b.id);
+  document.getElementById('retro').innerHTML =
+    '<div class="respuesta" data-tipo="'+(acerto?'acierto':'fallo')+'">' +
+      '<span class="titulo">'+(acerto ? 'Correcto' : 'Todavía no')+'</span>' +
+      '<p>'+(acerto ? 'Esa es.' : 'La respuesta era <strong>'+esc(b.respuestas[0])+'</strong>.')+'</p>' +
+      (b.explicacion ? '<div class="porque">'+b.explicacion+'</div>' : '') +
+      avisoConfianza(acerto, r) +
+    '</div>';
+  navegar('Continuar');
+}
+
+/* ── navegación ───────────────────────────────────────────────── */
+function limpiar(){ est.respondida=false; est.pista=false; est.confianza=null; est.intento=0; }
+
+function siguiente(){
+  limpiar();
+  if(est.pantalla === 'repaso'){
+    est.j++;
+    guardar();
+    if(est.j >= est.cola.length) return vistaInforme();
+    return vistaPregunta(bloqueActual());
+  }
+  est.b++;
+  if(est.b >= SEC[est.s].bloques.length) return finSeccion();
+  guardar();
+  vistaBloque();
+}
+
+function atras(){
+  limpiar();
+  if(est.b > 0){ est.b--; }
+  else if(est.s > 0){ est.s--; est.b = SEC[est.s].bloques.length - 1; }
+  guardar();
+  vistaBloque();
+}
+
+function finSeccion(){
+  const p = progSeccion(est.s);
+  const hayMas = est.s + 1 < SEC.length;
+  const libre = hayMas && secVisible(est.s + 1);
+  pintarCabeza(SEC[est.s].titulo, 'Sección '+(est.s+1)+' de '+SEC.length, true);
+  lienzo.innerHTML = '<article class="tarjeta tarjeta--cierre">' +
+    '<div class="eyebrow">Sección terminada</div>' +
+    '<h2>'+esc(SEC[est.s].titulo)+'</h2>' +
+    '<p>Acertaste <strong>'+p.ok+' de '+p.total+'</strong> al primer intento en esta sección.</p>' +
+    (p.ok < p.total ? '<p>Lo que fallaste vuelve al final, en la ronda de repaso.</p>' : '<p>Sección limpia. Sigue.</p>') +
+    '</article>' +
+    (hayMas && !libre ? candadoHTML() : '');
+  accion([
+    {texto:'Índice', accion:'indice', clase:'btn btn--fantasma btn--chico'},
+    hayMas && libre ? {texto:'Siguiente sección', accion:'seccion-sig', clase:'btn'} :
+    (!hayMas ? {texto:'Ver mi informe', accion:'cerrar', clase:'btn'} : null)
+  ]);
+}
+
+function candadoHTML(){
+  const a = GUIA.ajustes;
+  const enlace = 'https://wa.me/' + a.whatsapp + '?text=' + encodeURIComponent(a.mensajeCompra);
+  return '<section class="candado">' +
+    '<h2>Hasta aquí llega la muestra</h2>' +
+    '<p>Ya viste cómo funciona. La guía completa trae '+SEC.length+' secciones y '+PREG.length+' preguntas, con la explicación de cada error y tu informe de puntos ciegos.</p>' +
+    '<span class="precio">'+esc(a.precio)+'</span>' +
+    '<a class="btn btn--oro btn--ancho" style="display:block;text-decoration:none;margin-top:12px" href="'+enlace+'" target="_blank" rel="noopener">Pedirla por WhatsApp</a>' +
+    '</section>';
+}
+
+function vistaIntroRepaso(sub, cuerpoHTML){
+  est.pantalla = 'repaso';
+  limpiar(); guardar();
+  pintarCabeza('Ronda de repaso', sub, true);
+  lienzo.innerHTML = '<article class="tarjeta tarjeta--cierre">' +
+    '<div class="eyebrow">Ronda de repaso</div>' +
+    '<h2>'+esc(sub)+'</h2>' + cuerpoHTML + '</article>';
+  accion([{texto:'Empezar el repaso', accion:'repaso-ini', clase:'btn btn--ancho'}]);
+}
+
+function cerrar(){
+  if(GUIA.ajustes.rondaRepaso){
+    const fallos = PREG.filter(x => est.reg[x.b.id] && !est.reg[x.b.id].dominada).map(x => x.b.id);
+    if(fallos.length){
+      est.cola = fallos; est.j = 0;
+      return vistaIntroRepaso('Lo que quedó pendiente',
+        '<p>Te quedaron <strong>'+fallos.length+'</strong> '+(fallos.length===1?'pregunta':'preguntas')+' sin dominar. Vas a repetirlas ahora. No es castigo: volver sobre el error justo después de cometerlo es lo que hace que se fije.</p>');
+    }
+  }
+  vistaInforme();
+}
+
+/* ═══ MODO SIMULACRO ══════════════════════════════════════════ */
+
+function vistaSimIntro(){
+  est.pantalla = 'sim-intro';
+  pintarCabeza('Modo simulacro', GUIA.meta.titulo, true);
+  const n = pregVisibles().length;
+  lienzo.innerHTML = '<article class="tarjeta tarjeta--concepto">' +
+    '<div class="eyebrow">Modo simulacro</div>' +
+    '<h2>'+n+' preguntas · '+simMin()+' minutos</h2>' +
+    '<p>Las preguntas salen en orden aleatorio, con reloj y sin pistas. Cada una tiene <strong>una sola oportunidad</strong> y no verás si acertaste hasta el final.</p>' +
+    '<p>Sí te preguntará qué tan seguro estás: es un toque, y es lo que permite detectar tus puntos ciegos bajo presión.</p>' +
+    '<p>El resultado se guarda aparte y <strong>no toca tu avance de práctica</strong>. Si cierras la página a mitad de camino, el reloj sigue corriendo y puedes volver a entrar.</p>' +
+    '</article>';
+  accion([
+    {texto:'Índice', accion:'indice', clase:'btn btn--fantasma btn--chico'},
+    {texto:'Empezar simulacro', accion:'sim-empezar', clase:'btn'}
+  ]);
+}
+
+function iniciarSim(){
+  est.simCola = barajar(pregVisibles().map(x => x.b.id));
+  est.simIdx = 0;
+  est.simReg = {};
+  est.simIni = Date.now();
+  est.simFin = Date.now() + simMin() * 60000;
+  est.pantalla = 'sim';
+  if(!est.tSesion) est.tSesion = Date.now();
+  limpiar(); guardar();
+  if(est.simTimer) clearInterval(est.simTimer);
+  est.simTimer = setInterval(tickSim, 500);
+  vistaPregunta(bloqueActual());
+}
+
+function tickSim(){
+  if(est.pantalla !== 'sim') return;
+  const resta = est.simFin - Date.now();
+  if(resta <= 0){ finalizarSim('tiempo'); return; }
+  const el = document.getElementById('crono');
+  if(el){
+    el.textContent = fmtCrono(resta);
+    el.classList.toggle('crono--fin', resta < 60000);
+  }
+  avance.style.width = (est.simCola.length ? est.simIdx / est.simCola.length * 100 : 0) + '%';
+}
+
+function registrarSim(b, acerto, elegida, trampa){
+  est.simReg[b.id] = {
+    primera: acerto,
+    confianza: est.confianza,
+    seg: Math.round((Date.now() - (est.t0||Date.now()))/1000),
+    elegida: elegida,
+    trampa: acerto ? null : trampa
+  };
+  guardar();
+}
+
+function avanzarSim(){
+  est.simIdx++;
+  limpiar(); guardar();
+  if(est.simIdx >= est.simCola.length) return finalizarSim('completo');
+  vistaPregunta(bloqueActual());
+}
+
+function resumenSim(motivo){
+  const reg = est.simReg;
+  let resp = 0, ok = 0;
+  const m = {ciego:0, dominio:0, fragil:0, vacio:0};
+  const fallos = [];
+  est.simCola.forEach(function(id){
+    const r = reg[id];
+    if(!r) return;
+    resp++;
+    if(r.primera) ok++; else fallos.push(id);
+    if(r.confianza){
+      const alto = r.confianza === 'seguro';
+      if(r.primera && alto) m.dominio++;
+      else if(!r.primera && alto) m.ciego++;
+      else if(r.primera) m.fragil++;
+      else m.vacio++;
+    }
+  });
+  const usado = Math.min(simMin()*60, Math.max(1, Math.round((Date.now() - (est.simIni||Date.now()))/1000)));
+  return {fecha:Date.now(), motivo, total:est.simCola.length, resp, ok,
+          pct: resp ? Math.round(ok/resp*100) : 0, m, fallos, usado, reg};
+}
+
+function finalizarSim(motivo){
+  if(est.simTimer){ clearInterval(est.simTimer); est.simTimer = null; }
+  const res = resumenSim(motivo);
+  est.sim = res;
+  est.simCola = []; est.simIdx = 0; est.simReg = {}; est.simIni = null; est.simFin = null;
+  limpiar(); guardar(); pintarAvance();
+  vistaInformeSim(res);
+}
+
+function vistaInformeSim(res){
+  est.pantalla = 'sim-fin';
+  est.simUlt = res;
+  pintarCabeza('Resultado del simulacro', GUIA.meta.titulo, true);
+  const ap = analizar();
+  let comparacion = '';
+  if(ap.hechas > 0){
+    const d = res.pct - ap.pct;
+    const lectura = d <= -10
+      ? 'La presión del tiempo te está costando puntos: repite el simulacro hasta cerrar esa brecha.'
+      : (d >= 0
+        ? 'Bajo presión rindes igual o mejor que practicando: buena señal para el día del examen.'
+        : 'Rindes casi igual con y sin presión.');
+    comparacion = '<article class="tarjeta"><h3>Simulacro contra práctica</h3>' +
+      '<p>En práctica llevas <strong>'+ap.pct+'%</strong> al primer intento; en este simulacro sacaste <strong>'+res.pct+'%</strong>. '+lectura+'</p></article>';
+  }
+  const fallosHTML = res.fallos.length ? '<article class="tarjeta"><h3>Lo que fallaste</h3>' +
+    res.fallos.map(function(id){
+      const b = porId[id].b;
+      const r = res.reg[id];
+      const abierto = est.abierta === 'sim:'+id;
+      const tuya = b.tipo === 'opcion'
+        ? esc((b.opciones[r.elegida]||{texto:'—'}).texto)
+        : esc(String(r.elegida));
+      const buena = b.tipo === 'opcion'
+        ? esc((b.opciones.find(o=>o.correcta)||{texto:'—'}).texto)
+        : esc(b.respuestas[0]);
+      return '<div class="rev-item">' +
+        '<button class="rev-cab" data-accion="abrir-sim" data-id="'+id+'" aria-expanded="'+abierto+'">' +
+          '<span class="rev-marca" data-r="mal">✕</span>' +
+          '<span class="rev-txt">'+esc(b.enunciado.slice(0,72))+(b.enunciado.length>72?'…':'')+'</span>' +
+          '<span class="rev-marca">'+(abierto?'−':'+')+'</span>' +
+        '</button>' +
+        (abierto ? '<div class="rev-cuerpo"><dl>' +
+          '<dt>Tu respuesta</dt><dd>'+tuya+'</dd>' +
+          '<dt>Respuesta correcta</dt><dd>'+buena+'</dd>' +
+          (r.trampa ? '<dt>Tipo de error</dt><dd>'+esc(r.trampa)+'</dd>' : '') +
+          (b.explicacion ? '<dt>Explicación</dt><dd>'+b.explicacion+'</dd>' : '') +
+        '</dl></div>' : '') +
+        '</div>';
+    }).join('') + '</article>' : '';
+
+  lienzo.innerHTML = '<section>' +
+    '<div class="eyebrow">Modo simulacro</div>' +
+    '<h1 style="font-size:24px">'+(res.motivo==='tiempo'?'Se acabó el tiempo':'Simulacro terminado')+'</h1>' +
+    '<p class="subtitulo" style="font-size:14px">' +
+      (res.motivo==='tiempo'
+        ? 'Respondiste '+res.resp+' de '+res.total+' preguntas.'
+        : 'Respondiste '+res.resp+' pregunta'+(res.resp===1?'':'s')+' en '+Math.max(1,Math.round(res.usado/60))+' min.') +
+    '</p>' +
+    '<div class="marcador">' +
+      '<div><span class="cifra">'+res.pct+'%</span><span class="rotulo">Aciertos</span></div>' +
+      '<div><span class="cifra">'+res.ok+'/'+res.resp+'</span><span class="rotulo">Correctas</span></div>' +
+      '<div><span class="cifra">'+res.m.ciego+'</span><span class="rotulo">Puntos ciegos</span></div>' +
+      '<div><span class="cifra">'+Math.max(1,Math.round(res.usado/60))+'</span><span class="rotulo">Minutos</span></div>' +
+    '</div>' +
+    '<article class="tarjeta">' +
+      '<h3>Seguridad contra resultado</h3>' +
+      '<div class="matriz">' +
+        '<div class="celda celda--ciego"><div class="n">'+res.m.ciego+'</div><div class="t">Punto ciego</div><div class="d">Estabas seguro y fallaste</div></div>' +
+        '<div class="celda celda--dominio"><div class="n">'+res.m.dominio+'</div><div class="t">Dominio</div><div class="d">Seguro y acertaste</div></div>' +
+        '<div class="celda celda--fragil"><div class="n">'+res.m.fragil+'</div><div class="t">Frágil</div><div class="d">Acertaste sin estar seguro</div></div>' +
+        '<div class="celda"><div class="n">'+res.m.vacio+'</div><div class="t">Vacío reconocido</div><div class="d">Sabías que no sabías</div></div>' +
+      '</div>' +
+    '</article>' +
+    comparacion + fallosHTML +
+    '<div class="acciones no-imprimir">' +
+      (res.fallos.length ? '<button class="btn btn--ancho" data-accion="sim-fallos">Llevar '+res.fallos.length+' fallo'+(res.fallos.length===1?'':'s')+' a la ronda de repaso</button>' : '') +
+      '<button class="btn btn--fantasma btn--ancho" data-accion="sim-intro">Repetir simulacro</button>' +
+      '<button class="btn btn--fantasma btn--ancho" data-accion="indice">Volver al índice</button>' +
+    '</div>' +
+    '</section>';
+  accion([]);
+}
+
+/* ═══ ANÁLISIS ════════════════════════════════════════════════ */
+function analizar(){
+  const hechas = PREG.filter(x => respondida(x.b.id));
+  const total = PREG.length;
+  const ok = hechas.filter(x => est.reg[x.b.id].primera).length;
+  const dom = hechas.filter(x => est.reg[x.b.id].dominada).length;
+
+  const m = {ciego:0, dominio:0, fragil:0, vacio:0, sinDato:0};
+  hechas.forEach(function(x){
+    const r = est.reg[x.b.id];
+    if(!r.confianza){ m.sinDato++; return; }
+    const alto = r.confianza === 'seguro';
+    if(r.primera && alto) m.dominio++;
+    else if(!r.primera && alto) m.ciego++;
+    else if(r.primera && !alto) m.fragil++;
+    else m.vacio++;
+  });
+
+  const temas = {};
+  hechas.forEach(function(x){
+    const t = x.b.tema || 'General';
+    temas[t] = temas[t] || {ok:0, n:0};
+    temas[t].n++;
+    if(est.reg[x.b.id].primera) temas[t].ok++;
+  });
+
+  const tr = {};
+  hechas.forEach(function(x){
+    const r = est.reg[x.b.id];
+    if(!r.primera && r.trampa) tr[r.trampa] = (tr[r.trampa]||0) + 1;
+  });
+  const trampas = Object.keys(tr).map(k => ({nombre:k, n:tr[k]})).sort((a,b) => b.n - a.n);
+
+  const apuradas = hechas.filter(x => est.reg[x.b.id].seg < GUIA.ajustes.umbralApuro && !est.reg[x.b.id].primera).length;
+  const marcadas = PREG.filter(x => est.reg[x.b.id] && est.reg[x.b.id].marcada).length;
+  const sinResponder = total - hechas.length;
+
+  return {hechas:hechas.length, total, ok, dom, m, temas, trampas, apuradas, marcadas, sinResponder,
+          pct: hechas.length ? Math.round(ok/hechas.length*100) : 0};
+}
+
+function recomendaciones(a){
+  const R = [];
+  if(a.m.ciego > 0)
+    R.push('Tienes <strong>'+a.m.ciego+' '+(a.m.ciego===1?'punto ciego':'puntos ciegos')+'</strong>: preguntas donde estabas seguro y fallaste. Empieza por ahí, no por lo que ya sabes que no sabes.');
+  if(a.trampas.length && a.trampas[0].n > 1)
+    R.push('Repetiste <strong>'+a.trampas[0].n+' veces</strong> el mismo tipo de error: “'+esc(a.trampas[0].nombre)+'”. No son '+a.trampas[0].n+' fallas distintas, es una sola costumbre.');
+  const flojos = Object.keys(a.temas).filter(t => a.temas[t].ok / a.temas[t].n < .5);
+  if(flojos.length)
+    R.push('Vuelve a estudiar la teoría de: <strong>'+flojos.map(esc).join(', ')+'</strong>. Ahí fallaste más de la mitad.');
+  if(a.apuradas > 1)
+    R.push('Fallaste '+a.apuradas+' preguntas respondiendo en menos de '+GUIA.ajustes.umbralApuro+' segundos. Leer el enunciado dos veces te habría subido el puntaje sin estudiar más.');
+  if(a.m.fragil > 1)
+    R.push('Acertaste '+a.m.fragil+' preguntas sin estar seguro. Cuentan, pero no están firmes: el repaso espaciado te las volverá a mostrar en '+(GUIA.ajustes.diasRepaso||3)+' días.');
+  if(a.marcadas)
+    R.push('Dejaste '+a.marcadas+' '+(a.marcadas===1?'pregunta marcada':'preguntas marcadas')+' para revisar. Está en el filtro de la revisión.');
+  if(a.sinResponder > 0)
+    R.push('Te faltan <strong>'+a.sinResponder+'</strong> preguntas por responder. El informe solo puede analizar lo que ya hiciste.');
+  if(!R.length)
+    R.push('Buen desempeño general. Repite la guía completa en tres días sin mirar las explicaciones: ahí sabrás si de verdad quedó.');
+  return R;
+}
+
+function vistaInforme(){
+  est.pantalla = 'informe';
+  const a = analizar();
+  const comprador = GUIA.ajustes.comprador;
+  pintarCabeza('Informe de resultados', GUIA.meta.titulo, true);
+
+  const filas = Object.keys(a.temas).map(function(t){
+    const g = a.temas[t]; const r = g.ok/g.n;
+    const cl = r === 1 ? 'claro' : (r >= .5 ? 'medio' : 'ciego');
+    const et = r === 1 ? 'Despejado' : (r >= .5 ? 'A medias' : 'Punto ciego');
+    return '<li><span>'+esc(t)+' <b style="font-family:var(--dato);font-size:12px;color:var(--tinta-3)">'+g.ok+'/'+g.n+'</b></span>' +
+      '<span class="estado estado--'+cl+'">'+et+'</span></li>';
+  }).join('');
+
+  const maxTr = a.trampas.length ? a.trampas[0].n : 1;
+  const trampasHTML = a.trampas.length ? '<article class="tarjeta">' +
+    '<h3>Los errores que repites</h3>' +
+    '<p style="font-size:14px;color:var(--tinta-3)">Agrupados por tipo, no por pregunta. Un mismo hábito produce varias fallas.</p>' +
+    '<ul class="trampas">'+a.trampas.map(function(t){
+      return '<li><div class="fila"><span>'+esc(t.nombre)+'</span><span class="veces">'+t.n+'×</span></div>' +
+        '<div class="riel"><i style="width:'+Math.round(t.n/maxTr*100)+'%"></i></div></li>';
+    }).join('')+'</ul></article>' : '';
+
+  const simHTML = est.sim ? '<article class="tarjeta"><h3>Último simulacro</h3>' +
+    '<p style="font-size:14.5px">'+fechaCorta(est.sim.fecha)+' · <strong>'+est.sim.ok+'/'+est.sim.resp+'</strong> correctas ('+est.sim.pct+'%) · ' +
+    est.sim.m.ciego+' punto'+(est.sim.m.ciego===1?'':'s')+' ciego'+(est.sim.m.ciego===1?'':'s')+' · '+Math.max(1,Math.round(est.sim.usado/60))+' min.</p>' +
+    '<div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">' +
+      '<button class="btn btn--fantasma btn--chico" data-accion="sim-detalle">Ver detalle</button>' +
+      '<button class="btn btn--fantasma btn--chico" data-accion="sim-intro">Repetir</button>' +
+    '</div></article>' : '';
+
+  lienzo.innerHTML = '<section>' +
+    '<div class="marca-grande" style="font-size:11px">Punto Ciego</div>' +
+    '<div class="eyebrow" style="margin-top:6px">Informe de resultados'+(comprador?' · '+esc(comprador):'')+'</div>' +
+    '<h1 style="font-size:24px">'+esc(GUIA.meta.titulo)+'</h1>' +
+    '<p class="subtitulo" style="font-size:14px">'+new Date().toLocaleDateString('es-CO',{day:'numeric',month:'long',year:'numeric'})+' · '+a.hechas+' de '+a.total+' preguntas respondidas</p>' +
+
+    '<div class="marcador">' +
+      '<div><span class="cifra">'+a.pct+'%</span><span class="rotulo">Primer intento</span></div>' +
+      '<div><span class="cifra">'+a.ok+'/'+a.hechas+'</span><span class="rotulo">Correctas</span></div>' +
+      '<div><span class="cifra">'+a.dom+'</span><span class="rotulo">Dominadas</span></div>' +
+      '<div><span class="cifra">'+minutos()+'</span><span class="rotulo">Minutos</span></div>' +
+    '</div>' +
+
+    '<article class="tarjeta">' +
+      '<h3>Seguridad contra resultado</h3>' +
+      '<p style="font-size:14px;color:var(--tinta-3)">Cruza lo que creías saber con lo que sabías de verdad.</p>' +
+      '<div class="matriz">' +
+        '<div class="celda celda--ciego"><div class="n">'+a.m.ciego+'</div><div class="t">Punto ciego</div><div class="d">Estabas seguro y fallaste</div></div>' +
+        '<div class="celda celda--dominio"><div class="n">'+a.m.dominio+'</div><div class="t">Dominio</div><div class="d">Seguro y acertaste</div></div>' +
+        '<div class="celda celda--fragil"><div class="n">'+a.m.fragil+'</div><div class="t">Frágil</div><div class="d">Acertaste sin estar seguro</div></div>' +
+        '<div class="celda"><div class="n">'+a.m.vacio+'</div><div class="t">Vacío reconocido</div><div class="d">Sabías que no sabías</div></div>' +
+      '</div>' +
+    '</article>' +
+
+    '<article class="tarjeta"><h3>Mapa por tema</h3>' +
+      '<ul class="mapa">'+(filas || '<li>Sin datos todavía</li>')+'</ul></article>' +
+
+    trampasHTML + simHTML +
+
+    '<article class="tarjeta '+(a.m.ciego ? 'tarjeta--alerta' : 'tarjeta--bien')+'">' +
+      '<h3>Qué hacer ahora</h3>' +
+      '<ul class="reco">'+recomendaciones(a).map(r => '<li>'+r+'</li>').join('')+'</ul>' +
+    '</article>' +
+
+    '<div class="acciones no-imprimir">' +
+      '<button class="btn btn--ancho" data-accion="tarjeta">Descargar tarjeta de resultado (imagen)</button>' +
+      '<button class="btn btn--fantasma btn--ancho" data-accion="revision">Revisar mis respuestas</button>' +
+      '<button class="btn btn--fantasma btn--ancho" data-accion="compartir">Compartir por WhatsApp (texto)</button>' +
+      '<button class="btn btn--fantasma btn--ancho" data-accion="imprimir">Guardar como PDF</button>' +
+      '<button class="btn btn--fantasma btn--ancho" data-accion="transferir">Código de respaldo · cambiar de dispositivo</button>' +
+      '<button class="btn btn--fantasma btn--ancho" data-accion="sim-intro">Modo simulacro</button>' +
+      '<button class="btn btn--fantasma btn--ancho" data-accion="indice">Volver al índice</button>' +
+      '<button class="btn btn--fantasma btn--ancho" data-accion="reiniciar">Empezar de cero</button>' +
+      '<div id="acciones-nota" role="status"></div>' +
+    '</div>' +
+    '</section>';
+  accion([]);
+}
+
+/* ── revisión pregunta por pregunta ───────────────────────────── */
+function vistaRevision(){
+  est.pantalla = 'revision';
+  pintarCabeza('Revisión', 'Todas tus respuestas', true);
+
+  const filtros = [['todas','Todas'],['mal','Falladas'],['ciego','Puntos ciegos'],['marcada','Marcadas']];
+  let lista = PREG.slice();
+  if(est.filtro === 'mal')      lista = lista.filter(x => respondida(x.b.id) && !est.reg[x.b.id].primera);
+  if(est.filtro === 'ciego')    lista = lista.filter(x => { const r = est.reg[x.b.id]; return r && !r.primera && r.confianza === 'seguro'; });
+  if(est.filtro === 'marcada')  lista = lista.filter(x => est.reg[x.b.id] && est.reg[x.b.id].marcada);
+
+  const items = lista.map(function(x){
+    const b = x.b, r = est.reg[b.id];
+    const n = NUM[b.id];
+    const hecha = respondida(b.id);
+    const marca = !hecha ? 'no' : (r.primera ? 'ok' : 'mal');
+    const simbolo = !hecha ? '—' : (r.primera ? '✓' : '✕');
+    const abierto = est.abierta === b.id;
+    let detalle = '';
+    if(abierto){
+      const tuya = !hecha ? '<em>Sin responder</em>'
+        : (b.tipo === 'opcion' ? esc(b.opciones[r.elegida] ? b.opciones[r.elegida].texto : '—') : esc(String(r.elegida)));
+      const buena = b.tipo === 'opcion'
+        ? esc((b.opciones.find(o => o.correcta)||{texto:'—'}).texto) : esc(b.respuestas[0]);
+      let vid = '';
+      if(hecha && !r.primera && b.tipo === 'opcion'){
+        const u = videoDe(b, b.opciones[r.elegida]);
+        if(u) vid = '<dt>Video</dt><dd><a class="video" style="margin-top:0" href="'+esc(u)+'" target="_blank" rel="noopener">Ver el video de esta trampa →</a></dd>';
+      }
+      detalle = '<div class="rev-cuerpo">' +
+        '<p>'+esc(b.enunciado)+'</p>' +
+        '<dl>' +
+          '<dt>Tu respuesta</dt><dd>'+tuya+'</dd>' +
+          '<dt>Respuesta correcta</dt><dd>'+buena+'</dd>' +
+          (r && r.trampa && !r.primera ? '<dt>Tipo de error</dt><dd>'+esc(r.trampa)+'</dd>' : '') +
+          (r && r.confianza ? '<dt>Tu seguridad</dt><dd>'+esc(CONF[r.confianza].et)+(!r.primera && r.confianza==='seguro' ? ' · punto ciego' : '')+'</dd>' : '') +
+          (r && r.seg ? '<dt>Tiempo</dt><dd>'+r.seg+' s</dd>' : '') +
+          vid +
+          (b.explicacion ? '<dt>Explicación</dt><dd>'+b.explicacion+'</dd>' : '') +
+        '</dl></div>';
+    }
+    return '<div class="rev-item">' +
+      '<button class="rev-cab" data-accion="abrir-rev" data-id="'+b.id+'" aria-expanded="'+abierto+'">' +
+        '<span class="rev-marca" data-r="'+marca+'">'+simbolo+'</span>' +
+        '<span class="rev-txt">'+String(n).padStart(2,'0')+'. '+esc(b.enunciado.slice(0,72))+(b.enunciado.length>72?'…':'')+'</span>' +
+        '<span class="rev-marca">'+(abierto ? '−' : '+')+'</span>' +
+      '</button>'+detalle+'</div>';
+  }).join('');
+
+  lienzo.innerHTML = '<section>' +
+    '<div class="eyebrow">Revisión</div>' +
+    '<h2 style="margin:8px 0 14px">Pregunta por pregunta</h2>' +
+    '<div class="filtros">' +
+      filtros.map(f => '<button class="chip" data-accion="filtro" data-f="'+f[0]+'" aria-pressed="'+(est.filtro===f[0])+'">'+f[1]+'</button>').join('') +
+    '</div>' +
+    (items || '<div class="vacio">No hay preguntas en este filtro.</div>') +
+    '<div class="acciones no-imprimir">' +
+      '<button class="btn btn--fantasma btn--ancho" data-accion="informe">Volver al informe</button>' +
+    '</div></section>';
+  accion([]);
+}
+
+/* ═══ TRANSFERIR AVANCE (código de rescate) ═══════════════════ */
+function codigoExportar(){
+  const vivo = Object.keys(est.reg).length || est.s || est.b;
+  const d = vivo ? datosGuardado() : (almacen.leer() || datosGuardado());
+  const j = JSON.stringify({t:GUIA.meta.titulo, v:GUIA.meta.version, d:d});
+  return 'PC1.' + btoa(unescape(encodeURIComponent(j)));
+}
+function codigoImportar(txt){
+  try{
+    txt = String(txt||'').trim();
+    if(txt.indexOf('PC1.') === 0) txt = txt.slice(4);
+    const o = JSON.parse(decodeURIComponent(escape(atob(txt))));
+    if(!o || !o.d) return {err:'El código no tiene el formato esperado.'};
+    if(o.t !== GUIA.meta.titulo) return {err:'Ese código es de otra guía («'+o.t+'»).'};
+    return {ok:o.d};
+  }catch(e){
+    return {err:'No se pudo leer el código. Revisa que lo copiaste completo, sin espacios de más.'};
+  }
+}
+function vistaTransferir(){
+  est.pantalla = 'transferir';
+  pintarCabeza('Transferir avance', GUIA.meta.titulo, false);
+  const g = almacen.leer();
+  const nResp = g && g.reg ? Object.keys(g.reg).filter(k => g.reg[k] && g.reg[k].intentos > 0).length : 0;
+  const hay = (Object.keys(est.reg).length > 0) || (g && (nResp > 0 || g.s > 0 || g.b > 0));
+  lienzo.innerHTML = '<section>' +
+    '<div class="eyebrow">Transferir avance</div>' +
+    '<h2 style="margin:8px 0 14px">De un dispositivo a otro</h2>' +
+    (hay ? '<article class="tarjeta">' +
+      '<h3>1 · Saca tu código de este dispositivo</h3>' +
+      '<p style="font-size:14.5px;color:var(--tinta-3)">Cópialo y envíatelo por WhatsApp o correo. Es tu avance completo convertido en texto.</p>' +
+      '<textarea class="campo cod" id="cod" readonly rows="4">'+codigoExportar()+'</textarea>' +
+      '<button class="btn btn--fantasma btn--chico" style="margin-top:10px" data-accion="copiar-cod">Copiar código</button>' +
+      '</article>'
+    : '<article class="tarjeta"><h3>1 · Saca tu código</h3>' +
+      '<p style="font-size:14.5px;color:var(--tinta-3)">Todavía no hay avance guardado en este dispositivo, así que no hay nada que exportar.</p></article>') +
+    '<article class="tarjeta">' +
+      '<h3>2 · Pega el código en el otro dispositivo</h3>' +
+      '<p style="font-size:14.5px;color:var(--tinta-3)">Abre esta misma guía allá, entra a esta pantalla y pega el código. Ojo: reemplaza el avance que ese dispositivo tenga.</p>' +
+      '<textarea class="campo cod" id="cod-in" rows="4" placeholder="PC1.…"></textarea>' +
+      '<button class="btn btn--chico" style="margin-top:10px" data-accion="cargar-cod">Cargar este código</button>' +
+      '<div id="cod-nota" role="status" style="font-size:13.5px;margin-top:8px;color:var(--trampa)"></div>' +
+    '</article>' +
+    '</section>';
+  accion([{texto:'Volver', accion:'portada', clase:'btn btn--fantasma btn--ancho'}]);
+}
+
+/* ═══ TARJETA DE RESULTADO (imagen canvas 1080×1350) ══════════ */
+function slug(t){
+  return String(t).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,50) || 'resultado';
+}
+function notaAccion(txt){
+  const n = document.getElementById('acciones-nota');
+  if(!n) return;
+  n.textContent = txt;
+  setTimeout(function(){ if(n.isConnected && n.textContent === txt) n.textContent = ''; }, 4000);
+}
+function descargaBlob(blob, nombre){
+  const u = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = u; a.download = nombre;
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(u); a.remove(); }, 900);
+}
+function rrect(ctx, x, y, w, h, r){
+  ctx.beginPath();
+  ctx.moveTo(x+r, y);
+  ctx.arcTo(x+w, y, x+w, y+h, r);
+  ctx.arcTo(x+w, y+h, x, y+h, r);
+  ctx.arcTo(x, y+h, x, y, r);
+  ctx.arcTo(x, y, x+w, y, r);
+  ctx.closePath();
+}
+function trk(ctx, txt, x, y, t){
+  let cx = x;
+  for(const ch of String(txt)){ ctx.fillText(ch, cx, y); cx += ctx.measureText(ch).width + t; }
+}
+function envolver(ctx, txt, x, y, maxW, lh, maxL){
+  const w = String(txt).split(' ');
+  let linea = '', n = 0;
+  for(let i = 0; i < w.length; i++){
+    const t = linea ? linea+' '+w[i] : w[i];
+    if(ctx.measureText(t).width > maxW && linea){
+      ctx.fillText(linea, x, y); y += lh; linea = w[i]; n++;
+      if(n >= maxL - 1){
+        let resto = w.slice(i).join(' ');
+        while(resto && ctx.measureText(resto+'…').width > maxW) resto = resto.slice(0, -1);
+        ctx.fillText(resto ? resto+'…' : '…', x, y);
+        return y + lh;
+      }
+    }else linea = t;
+  }
+  if(linea) ctx.fillText(linea, x, y);
+  return y + lh;
+}
+function tarjetaImagen(){
+  const a = analizar();
+  const c = document.createElement('canvas');
+  c.width = 1080; c.height = 1350;
+  const x = c.getContext ? c.getContext('2d') : null;
+  if(!x){ notaAccion('Este navegador no permite generar la imagen. Usa «Guardar como PDF».'); return; }
+
+  const dibujar = function(){
+    x.fillStyle = '#14161B'; x.fillRect(0, 0, 1080, 1350);
+    x.strokeStyle = 'rgba(201,162,39,.55)'; x.lineWidth = 2;
+    x.strokeRect(40, 40, 1000, 1270);
+
+    x.fillStyle = '#C9A227'; x.font = '700 34px "Space Mono", monospace';
+    trk(x, 'PUNTO CIEGO', 92, 148, 13);
+    x.fillStyle = '#9AA0B4'; x.font = '400 27px Inter, sans-serif';
+    x.fillText('Estudia lo que no sabes que no sabes.', 92, 196);
+
+    x.fillStyle = '#F6F3EC'; x.font = '600 58px Fraunces, Georgia, serif';
+    let ty = envolver(x, GUIA.meta.titulo, 92, 290, 900, 70, 3);
+    if(GUIA.ajustes.comprador){
+      x.fillStyle = '#C9A227'; x.font = '700 25px "Space Mono", monospace';
+      trk(x, ('Informe de '+GUIA.ajustes.comprador).toUpperCase(), 92, ty, 5);
+      ty += 48;
+    }
+
+    const yPct = Math.max(ty + 230, 800);
+    x.fillStyle = '#F6F3EC'; x.font = '700 250px "Space Mono", monospace';
+    x.fillText(a.pct + '%', 84, yPct);
+    x.fillStyle = '#9AA0B4'; x.font = '400 30px Inter, sans-serif';
+    x.fillText('de aciertos al primer intento · '+a.ok+' de '+a.hechas+' preguntas', 92, yPct + 54);
+
+    const celdas = [
+      [a.m.ciego,  'PUNTOS CIEGOS', '#E58A80'],
+      [a.m.dominio,'DOMINIO',       '#7CC7A1'],
+      [a.m.fragil, 'FRÁGILES',      '#E3C25C'],
+      [a.m.vacio,  'VACÍOS',        '#9AA0B4']
+    ];
+    const cw = 210, ch = 200, gap = 20, x0 = (1080 - (cw*4 + gap*3)) / 2, y0 = 940;
+    celdas.forEach(function(cd, i){
+      const cx0 = x0 + i * (cw + gap);
+      x.fillStyle = '#1B1E27'; rrect(x, cx0, y0, cw, ch, 14); x.fill();
+      x.strokeStyle = '#3A404F'; x.lineWidth = 1.5; rrect(x, cx0, y0, cw, ch, 14); x.stroke();
+      x.textAlign = 'center';
+      x.fillStyle = cd[2]; x.font = '700 62px "Space Mono", monospace';
+      x.fillText(String(cd[0]), cx0 + cw/2, y0 + 108);
+      x.fillStyle = '#9AA0B4'; x.font = '700 17px "Space Mono", monospace';
+      x.fillText(cd[1], cx0 + cw/2, y0 + 152);
+      x.textAlign = 'left';
+    });
+
+    x.fillStyle = '#6B7385'; x.font = '400 22px Inter, sans-serif';
+    x.fillText(new Date().toLocaleDateString('es-CO',{day:'numeric',month:'long',year:'numeric'})+' · '+GUIA.meta.area, 92, 1252);
+    x.fillStyle = '#565B6B'; x.font = '400 20px "Space Mono", monospace';
+    x.fillText('guía interactiva · bymcyl', 92, 1288);
+
+    const nombre = 'punto-ciego-' + slug(GUIA.meta.titulo) + '.png';
+    if(c.toBlob){
+      c.toBlob(function(blob){
+        if(!blob){ notaAccion('No se pudo generar la imagen.'); return; }
+        try{
+          const f = new File([blob], nombre, {type:'image/png'});
+          if(navigator.canShare && navigator.canShare({files:[f]}) && navigator.share){
+            navigator.share({files:[f], title:'Mi resultado'}).catch(function(){ descargaBlob(blob, nombre); });
+            notaAccion('Tarjeta lista ✓');
+            return;
+          }
+        }catch(e){}
+        descargaBlob(blob, nombre);
+        notaAccion('Tarjeta descargada ✓');
+      }, 'image/png');
+    }else{
+      notaAccion('No se pudo generar la imagen.');
+    }
+  };
+
+  try{
+    if(document.fonts && document.fonts.ready && document.fonts.ready.then){
+      document.fonts.ready.then(dibujar, dibujar);
+    }else dibujar();
+  }catch(e){ dibujar(); }
+}
+
+/* ── acciones sueltas ─────────────────────────────────────────── */
+function compartir(){
+  const a = analizar();
+  const t = 'Hice la guía "'+GUIA.meta.titulo+'" de '+GUIA.meta.coleccion+': '+a.ok+'/'+a.hechas+' al primer intento' +
+            (a.m.ciego ? ' y '+a.m.ciego+' puntos ciegos detectados.' : '.');
+  window.open('https://wa.me/?text=' + encodeURIComponent(t), '_blank', 'noopener');
+}
+
+function empezar(reanudar){
+  const g = reanudar ? almacen.leer() : null;
+  if(g){
+    est.s = g.s || 0; est.b = g.b || 0;
+    est.reg = g.reg || {}; est.cola = g.cola || []; est.j = g.j || 0;
+    est.seg = g.seg || 0; est.sim = g.sim || null;
+    est.simCola = g.sCola || []; est.simIdx = g.sIdx || 0; est.simReg = g.sReg || {};
+    est.simIni = g.sIni || null; est.simFin = g.sFin || null;
+  }else{
+    almacen.borrar();
+    est.s = 0; est.b = 0; est.reg = {}; est.cola = []; est.j = 0; est.seg = 0;
+    est.sim = null; est.simCola = []; est.simIdx = 0; est.simReg = {};
+    est.simIni = null; est.simFin = null; est.orden = {};
+  }
+  est.tSesion = Date.now();
+  limpiar(); pintarAvance();
+
+  // si quedó un simulacro a medio camino, vuelve al reloj (o lo cierra si venció)
+  if(g && est.simFin && est.simCola.length){
+    if(Date.now() < est.simFin && est.simIdx < est.simCola.length){
+      est.pantalla = 'sim';
+      if(est.simTimer) clearInterval(est.simTimer);
+      est.simTimer = setInterval(tickSim, 500);
+      return vistaPregunta(bloqueActual());
+    }
+    return finalizarSim('tiempo');
+  }
+  // si quedó a mitad de la ronda de repaso, vuelve ahí y no al recorrido
+  if(g && g.pantalla === 'repaso' && est.cola.length && est.j < est.cola.length){
+    est.pantalla = 'repaso';
+    return vistaPregunta(bloqueActual());
+  }
+  if(est.s >= SEC.length){ est.s = SEC.length - 1; est.b = 0; }
+  if(est.b >= SEC[est.s].bloques.length) return finSeccion();
+  vistaBloque();
+}
+
+/* ── delegación de eventos ────────────────────────────────────── */
+document.addEventListener('click', function(ev){
+  const el = ev.target.closest('[data-accion]');
+  if(!el) return;
+  const a = el.dataset.accion;
+
+  if(a === 'empezar')   return empezar(false);
+  if(a === 'reanudar')  return empezar(true);
+  if(a === 'portada')   return vistaPortada();
+  if(a === 'indice')    return vistaIndice();
+  if(a === 'siguiente') return siguiente();
+  if(a === 'atras')     return atras();
+  if(a === 'responder') return responderOpcion(parseInt(el.dataset.op,10));
+  if(a === 'comprobar') return comprobarAbierta();
+  if(a === 'cerrar')    return cerrar();
+  if(a === 'informe')   return vistaInforme();
+  if(a === 'revision')  return vistaRevision();
+  if(a === 'compartir') return compartir();
+  if(a === 'tarjeta')   return tarjetaImagen();
+  if(a === 'imprimir')  return window.print();
+  if(a === 'transferir')return vistaTransferir();
+
+  if(a === 'gancho'){
+    if(est.gancho || !GUIA.gancho) return;
+    const i = parseInt(el.dataset.g, 10);
+    est.gancho = {i: i, ok: GUIA.gancho.opciones[i].correcta === true};
+    return vistaPortada();
+  }
+
+  if(a === 'copiar-cod'){
+    const t = document.getElementById('cod');
+    if(!t) return;
+    t.select();
+    try{ t.setSelectionRange(0, 999999); }catch(e){}
+    let copiado = false;
+    try{ copiado = document.execCommand('copy'); }catch(e){}
+    if(!copiado && navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(t.value).then(function(){}, function(){});
+      copiado = true;
+    }
+    el.textContent = copiado ? 'Copiado ✓' : 'Selecciona y copia manualmente';
+    setTimeout(function(){ if(el.isConnected) el.textContent = 'Copiar código'; }, 2500);
+    return;
+  }
+  if(a === 'cargar-cod'){
+    const t = document.getElementById('cod-in');
+    const nota = document.getElementById('cod-nota');
+    const r = codigoImportar(t ? t.value : '');
+    if(r.err){ if(nota) nota.textContent = r.err; return; }
+    almacen.escribir(r.ok);
+    est.reg = {}; est.s = 0; est.b = 0; est.cola = []; est.j = 0; est.seg = 0;
+    est.sim = null; est.simCola = []; est.simIdx = 0; est.simReg = {};
+    est.simIni = null; est.simFin = null; est.tSesion = null; est.orden = {};
+    limpiar(); pintarAvance();
+    return vistaPortada();
+  }
+
+  if(a === 'ir-seccion'){
+    const i = parseInt(el.dataset.s,10);
+    if(!secVisible(i)){
+      lienzo.innerHTML = candadoHTML();
+      accion([{texto:'Volver al índice', accion:'indice', clase:'btn btn--fantasma btn--ancho'}]);
+      return;
+    }
+    est.s = i; est.b = 0; est.pantalla = 'seccion'; limpiar(); guardar();
+    return vistaBloque();
+  }
+  if(a === 'seccion-sig'){ est.s++; est.b = 0; est.pantalla='seccion'; limpiar(); guardar(); return vistaBloque(); }
+  if(a === 'repaso-ini'){ est.pantalla='repaso'; return vistaPregunta(bloqueActual()); }
+
+  if(a === 'repaso-esp'){
+    if(!Object.keys(est.reg).length){
+      const g = almacen.leer();
+      if(g){
+        est.s = g.s || 0; est.b = g.b || 0; est.reg = g.reg || {};
+        est.seg = g.seg || 0; est.sim = g.sim || null;
+      }
+    }
+    if(!est.tSesion) est.tSesion = Date.now();
+    const rep = repasables();
+    if(!rep.listas.length) return vistaIndice();
+    est.cola = rep.listas; est.j = 0;
+    return vistaIntroRepaso('Repaso espaciado',
+      '<p>Vas a repetir <strong>'+rep.listas.length+'</strong> pregunta'+(rep.listas.length===1?'':'s')+' que acertaste sin seguridad o fallaste hace unos días.</p>' +
+      '<p>Si hoy salen bien y marcas «Seguro», pasan a dominadas de verdad. Si vuelven a fallar, se reprograman.</p>');
+  }
+
+  if(a === 'sim-intro'){
+    if(est.pantalla === 'sim') return;
+    return vistaSimIntro();
+  }
+  if(a === 'sim-empezar') return iniciarSim();
+  if(a === 'sim-terminar'){
+    if(est.pantalla !== 'sim') return;
+    try{ if(window.confirm && !window.confirm('¿Terminar el simulacro con lo respondido hasta ahora?')) return; }catch(e){}
+    return finalizarSim('manual');
+  }
+  if(a === 'sim-detalle'){
+    est.abierta = null;
+    return vistaInformeSim(est.sim || est.simUlt);
+  }
+  if(a === 'sim-fallos'){
+    if(!est.simUlt || !est.simUlt.fallos.length) return;
+    est.cola = est.simUlt.fallos.slice(); est.j = 0;
+    return vistaIntroRepaso('Fallos del simulacro',
+      '<p>Vas a repetir con calma —y con explicación— lo que fallaste bajo presión. Lo que domines aquí sí cuenta en tu avance de práctica.</p>');
+  }
+  if(a === 'abrir-sim'){
+    est.abierta = (est.abierta === 'sim:'+el.dataset.id) ? null : 'sim:'+el.dataset.id;
+    return vistaInformeSim(est.simUlt);
+  }
+
+  if(a === 'pista'){ est.pista = true; return vistaPregunta(bloqueActual()); }
+  if(a === 'confianza'){ est.confianza = el.dataset.c; return vistaPregunta(bloqueActual()); }
+  if(a === 'marcar'){
+    const b = bloqueActual(); const r = regDe(b.id);
+    r.marcada = !r.marcada; est.reg[b.id] = r; guardar();
+    el.setAttribute('aria-pressed', String(r.marcada));
+    el.innerHTML = r.marcada ? IC.estrella+'Marcada' : IC.estrellaO+'Marcar';
+    return;
+  }
+  if(a === 'filtro'){ est.filtro = el.dataset.f; est.abierta = null; return vistaRevision(); }
+  if(a === 'abrir-rev'){ est.abierta = (est.abierta === el.dataset.id) ? null : el.dataset.id; return vistaRevision(); }
+  if(a === 'reiniciar'){
+    if(!est.confirmarBorrado){
+      est.confirmarBorrado = true;
+      el.textContent = 'Confirmar: borrar todo mi avance';
+      el.classList.remove('btn--fantasma');
+      setTimeout(function(){
+        if(est.confirmarBorrado && el.isConnected){
+          est.confirmarBorrado = false;
+          el.textContent = 'Empezar de cero';
+          el.classList.add('btn--fantasma');
+        }
+      }, 5000);
+      return;
+    }
+    est.confirmarBorrado = false;
+    almacen.borrar();
+    est.reg = {}; est.s = 0; est.b = 0; est.j = 0; est.cola = []; est.seg = 0; est.tSesion = null;
+    est.sim = null; est.simUlt = null; est.simCola = []; est.simIdx = 0; est.simReg = {};
+    est.simIni = null; est.simFin = null; est.orden = {}; est.gancho = null;
+    if(est.simTimer){ clearInterval(est.simTimer); est.simTimer = null; }
+    limpiar(); pintarAvance(); return vistaPortada();
+  }
+});
+
+document.addEventListener('keydown', function(ev){
+  if(ev.key === 'Enter' && document.getElementById('campo') && !est.respondida){
+    ev.preventDefault(); comprobarAbierta();
+  }
+});
+
+// iOS Safari y Chrome Android pueden matar la pestaña sin avisar:
+// guardamos también al ocultar o cerrar la página.
+window.addEventListener('pagehide', function(){ if(est.tSesion) guardar(); });
+document.addEventListener('visibilitychange', function(){
+  if(document.visibilityState === 'hidden' && est.tSesion){
+    guardar();
+    est.seg = segundosTotales();   // congela el cronómetro mientras no está a la vista
+    est.tSesion = null;
+  }else if(document.visibilityState === 'visible' && !est.tSesion && est.pantalla !== 'portada'){
+    est.tSesion = Date.now();      // y lo reanuda al volver
+  }
+});
+
+// gancho de depuración: abrir el archivo con #debug al final de la URL
+try{
+  if(window.location.hash.indexOf('debug') > -1){
+    window.__pc = {est:est, guardar:guardar, analizar:analizar, iniciarSim:iniciarSim,
+                   finalizarSim:finalizarSim, repasables:repasables, almacen:almacen};
+  }
+}catch(e){}
+
+vistaPortada();
+
+})();
+</script>
+</body>
+</html>
