@@ -55,6 +55,15 @@ sabe, marca *Adivinando* y elige: eso también es un dato.
   nadie se estrelle con el candado a mitad de camino.
 - **Sigue donde ibas**: la biblioteca recuerda el último recurso en curso y lo ofrece
   de primero en la portada.
+- **La marca, en su sitio**: el bloque horizontal en la portada de la biblioteca y de
+  cada guía, la diana compacta en la cabecera fija, el bloque corto en el panel de
+  Actividad y en el informe, el sello editorial en el pie, la diana en el candado de
+  compra y en la tarjeta de resultado descargable, y el favicon en la pestaña. Dentro de
+  cada guía los anillos van en el color de su materia; el centro, siempre en oro.
+- **Modo oscuro**: interruptor en la portada y en la cabecera, con la preferencia
+  guardada en el dispositivo (si no hay ninguna, se respeta la del sistema). El tema
+  entra también en la guía abierta, y como los logos se dibujan con las variables del
+  tema, pasan solos a su versión negativa: anillos claros sobre fondo tinta.
 - **Lector incrustado**: al abrir una guía, esta se despliega dentro de la misma página,
   con una barra «‹ Biblioteca» para volver. La guía corre entera y sin recortes —su
   índice, su simulacro, su informe—; al volver, el catálogo ya refleja lo que se avanzó.
@@ -87,6 +96,11 @@ El paso 3 también hay que repetirlo cuando cambie el contenido de una guía ya 
 (por ejemplo, al migrarlas a una plantilla nueva): `index.html` lleva una copia, y sin
 reconstruir seguiría sirviendo la vieja.
 
+Si algún día regeneras las guías desde una plantilla nueva, pásales antes
+`node marcar-guias.js`: vuelve a poner los logos en los siete sitios de cada guía y toma
+el color de `meta.paleta`, así que una guía de una materia nueva se marca sola. Es
+idempotente —salta las que ya están marcadas—, así que se puede ejecutar sin miedo.
+
 ```js
 { id:'g06',                    // único y estable: es la llave del avance guardado
   tipo:'guia',                 // clave de `tipos`
@@ -103,7 +117,7 @@ reconstruir seguiría sirviendo la vieja.
   muestra:{secciones:1, preguntas:5},  // guía en modo demo
   nuevo:true,                  // etiqueta NUEVO
   premium:true,                // no se abre: candado + compra
-  precio:'$18.000' }           // opcional, prima sobre ajustes.precio
+  precio:'$10.000' }           // opcional, prima sobre ajustes.precio
 ```
 
 `clave.titulo` y `clave.version` deben coincidir **exactamente** con el `meta.titulo` y
@@ -129,6 +143,7 @@ si quieres compartir una sola guía—.
 punto-ciego/
 ├── index.html          ← la biblioteca CON las guías dentro (~1,4 MB) · esto es lo que se reparte
 ├── construir.js        ← node construir.js → vuelve a incrustar las guías
+├── marcar-guias.js     ← node marcar-guias.js → pone la marca en las guías de guias/
 └── guias/              ← las guías sueltas, fuente de lo que se incrusta
     ├── 01-lectura-critica-inferir-sin-inventar.html
     ├── 02-argumentacion-y-falacias.html
