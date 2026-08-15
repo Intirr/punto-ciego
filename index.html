@@ -30,6 +30,7 @@
   --trampa:#A8382F; --trampa-claro:#F7E9E7;
   --linea:#D8D2C4;
   --sup:#fff;                  /* superficie de tarjetas y campos */
+  --velo:rgba(246,243,236,.97);/* fondo translúcido de las barras fijas */
   --display:'Fraunces',Georgia,'Times New Roman',serif;
   --texto:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
   --dato:'Space Mono','SFMono-Regular',Consolas,monospace;
@@ -48,6 +49,7 @@ html[data-tema="oscuro"]{
   --acierto:#7CC7A1; --acierto-claro:#16281F;
   --trampa:#E58A80; --trampa-claro:#2C1A18;
   --linea:#343A48;
+  --velo:rgba(20,22,27,.97);
 }
 html[data-tema="oscuro"] .candado{background:var(--papel-2);border:1px solid var(--linea)}
 html[data-tema="oscuro"] .candado h2{color:var(--tinta)}
@@ -58,7 +60,7 @@ html[data-tema="oscuro"] .btn--fantasma{background:transparent;color:var(--tinta
 html[data-tema="oscuro"] .chip[aria-pressed="true"]{background:var(--oro);border-color:var(--oro);color:#14161B}
 html[data-tema="oscuro"] .nav-btn[aria-pressed="true"]{color:var(--oro)}
 *{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%;background:var(--papel)}
 body{
   font-family:var(--texto);background:var(--papel);color:var(--tinta);
   line-height:1.6;font-size:16px;-webkit-font-smoothing:antialiased;
@@ -71,7 +73,7 @@ body{
 
 /* ── cabecera ─────────────────────────────────────────────────── */
 #cabeza{
-  position:sticky;top:3px;z-index:45;background:rgba(246,243,236,.97);
+  position:sticky;top:3px;z-index:45;background:var(--velo);
   border-bottom:1px solid var(--linea);backdrop-filter:blur(8px);
 }
 .cabeza-int{
@@ -245,7 +247,7 @@ p{margin:0 0 12px} p:last-child{margin-bottom:0}
 /* ── barra de navegación inferior ─────────────────────────────── */
 .barra{
   position:fixed;left:0;right:0;bottom:0;z-index:40;
-  background:rgba(246,243,236,.97);border-top:1px solid var(--linea);
+  background:var(--velo);border-top:1px solid var(--linea);
   padding:6px 10px calc(6px + env(safe-area-inset-bottom));backdrop-filter:blur(8px);
 }
 .barra-int{max-width:640px;margin:0 auto;display:flex;align-items:stretch;gap:6px}
